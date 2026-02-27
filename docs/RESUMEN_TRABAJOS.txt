@@ -1,0 +1,120 @@
+RESUMEN DE TRABAJOS REALIZADOS
+==============================
+
+1. MIGRACIÓN Y PUESTA EN MARCHA EN NUEVA CUENTA GOOGLE
+------------------------------------------------------
+
+- Creación de nueva hoja de cálculo "Vistas al Mar — Reservas" en la cuenta oficial de reservas.
+- Creación de nuevo calendario de Google "Reservas apartamento" y configuración de su CALENDAR_ID.
+- Adaptación del Apps Script para trabajar por ID de hoja (SPREADSHEET_ID) en lugar de hoja activa.
+- Ejecución de:
+  - setupSheets(): creación y formateo de las pestañas "Reservas" y "Visitas".
+  - Configuración correcta de la pestaña "Precios" con fechas y precios por día + limpieza.
+  - installTrigger(): instalación del trigger onEdit (onSheetEdit) para automatizar confirmaciones/cancelaciones.
+- Despliegue del Apps Script como Web App y actualización de la URL en la web (APPS_SCRIPT_URL).
+
+
+2. REFACTORIZACIÓN Y ESTRUCTURA DEL FRONTEND
+--------------------------------------------
+
+- Separación del HTML en componentes claros:
+  - index.html -> solo estructura y contenido.
+  - css/styles.css -> todos los estilos.
+  - js/app.js -> toda la lógica (calendario, precios, reservas, panel admin, tracking, galería).
+- Creación de carpeta de documentación:
+  - docs/README_VistasAlMar.txt -> guía técnica para mantenimiento (Sheets, Script, hosting).
+  - docs/RESUMEN_TRABAJOS.txt -> este resumen de mejoras.
+- Limpieza de ficheros auxiliares antiguos:
+  - Eliminados: INSTRUCCIONES-*.txt, acc.txt, app script.txt (ya cargado en Google), etc.
+
+
+3. CORRECCIONES EN LA INTEGRACIÓN FRONTEND ↔ BACKEND
+----------------------------------------------------
+
+- Unificación del formato de fechas entre frontend y Apps Script:
+  - Siempre "yyyy/MM/dd" internamente para precios y reservas.
+  - Funciones ds() y sd() para convertir entre Date y string.
+- Lectura robusta de precios diarios:
+  - Normalización de las claves de dailyPrices devueltas por Apps Script.
+- Cambio del método de comunicación:
+  - Antes: JSONP mediante inyección de <script src="..."> (bloqueado por navegadores recientes).
+  - Ahora: fetch GET/POST estándar para:
+    - getPricing
+    - getBookings
+    - getStats
+    - trackVisit
+    - createBooking (POST JSON).
+- Bloqueo de días pasados en el calendario:
+  - Días anteriores a hoy marcados como "past" y no clicables.
+- Alineación de la lógica de reservas:
+  - Check-in incluido, check-out excluido (estándar hotelero).
+  - Dias reservados = [checkin, checkout) tanto en web como en Apps Script y Google Calendar.
+
+
+4. MEJORAS EN LA EXPERIENCIA DE USUARIO (HUESPED)
+-------------------------------------------------
+
+- Legibilidad de la sección "Reserva":
+  - Títulos y textos de "Consulta disponibilidad" y descripción ahora en blanco/alto contraste.
+  - Desplegable "Personas" con fondo blanco y texto oscuro para ver mejor las opciones.
+- Comportamiento del calendario:
+  - Primera carga espera a tener:
+    - Precios diarios.
+    - Rangos reservados.
+  - Solo entonces se dibuja el calendario, evitando parpadeos de "calendario vacío" que se rellena después.
+- Cálculo correcto de precios:
+  - Se utilizan los precios diarios configurados en la pestaña "Precios" (60€/noche en la prueba).
+  - Se suma la limpieza fija (80€) al total.
+  - Se calcula y muestra:
+    - Nº de noches.
+    - Precio medio por noche.
+    - Total con limpieza.
+  - El desglose detallado se guarda en la hoja (ejemplo: "02/27:60€ + 02/28:60€ + limpieza:80€ = 200€").
+- Mensajería más clara:
+  - Línea de "Temporada" muestra ahora "Incluye limpieza (80€)" para evitar confusiones.
+
+
+5. MEJORAS EN LA EXPERIENCIA DEL ADMINISTRADOR
+----------------------------------------------
+
+- Flujo de solicitud y confirmación:
+  - Desde la web:
+    - El huésped envía una **solicitud de reserva**.
+    - La reserva se guarda en la pestaña "Reservas" con Estado = "Pendiente".
+    - Se manda email al huésped indicando que se confirmará en <24h.
+    - Se manda email al propietario con todos los detalles.
+  - Desde la hoja "Reservas":
+    - El propietario cambia manualmente el Estado en la columna J:
+      - "Pendiente" → "Confirmada":
+        - Se manda email de confirmación al huésped.
+        - Se crea el evento de todo el día en el calendario configurado (CALENDAR_ID).
+        - Se rellena la columna "ID Evento Calendario" con el ID del evento.
+      - "Pendiente" → "Cancelada":
+        - Se manda email de cancelación al huésped.
+        - Si existe evento de calendario, se marca como cancelado (título y color).
+- Verificación:
+  - Se ha probado el flujo completo:
+    - Solicitud desde la web (27/02/2026 - 01/03/2026).
+    - Registro correcto en "Reservas" con total 200€.
+    - Cambio a "Confirmada" creando evento en Google Calendar y escribiendo el ID en la hoja.
+
+
+6. TRABAJOS FUTUROS PROPUESTOS
+------------------------------
+
+Pendientes de implementar (diseñadas pero aún no desarrolladas):
+
+- Confirmar / cancelar desde el email del propietario:
+  - Añadir enlaces "Confirmar" y "Cancelar" en el correo de nueva solicitud que llamen a Apps Script.
+  - El propietario podría gestionar reservas sin abrir la hoja.
+
+- Mejoras en la propia hoja de cálculo:
+  - Menú personalizado "Reservas" con acciones:
+    - Ver solo "Pendientes".
+    - Quitar filtros.
+
+- Ampliación del panel admin en la web:
+  - En la URL secreta (?panel=vistasMar2025) mostrar:
+    - Lista de reservas pendientes.
+    - Botones "Confirmar" y "Cancelar" que actualicen el estado directamente.
+

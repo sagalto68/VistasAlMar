@@ -1,0 +1,316 @@
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfzpVeR6ccjSOISkLDSm5i62ZVZ1DWqcQw_x6M9NXEn1yW8_28LGHP1Sp5gN66UxCl5Q/exec';
+const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
+const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
+let pricesReady=false,bookingsReady=false;
+
+// FIX: Formato yyyy/MM/dd para coincidir con el backend (Apps Script)
+function ds(d){
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return y+'/'+m+'/'+day;
+}
+
+// FIX: Acepta tanto yyyy-MM-dd como yyyy/MM/dd
+function sd(s){const p=s.split(/[-\/]/);return new Date(p[0],p[1]-1,p[2])}
+
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('active')}
+
+function jsonp(u,cb){
+  const s=document.createElement('script');
+  const n='cb'+Date.now()+Math.random().toString(36).substr(2,5);
+  window[n]=function(data){cb(data);delete window[n]};
+  s.src=u+'&callback='+n;
+  s.onerror=function(){console.error('JSONP error:',u)};
+  document.body.appendChild(s);
+}
+
+function tryRenderCal(){
+  if(pricesReady && bookingsReady){
+    renderCal();
+  }
+}
+
+function loadBookings(){
+  fetch(APPS_SCRIPT_URL+'?action=getBookings')
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.bookings){
+        bookedRanges=d.bookings;
+        console.log('Bookings loaded:',bookedRanges.length);
+      } else {
+        console.warn('No bookings data:',d);
+      }
+      bookingsReady=true;
+      tryRenderCal();
+    })
+    .catch(function(err){
+      console.error('Error getBookings:',err);
+      bookingsReady=true;
+      tryRenderCal();
+    });
+}
+
+function loadPricing(){
+  fetch(APPS_SCRIPT_URL+'?action=getPricing')
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.dailyPrices){
+        // Normalizamos las claves de fechas a formato yyyy/MM/dd
+        const normalized={};
+        Object.keys(d.dailyPrices).forEach(function(k){
+          const dt=sd(k);
+          normalized[ds(dt)]=d.dailyPrices[k];
+        });
+        dailyPrices=normalized;
+        limpiezaCost=d.limpieza||80;
+        console.log('Pricing loaded:',Object.keys(dailyPrices).length,'days');
+        const ap=Object.values(dailyPrices).filter(function(p){return p>0});
+        if(ap.length) document.getElementById('hlPrice').textContent='Desde '+Math.min.apply(null,ap)+'€/noche';
+      } else {
+        console.warn('No pricing data:',d);
+      }
+      pricesReady=true;
+      tryRenderCal();
+    })
+    .catch(function(err){
+      console.error('Error getPricing:',err);
+      pricesReady=true;
+      tryRenderCal();
+    });
+}
+
+function calculatePrice(ci,co){
+  let mn=0;const dias=[];
+  let d=new Date(sd(ci));const end=new Date(sd(co));
+  while(d<end){
+    const dk=ds(d);
+    const pr=dailyPrices[dk]||0;
+    mn+=pr;
+    dias.push({fecha:dk,precio:pr});
+    d.setDate(d.getDate()+1);
+  }
+  const n=dias.length;
+  if(n===0) return null;
+  const mt=mn+limpiezaCost;
+  const precioMedioNoche=Math.round(mn/n);
+  const des=dias.map(function(d){return d.fecha.substring(5)+':'+d.precio+'€'}).join(' + ')+' + limpieza:'+limpiezaCost+'€ = '+mt+'€';
+  return {nights:n,montoNoches:mn,limpieza:limpiezaCost,montoTotal:mt,precioMedioNoche:precioMedioNoche,desglose:des};
+}
+
+function updatePrice(){
+  if(!selStart||!selEnd) return;
+  const p=calculatePrice(selStart,selEnd);
+  if(!p||p.nights<2){
+    document.getElementById('pp-nights').textContent='⚠️ Mínimo 2 noches';
+    document.getElementById('pp-rate').textContent='—';
+    document.getElementById('pp-season').textContent='—';
+    document.getElementById('pp-total').textContent='—';
+    document.getElementById('pricePreview').classList.add('show');
+    document.getElementById('bookingSummary').style.display='none';
+    document.getElementById('noDateWarning').style.display='block';
+    document.getElementById('noDateWarning').innerHTML='<span style="color:rgba(255,200,100,0.9);font-size:0.85rem">⚠️ Mínimo 2 noches</span>';
+    return;
+  }
+  const fmt=function(s){return sd(s).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'})};
+  document.getElementById('pp-nights').textContent=p.nights+' noches';
+  document.getElementById('pp-rate').textContent='Precio medio: '+p.precioMedioNoche+'€/noche';
+  document.getElementById('pp-season').textContent='Incluye limpieza (80€)';
+  document.getElementById('pp-total').textContent=p.montoTotal+'€';
+  document.getElementById('pricePreview').classList.add('show');
+  document.getElementById('sum-checkin').textContent=fmt(selStart);
+  document.getElementById('sum-checkout').textContent=fmt(selEnd);
+  document.getElementById('sum-nights').textContent=p.nights+' noches';
+  document.getElementById('sum-rate').textContent='Promedio: '+p.precioMedioNoche+'€/noche';
+  document.getElementById('sum-total').textContent=p.montoTotal+'€';
+  document.getElementById('f-amount').value=p.montoTotal+'';
+  
+  const eb=document.getElementById('sum-breakdown');
+  if(eb) eb.remove();
+  const bd=document.createElement('div');
+  bd.id='sum-breakdown';
+  bd.style.cssText='border-top:1px solid rgba(74,179,214,0.15);padding-top:0.6rem;margin-top:0.3rem;font-size:0.78rem;color:rgba(255,255,255,0.45)';
+  bd.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:2px"><span>'+p.nights+' noches</span><span>'+p.montoNoches+'€</span></div><div style="display:flex;justify-content:space-between"><span>🧹 Gastos limpieza</span><span>+'+p.limpieza+'€</span></div>';
+  const tr=document.getElementById('sum-total').parentElement;
+  tr.parentElement.insertBefore(bd,tr);
+  document.getElementById('bookingSummary').style.display='block';
+  document.getElementById('noDateWarning').style.display='none';
+}
+
+function renderCal(){
+  const d=new Date(calY,calM,1);
+  document.getElementById('calLabel').textContent=MN[calM]+' '+calY;
+  const g=document.getElementById('calGrid');
+  g.innerHTML='';
+  const today=new Date();today.setHours(0,0,0,0);
+  const fw=(d.getDay()+6)%7;
+  for(let i=0;i<fw;i++){
+    const e=document.createElement('div');
+    e.className='cal-day other';
+    g.appendChild(e);
+  }
+  const dm=new Date(calY,calM+1,0).getDate();
+  for(let i=1;i<=dm;i++){
+    const dayDate=new Date(calY,calM,i);dayDate.setHours(0,0,0,0);
+    const cd=ds(dayDate);
+    const e=document.createElement('div');
+    e.className='cal-day';
+    const precio=dailyPrices[cd]||0;
+    e.innerHTML='<span class="day-num">'+i+'</span><span class="day-price">'+(precio>0?precio+'€':'')+'</span>';
+    const bkd=bookedRanges.some(function(b){return cd>=b.checkin&&cd<b.checkout});
+    if(bkd) e.classList.add('booked');
+    if(dayDate<today) e.classList.add('past');
+    if(cd===selStart||cd===selEnd) e.classList.add('selected');
+    if(selStart&&selEnd&&cd>selStart&&cd<selEnd) e.classList.add('in-range');
+    e.onclick=(function(date){return function(){selDate(date)}})(cd);
+    g.appendChild(e);
+  }
+}
+
+function selDate(d){
+  if(!selStart||selEnd){
+    selStart=d;selEnd=null;
+  } else {
+    if(d<=selStart){selStart=d;selEnd=null}
+    else {
+      selEnd=d;
+      document.getElementById('f-checkin').value=sd(selStart).toLocaleDateString('es-ES');
+      document.getElementById('f-checkout').value=sd(selEnd).toLocaleDateString('es-ES');
+      updatePrice();
+    }
+  }
+  renderCal();
+}
+
+function submitBooking(){
+  const nm=document.getElementById('f-name').value.trim();
+  const em=document.getElementById('f-email').value.trim();
+  const ci=selStart,co=selEnd;
+  if(!nm||!em||!ci||!co){alert('Por favor completa todos los campos');return}
+  const p=calculatePrice(ci,co);
+  if(!p||p.nights<2){alert('Selecciona al menos 2 noches.');return}
+  const btn=document.getElementById('btnSubmit');
+  btn.disabled=true;btn.textContent='Enviando...';
+  const lb=document.getElementById('loadingBar');
+  lb.style.width='50%';
+  const payload={
+    action:'createBooking',nombre:nm,email:em,
+    checkin:ci,checkout:co,
+    personas:document.getElementById('f-guests').value,
+    telefono:document.getElementById('f-phone').value,
+    montoTotal:p.montoTotal,desglose:p.desglose,
+    mensaje:document.getElementById('f-msg').value
+  };
+  fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      lb.style.width='100%';
+      if(d.success){
+        document.getElementById('bookingFormWrap').style.display='none';
+        document.getElementById('formSuccess').classList.add('show');
+        loadBookings();
+      } else {
+        alert('Error al enviar: '+(d.error||'Desconocido'));
+        btn.disabled=false;btn.textContent='Enviar solicitud →';
+      }
+    })
+    .catch(function(e){
+      alert('Error de red: '+e.message);
+      btn.disabled=false;btn.textContent='Enviar solicitud →';
+    });
+}
+
+// Dynamic gallery loader
+const galleryPhotos = [
+  {file: 'hero.jpg', title: 'Comedor con vistas'},
+  {file: 'beach.jpg', title: 'Vistas al mar'},
+  {file: 'dining.jpg', title: 'Comedor'},
+  {file: 'kitchen.jpg', title: 'Cocina'},
+  {file: 'living.jpg', title: 'Salón'},
+  {file: 'bedroom.jpg', title: 'Habitación'},
+  {file: 'bath.jpg', title: 'Baño'}
+];
+
+function loadGallery() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  
+  galleryPhotos.forEach(function(photo, idx) {
+    const item = document.createElement('div');
+    item.className = 'gal-item reveal';
+    item.style.animationDelay = (idx * 0.1) + 's';
+    item.onclick = function(){ openLbox('fotos/' + photo.file) };
+    
+    const bg = document.createElement('div');
+    bg.className = 'gal-bg';
+    bg.style.backgroundImage = 'url(fotos/' + photo.file + ')';
+    
+    const ov = document.createElement('div');
+    ov.className = 'gal-ov';
+    ov.innerHTML = '<span>' + photo.title + '</span>';
+    
+    item.appendChild(bg);
+    item.appendChild(ov);
+    grid.appendChild(item);
+  });
+}
+
+function openLbox(imgSrc){
+  document.getElementById('lboxImg').src=imgSrc;
+  document.getElementById('lbox').classList.add('show');
+}
+function openLboxVar(v,t){
+  const cs=getComputedStyle(document.documentElement).getPropertyValue(v);
+  const u=cs.match(/url\((['"]?)([^'"]+)\1\)/);
+  if(u){
+    document.getElementById('lboxImg').src=u[2];
+    document.getElementById('lbox').classList.add('show');
+  }
+}
+function closeLbox(){document.getElementById('lbox').classList.remove('show')}
+
+// Admin panel
+function initAdminPanel() {
+  if(window.location.search.includes('panel=vistasMar2025')){
+    fetch(APPS_SCRIPT_URL+'?action=getStats&secret=vistasMar2025')
+      .then(function(r){return r.json()})
+      .then(function(d){
+        document.getElementById('st-today').textContent=d.visitsToday||0;
+        document.getElementById('st-month').textContent=d.visitsMonth||0;
+        document.getElementById('st-total').textContent=d.totalVisits||0;
+        document.getElementById('st-bookings').textContent=d.totalBookings||0;
+        document.getElementById('st-pending').textContent=d.pendingBookings||0;
+        document.getElementById('st-revenue').textContent=(d.revenue||0)+'€';
+        document.getElementById('adminPanel').classList.add('show');
+      })
+      .catch(function(err){
+        console.error('Error getStats:',err);
+      });
+  }
+}
+
+// Track visit (solo en entorno web, no en file:// para evitar bloqueos del navegador)
+function trackVisit() {
+  if (location.protocol === 'http:' || location.protocol === 'https:') {
+    try {
+      const ref=document.referrer||'directo';
+      const dev=/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop';
+      fetch(APPS_SCRIPT_URL+'?action=trackVisit&ref='+encodeURIComponent(ref)+'&dev='+dev)
+        .catch(function(){});
+    } catch(e){}
+  }
+}
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+  loadBookings();
+  loadPricing();
+  loadGallery();
+  initAdminPanel();
+  trackVisit();
+
+  document.getElementById('calPrev').onclick=function(){calM--;if(calM<0){calM=11;calY--}renderCal()};
+  document.getElementById('calNext').onclick=function(){calM++;if(calM>11){calM=0;calY++}renderCal()};
+});
+

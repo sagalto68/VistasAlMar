@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vistas al Mar — Apartamento en Platja d'Aro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<nav>
+<div class="nav-brand">🌊 Vistas al Mar</div>
+<ul class="nav-links">
+<li><a href="#inicio">Inicio</a></li>
+<li><a href="#reservar">Reservar</a></li>
+<li><a href="#actividades">Actividades</a></li>
+<li><a href="#restaurantes">Restaurantes</a></li>
+</ul>
+<button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+<button class="mobile-close" onclick="toggleMenu()">✕</button>
+<a href="#inicio" onclick="toggleMenu()">Inicio</a>
+<a href="#reservar" onclick="toggleMenu()">Reservar</a>
+<a href="#actividades" onclick="toggleMenu()">Actividades</a>
+<a href="#restaurantes" onclick="toggleMenu()">Restaurantes</a>
+</div>
+<section class="hero" id="inicio">
+<div class="hero-bg"></div>
+<div class="hero-ov"></div>
+<div class="hero-c">
+<span class="eyebrow">Platja d'Aro · Costa Brava</span>
+<h1>Vistas<br><em>al Mar</em></h1>
+<p class="hero-sub">Apartamento de diseño · Primera línea de playa</p>
+<div class="hero-btns">
+<a href="#reservar" class="btn-p">Ver disponibilidad</a>
+<a href="#apartamento" class="btn-g">Conocer más</a>
+</div>
+</div>
+</section>
+<div class="hl-bar">
+<div class="hl"><span class="hl-icon">🏠</span><span class="hl-lbl">Capacidad</span><span class="hl-val">4 personas</span></div>
+<div class="hl"><span class="hl-icon">🛏️</span><span class="hl-lbl">Habitaciones</span><span class="hl-val">1 + sofá cama</span></div>
+<div class="hl"><span class="hl-icon">🌊</span><span class="hl-lbl">Ubicación</span><span class="hl-val">Primera línea</span></div>
+<div class="hl"><span class="hl-icon">💶</span><span class="hl-lbl">Desde</span><span class="hl-val" id="hlPrice">60€/noche</span></div>
+<div class="hl"><span class="hl-icon">📶</span><span class="hl-lbl">WiFi</span><span class="hl-val">Incluido</span></div>
+</div>
+<section class="about" id="apartamento">
+<div class="about-inner">
+<div class="img-grid reveal">
+<div class="img-main" onclick="openLboxVar('--img-dining','Comedor')"></div>
+<div class="img-side" onclick="openLboxVar('--img-living','Salón')"></div>
+<div class="img-bot" onclick="openLboxVar('--img-beach','Playa')"></div>
+</div>
+<div class="reveal">
+<span class="sec-eye">El Apartamento</span>
+<h2 class="sec-title">Despierta con el Mediterráneo frente a ti</h2>
+<p class="sec-text">Apartamento moderno y completamente renovado situado en primera línea de playa en Platja d'Aro, en el corazón de la Costa Brava. Vistas directas al mar desde el salón, comedor y balcón.</p>
+<p class="sec-text" style="margin-top:1rem">Habitación con litera para dos personas, sofá cama en el salón, cocina de diseño equipada con electrodomésticos de alta gama, y baño moderno. Perfecto para familias o grupos de hasta 4 personas.</p>
+<div class="amenities">
+<span class="amen">🌊 Vistas al mar</span>
+<span class="amen">📶 WiFi gratis</span>
+<span class="amen">☕ Nespresso</span>
+<span class="amen">📺 Smart TV</span>
+<span class="amen">🍳 Cocina equipada</span>
+<span class="amen">🧴 Amenities baño</span>
+<span class="amen">🛁 Toallas y sábanas</span>
+<span class="amen">🔥 Microondas-grill</span>
+<span class="amen">❄️ Frigorífico</span>
+<span class="amen">🏖️ Playa a 50m</span>
+<span class="amen">🅿️ Parking cercano</span>
+<span class="amen">🛒 Supermercado 100m</span>
+</div>
+<div style="margin-top:2rem;padding:1.2rem 1.5rem;background:rgba(30,95,140,0.05);border-left:4px solid var(--ocean);border-radius:0 10px 10px 0">
+<h3 style="color:var(--ocean);font-size:0.9rem;margin:0 0 0.5rem;text-transform:uppercase;letter-spacing:0.08em">📍 Ubicación</h3>
+<p style="color:#3a4a58;margin:0;line-height:1.7"><strong>Passatge Bolívar, 7</strong><br>EDIFICIO CANNES<br>17250, Platja d'Aro, Girona</p>
+</div>
+</div>
+</div>
+</section>
+<section class="gallery" id="galeria">
+<div class="gal-hdr reveal">
+<span class="sec-eye">Galería</span>
+<h2 class="sec-title">El espacio en imágenes</h2>
+</div>
+<div class="gal-grid" id="galleryGrid">
+<!-- Las fotos se cargan automáticamente desde la carpeta fotos/ -->
+</div>
+</section>
+<section class="booking" id="reservar">
+<div class="booking-inner">
+<div class="reveal">
+<span class="sec-eye">Reserva</span>
+<h2 class="sec-title">Consulta disponibilidad</h2>
+<p class="sec-text">Selecciona tus fechas en el calendario. Las fechas en rojo están reservadas. El precio incluye limpieza.</p>
+<div class="cal-wrap">
+<div class="cal-nav">
+<button id="calPrev">‹</button>
+<span class="cal-month-lbl" id="calLabel">—</span>
+<button id="calNext">›</button>
+</div>
+<div class="cal-days-hdr">
+<span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
+</div>
+<div class="cal-grid" id="calGrid"></div>
+<div class="cal-legend">
+<span><span class="dot" style="background:var(--coral)"></span>Seleccionado</span>
+<span><span class="dot" style="background:rgba(255,80,80,0.4)"></span>Reservado</span>
+
+</div>
+<div style="margin-top:1rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:8px;border-left:3px solid var(--wave)">
+<p style="font-size:0.88rem;line-height:1.6;color:rgba(255,255,255,0.8)">
+<strong style="color:var(--wave)">ℹ️ Gastos de limpieza:</strong> 80€ que se sumarán al total de la reserva.
+</p>
+</div>
+</div>
+<div class="price-preview" id="pricePreview">
+<div class="price-row"><span class="lbl" id="pp-nights">—</span><span class="val" id="pp-rate">—</span></div>
+<div class="price-row"><span class="lbl">Temporada</span><span class="val" id="pp-season">—</span></div>
+<div class="price-row total"><span class="lbl">Total</span><span class="val" id="pp-total">—</span></div>
+</div>
+<div style="margin-top:1.5rem">
+<p style="color:rgba(255,255,255,0.55);font-size:0.88rem;line-height:2">✉️ <a href="mailto:aptopda121@gmail.com" style="color:var(--wave)">aptopda121@gmail.com</a><br>📍 Passatge Bolívar, 7, Platja d'Aro<br>⚡ Respuesta en &lt;24h</p>
+</div>
+</div>
+<div class="bk-form reveal">
+<p class="form-title">Solicitar reserva</p>
+<div id="bookingFormWrap">
+<div class="loading-bar" id="loadingBar"></div>
+<div class="form-row">
+<div class="form-g"><label>Nombre</label><input type="text" id="f-name" placeholder="Tu nombre"></div>
+<div class="form-g"><label>Email</label><input type="email" id="f-email" placeholder="tu@email.com"></div>
+</div>
+<div class="form-row">
+<div class="form-g"><label>Check-in</label><input type="text" id="f-checkin" placeholder="Elige en calendario" readonly></div>
+<div class="form-g"><label>Check-out</label><input type="text" id="f-checkout" placeholder="Elige en calendario" readonly></div>
+</div>
+<div class="form-row">
+<div class="form-g"><label>Personas</label>
+<select id="f-guests"><option>1 persona</option><option selected>2 personas</option><option>3 personas</option><option>4 personas</option></select>
+</div>
+<div class="form-g"><label>Teléfono</label><input type="tel" id="f-phone" placeholder="+34 600 000 000"></div>
+</div>
+<div id="bookingSummary" style="display:none;background:rgba(255,255,255,0.07);border:1.5px solid rgba(74,179,214,0.35);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem">
+<p style="color:var(--wave);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;margin:0 0 0.8rem;font-weight:600">📊 Resumen</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1rem;margin-bottom:0.8rem">
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Entrada</span>
+<span style="color:white;font-size:0.92rem;font-weight:500" id="sum-checkin">—</span></div>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Salida</span>
+<span style="color:white;font-size:0.92rem;font-weight:500" id="sum-checkout">—</span></div>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Noches</span>
+<span style="color:white;font-size:0.92rem" id="sum-nights">—</span></div>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Tarifa</span>
+<span style="color:white;font-size:0.92rem" id="sum-rate">—</span></div>
+</div>
+<div style="border-top:1px solid rgba(74,179,214,0.2);padding-top:0.8rem;display:flex;justify-content:space-between;align-items:center">
+<span style="color:rgba(255,255,255,0.6);font-size:0.85rem">Total</span>
+<span id="sum-total" style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--coral);font-weight:600;line-height:1">—</span>
+</div>
+<input type="hidden" id="f-amount">
+<p style="color:rgba(255,255,255,0.35);font-size:0.72rem;margin:0.5rem 0 0">* Pago el día de llegada por Bizum o efectivo</p>
+</div>
+<div id="noDateWarning" style="background:rgba(74,179,214,0.1);border:1px dashed rgba(74,179,214,0.3);border-radius:10px;padding:0.9rem;text-align:center;margin-bottom:1rem">
+<span style="color:rgba(255,255,255,0.5);font-size:0.85rem">👆 Selecciona fechas en el calendario</span>
+</div>
+<div class="form-g"><label>Mensaje (opcional)</label><textarea id="f-msg" placeholder="Cuéntanos algo..."></textarea></div>
+<button class="btn-submit" id="btnSubmit" onclick="submitBooking()">Enviar solicitud →</button>
+</div>
+<div class="form-msg" id="formSuccess">
+<div class="big">🎉</div>
+<h3>¡Solicitud enviada!</h3>
+<p>Te hemos enviado confirmación a tu email.<br>Te contactaremos en &lt;24h.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="activities" id="actividades">
+<div class="activities-inner reveal">
+<span class="sec-eye">Alrededores</span>
+<h2 class="sec-title">Actividades de interés cercanas</h2>
+<p class="sec-text">Descubre todo lo que puedes hacer cerca del apartamento.</p>
+<div class="act-grid">
+<div class="act-card">
+<div class="act-icon">🏖️</div>
+<h3>Playas cercanas</h3>
+<p><strong>Playa de Aro</strong> — 50 metros del apartamento. Arena dorada de 2km, aguas cristalinas con Bandera Azul. Servicios completos: hamacas, socorrismo, duchas.</p>
+<p><strong>Cala Rovira</strong> — 2km. Cala semi-urbana tranquila, ideal para familias con niños. Fondo de arena y poco oleaje.</p>
+<p><strong>Sa Conca (S'Agaró)</strong> — 4km. Playa exclusiva con aguas turquesas. Paseo marítimo con ambiente sofisticado.</p>
+<a href="https://www.platjadaro.com/es/playas" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Ver todas las playas →</a>
+</div>
+
+<div class="act-card">
+<div class="act-icon">🚶</div>
+<h3>Camí de Ronda</h3>
+<p>El mítico <strong>sendero GR-92</strong> que recorre toda la Costa Brava pegado al mar. Desde Platja d'Aro puedes hacer rutas de diferente dificultad:</p>
+<p>• <strong>Platja d'Aro → Sant Feliu</strong> (8km, 2h30) — nivel fácil<br>
+• <strong>Platja d'Aro → Cala Pedrosa</strong> (4km, 1h15) — nivel medio<br>
+• <strong>Circuito calas de Castell</strong> (6km, 2h) — nivel medio-alto</p>
+<a href="https://www.wikiloc.com/trails/hiking/spain/catalonia/girona/platja-daro" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Rutas en Wikiloc →</a>
+</div>
+
+<div class="act-card">
+<div class="act-icon">🏛️</div>
+<h3>Patrimonio histórico</h3>
+<p><strong>Castillo de Benedormiens</strong> — Ruinas románicas del s.XI con vistas 360º. Acceso gratuito, 3km desde el centro.</p>
+<p><strong>Jardines de Cap Roig</strong> (10km) — Jardín botánico de 17 hectáreas junto al mar. Festival de música en verano. Entrada: 7€.</p>
+<p><strong>Villa romana de Pla de Palol</strong> — Yacimiento arqueológico del s.I-VI. Visitas guiadas gratuitas sábados.</p>
+<a href="https://www.visitpalafrugell.cat/es/jardins-cap-roig" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Info Jardines Cap Roig →</a>
+</div>
+
+<div class="act-card">
+<div class="act-icon">⛵</div>
+<h3>Deportes acuáticos</h3>
+<p><strong>Platja d'Aro Diving Center</strong> — Bautismos desde 50€, inmersiones para certificados, cursos PADI. Descubre el pecio "Boreas".</p>
+<p><strong>Kayak & SUP</strong> — Alquiler 15€/h. Excursiones guiadas a calas escondidas (35€, 3h). Salida desde la playa principal.</p>
+<p><strong>Vela & catamarán</strong> — Club Náutico ofrece cursos semanales y salidas en velero por la costa (desde 45€).</p>
+<a href="https://www.platjadarodivingcenter.com/" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Centro de buceo →</a>
+</div>
+
+<div class="act-card">
+<div class="act-icon">🎨</div>
+<h3>Museos y cultura</h3>
+<p><strong>Casa Museo Dalí (Cadaqués)</strong> — 50km. Residencia del artista en Portlligat. Visita obligada. Reserva previa imprescindible. Entrada: 14€.</p>
+<p><strong>Teatro-Museo Dalí (Figueres)</strong> — 55km. El museo surrealista más visitado de España. Entrada: 15€.</p>
+<p><strong>Pals</strong> — 15km. Uno de los pueblos medievales mejor conservados de Catalunya. Torre románica, murallas y calles empedradas.</p>
+<p><strong>Girona</strong> — 35km. Call Jueu (barrio judío medieval), Catedral, Casas del Onyar. Escenario de Juego de Tronos.</p>
+<a href="https://www.salvador-dali.org/es/" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Museos Dalí →</a>
+</div>
+
+<div class="act-card">
+<div class="act-icon">🛍️</div>
+<h3>Compras y ocio</h3>
+<p><strong>Paseo marítimo</strong> — 2km de tiendas: moda, artesanía, souvenirs, heladerías. Ambiente nocturno con bares y terrazas.</p>
+<p><strong>Mercado semanal</strong> — Sábados por la mañana en Av. Cavall Bernat. Productos locales, ropa, artesanía.</p>
+<p><strong>Espai Gironès</strong> (20km) — Centro comercial con Decathlon, Ikea, Zara, cines.</p>
+<p><strong>La Bisbal d'Empordà</strong> (15km) — Capital de la cerámica catalana. Tiendas de cerámica artesanal y antigüedades.</p>
+<a href="https://www.platjadaro.com/es/que-hacer/compras" target="_blank" style="color:var(--ocean);font-size:0.88rem;margin-top:0.5rem;display:inline-block">🔗 Guía de compras →</a>
+</div>
+</div>
+</div>
+</section>
+<section class="restaurants" id="restaurantes">
+<div class="rest-inner reveal">
+<span class="sec-eye">Gastronomía</span>
+<h2 class="sec-title">Restaurantes recomendados</h2>
+<p class="sec-text">La mejor cocina mediterránea a pocos pasos del apartamento.</p>
+<div class="rest-grid">
+<div class="rest-card">
+<div class="rest-type">🌴 Beach Club</div>
+<h3>Enjoy Beach Club</h3>
+<p class="rest-desc">El local más de moda del paseo marítimo. Cocina mediterránea con toques asiáticos, cócteles premium y DJ sesiones. Ambiente sofisticado con tumbonas frente al mar. Ideal para vermut y puesta de sol.</p>
+<p class="rest-dist">📍 5 min a pie · Paseo Marítimo</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🔥 Brasería</div>
+<h3>Pura Brasa</h3>
+<p class="rest-desc">Especialistas en carnes a la brasa y parrilla argentina. Chuletones, secreto ibérico, costillar. Producto de primera calidad. Terraza en primera línea de playa con vistas al mar. Reserva recomendada.</p>
+<p class="rest-dist">📍 7 min a pie · Paseo Marítimo</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🍝 Mediterránea</div>
+<h3>Levante Beach Club</h3>
+<p class="rest-desc">Cocina mediterránea creativa con producto local. Arroces, pescados frescos y pasta artesanal. Ambiente chill-out con música lounge. Perfecto para comidas largas frente al mar.</p>
+<p class="rest-dist">📍 6 min a pie · Paseo Marítimo</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🐟 Pescado fresco</div>
+<h3>La Taverna del Mar</h3>
+<p class="rest-desc">Clásico imprescindible del puerto. Pescado del día, suquet de rape, fideuá y marisco. Cocina marinera tradicional catalana. Terraza con vistas al puerto deportivo. Imprescindible reservar en verano.</p>
+<p class="rest-dist">📍 8 min a pie · Puerto</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🍕 Italiana</div>
+<h3>Pizzeria Bella Napoli</h3>
+<p class="rest-desc">Auténtica pizza napolitana con masa madre y horno de leña. Ingredientes importados de Italia. Ambiente familiar y acogedor. Precios ajustados, ideal para cenas con niños. También pasta fresca casera.</p>
+<p class="rest-dist">📍 4 min a pie</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🍔 Burger & Gin Bar</div>
+<h3>NIVO Beach Club</h3>
+<p class="rest-desc">Hamburguesas gourmet, poke bowls y ensaladas premium. Carta de gin-tonics con más de 40 referencias. Música en vivo los fines de semana. Ambiente joven y desenfadado. Perfecto después de playa.</p>
+<p class="rest-dist">📍 5 min a pie · Paseo Marítimo</p>
+</div>
+
+
+
+
+
+
+
+<div class="rest-card">
+<div class="rest-type">🍝 Italiana</div>
+<h3>Basilico</h3>
+<p class="rest-desc">Auténtica cocina italiana con pasta fresca casera y pizzas al horno de leña. Ingredientes importados directamente de Italia. Terraza acogedora con vistas al paseo. Ambiente familiar y romántico.</p>
+<p class="rest-dist">📍 6 min a pie · Centro</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🥩 Asador</div>
+<h3>Txots</h3>
+<p class="rest-desc">Chuletones de buey a la brasa y pescados frescos a la parrilla. Cocina vasca de producto. Carta de vinos con referencias de Rioja y Ribera. Reserva recomendada en temporada alta.</p>
+<p class="rest-dist">📍 8 min a pie · Centro</p>
+</div>
+
+<div class="rest-card">
+<div class="rest-type">🍦 Heladería</div>
+<h3>Dinos Ice Cream</h3>
+<p class="rest-desc">Helados artesanales con sabores únicos y tradicionales. Más de 30 variedades, granizados y batidos naturales. Perfecto para después de playa. Los niños adoran el ambiente colorido y divertido.</p>
+<p class="rest-dist">📍 3 min a pie · Paseo Marítimo</p>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<p class="flogo">Vistas al Mar</p>
+<p>Platja d'Aro · Costa Brava · <a href="mailto:aptopda121@gmail.com">aptopda121@gmail.com</a></p>
+<p style="margin-top:1rem;font-size:0.72rem;opacity:0.35">© 2025 Vistas al Mar</p>
+</footer>
+<div class="lbox" id="lbox" onclick="closeLbox()">
+<button class="lbox-x">✕</button>
+<img id="lboxImg" src="" alt="">
+</div>
+<div class="admin-panel" id="adminPanel">
+<button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('show')">✕</button>
+<div class="admin-title">📊 Panel Admin</div>
+<div class="stat-row"><span class="slbl">Visitas hoy</span><span class="sval" id="st-today">—</span></div>
+<div class="stat-row"><span class="slbl">Visitas mes</span><span class="sval" id="st-month">—</span></div>
+<div class="stat-row"><span class="slbl">Visitas totales</span><span class="sval" id="st-total">—</span></div>
+<div class="stat-row"><span class="slbl">Reservas</span><span class="sval" id="st-bookings">—</span></div>
+<div class="stat-row"><span class="slbl">Pendientes</span><span class="sval" id="st-pending">—</span></div>
+<div class="stat-row"><span class="slbl">Ingresos</span><span class="sval" id="st-revenue">—</span></div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
