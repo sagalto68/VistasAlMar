@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfzpVeR6ccjSOISkLDSm5i62ZVZ1DWqcQw_x6M9NXEn1yW8_28LGHP1Sp5gN66UxCl5Q/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzZobrGU0xXfpYL3p43gJHFAUnfFF3FpU5ZiaVxMpwCtfNPhoOFcayNdQhRfeorfio-7g/exec';
 const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
 const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
@@ -28,6 +28,8 @@ function jsonp(u,cb){
 
 function tryRenderCal(){
   if(pricesReady && bookingsReady){
+    var l=document.getElementById('calLoading');
+    if(l) l.classList.add('hide');
     renderCal();
   }
 }
@@ -291,6 +293,7 @@ function loadAdminPending() {
   var wrap = document.getElementById('adminPendingWrap');
   var listEl = document.getElementById('adminPendingList');
   if (!wrap || !listEl) return;
+  listEl.innerHTML = '<p class="empty">Actualizando...</p>';
   fetch(APPS_SCRIPT_URL+'?action=getPendingBookings&secret='+encodeURIComponent(ADMIN_SECRET))
     .then(function(r){return r.json()})
     .then(function(d){
@@ -319,6 +322,8 @@ function loadAdminPending() {
             var url = btn.getAttribute('data-url');
             if (!url) return;
             btn.disabled=true;
+            var item = btn.closest('.pending-item');
+            if (item) item.remove();
             fetch(url).then(function(){ loadAdminPending(); loadAdminStats(); }).finally(function(){ btn.disabled=false; });
           };
         });
@@ -329,6 +334,8 @@ function loadAdminPending() {
             var reason = prompt('Motivo de cancelación (opcional):')||'';
             url = url + encodeURIComponent(reason);
             btn.disabled=true;
+            var item = btn.closest('.pending-item');
+            if (item) item.remove();
             fetch(url).then(function(){ loadAdminPending(); loadAdminStats(); }).finally(function(){ btn.disabled=false; });
           };
         });
@@ -345,6 +352,13 @@ function initAdminPanel() {
   document.getElementById('adminPanel').classList.add('show');
   loadAdminStats();
   loadAdminPending();
+  var rb=document.getElementById('adminRefreshBtn');
+  if (rb) {
+    rb.onclick=function(){
+      loadAdminStats();
+      loadAdminPending();
+    };
+  }
 }
 
 // Track visit (solo en entorno web, no en file:// para evitar bloqueos del navegador)

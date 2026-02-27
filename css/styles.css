@@ -106,6 +106,9 @@ section{padding:5rem 5%}
 .btn-submit{width:100%;padding:1.1rem;background:var(--coral);color:#fff;border:none;border-radius:50px;font-weight:600;font-size:1rem;cursor:pointer;transition:all .3s;margin-top:1rem}
 .btn-submit:hover{background:#d66538;transform:translateY(-2px);box-shadow:0 8px 20px rgba(232,115,74,.3)}
 .btn-submit:disabled{background:#999;cursor:not-allowed;transform:none}
+.cal-loading{margin:.8rem 0;color:rgba(255,255,255,.8);font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.cal-loading::before{content:'';width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:var(--wave);animation:spin .8s linear infinite}
+.cal-loading.hide{display:none}
 .loading-bar{height:3px;background:var(--wave);width:0;transition:width .3s;margin-bottom:1rem;border-radius:3px}
 .form-msg{display:none;text-align:center;padding:3rem 2rem}
 .form-msg.show{display:block}
@@ -139,7 +142,9 @@ footer a{color:var(--wave);text-decoration:none}
 .admin-panel{position:fixed;bottom:20px;right:20px;background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.15);z-index:999;width:320px;max-height:85vh;overflow-y:auto;transform:translateX(calc(100% + 40px));transition:transform .4s}
 .admin-panel.show{transform:translateX(0)}
 .admin-close{position:absolute;top:10px;right:10px;background:0 0;border:none;font-size:1.5rem;cursor:pointer;color:#999}
-.admin-title{font-weight:700;color:var(--ocean);margin-bottom:1rem;font-size:1.1rem}
+.admin-title{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--ocean);margin-bottom:1rem;font-size:1.1rem}
+.admin-title button{border:none;background:#f1f5f9;color:#1e293b;font-size:.75rem;border-radius:999px;padding:.25rem .7rem;cursor:pointer;font-weight:600}
+.admin-title button:hover{background:#e2e8f0}
 .stat-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid #f0f0f0}
 .slbl{font-size:.85rem;color:#666}
 .sval{font-weight:700;color:var(--deep)}
@@ -159,5 +164,6 @@ footer a{color:var(--wave);text-decoration:none}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 .reveal:nth-child(2){animation-delay:.1s}
 .reveal:nth-child(3){animation-delay:.2s}
+@keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:768px){section{padding:3rem 5%}.hero h1{font-size:3rem}.img-grid{grid-template-columns:1fr;grid-template-rows:repeat(3,180px)}.img-main{grid-row:auto}}
 
