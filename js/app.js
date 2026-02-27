@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfzpVeR6ccjSOISkLDSm5i62ZVZ1DWqcQw_x6M9NXEn1yW8_28LGHP1Sp5gN66UxCl5Q/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzZobrGU0xXfpYL3p43gJHFAUnfFF3FpU5ZiaVxMpwCtfNPhoOFcayNdQhRfeorfio-7g/exec';
 const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
 const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
