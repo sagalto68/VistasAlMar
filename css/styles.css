@@ -136,13 +136,25 @@ footer a{color:var(--wave);text-decoration:none}
 .lbox img{max-width:90%;max-height:90vh;border-radius:8px}
 .lbox-x{position:absolute;top:2rem;right:2rem;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:2rem;width:50px;height:50px;border-radius:50%;cursor:pointer;transition:background .3s}
 .lbox-x:hover{background:rgba(255,255,255,.2)}
-.admin-panel{position:fixed;bottom:20px;right:20px;background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.15);z-index:999;width:280px;transform:translateX(calc(100% + 40px));transition:transform .4s}
+.admin-panel{position:fixed;bottom:20px;right:20px;background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.15);z-index:999;width:320px;max-height:85vh;overflow-y:auto;transform:translateX(calc(100% + 40px));transition:transform .4s}
 .admin-panel.show{transform:translateX(0)}
 .admin-close{position:absolute;top:10px;right:10px;background:0 0;border:none;font-size:1.5rem;cursor:pointer;color:#999}
 .admin-title{font-weight:700;color:var(--ocean);margin-bottom:1rem;font-size:1.1rem}
 .stat-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid #f0f0f0}
 .slbl{font-size:.85rem;color:#666}
 .sval{font-weight:700;color:var(--deep)}
+.admin-pending-wrap{margin-top:1rem;padding-top:1rem;border-top:1px solid #eee}
+.admin-subtitle{font-size:.8rem;font-weight:700;color:var(--ocean);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.05em}
+.pending-item{background:#f8f9fa;border-radius:8px;padding:.6rem .8rem;margin-bottom:.5rem;font-size:.8rem}
+.pending-item .p-id{font-weight:700;color:var(--deep)}
+.pending-item .p-dates{color:#666;margin:.2rem 0}
+.pending-item .p-actions{margin-top:.5rem;display:flex;gap:.4rem}
+.btn-confirm,.btn-cancel{padding:.35rem .6rem;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:none}
+.btn-confirm{background:#27ae60;color:#fff}
+.btn-confirm:hover{background:#219a52}
+.btn-cancel{background:#c0392b;color:#fff}
+.btn-cancel:hover{background:#a93226}
+.admin-pending-wrap .empty{color:#999;font-size:.85rem}
 .reveal{opacity:0;transform:translateY(30px);animation:fadeUp .8s forwards}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 .reveal:nth-child(2){animation-delay:.1s}

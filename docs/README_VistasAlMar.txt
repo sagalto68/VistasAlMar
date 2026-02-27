@@ -154,6 +154,8 @@ Pasos habituales:
    - Copiar la URL que termina en /exec.
 
 6) Actualizar APPS_SCRIPT_URL en js/app.js con la nueva URL /exec.
+7) Para el menú "Reservas" en la hoja: ejecutar installMenuTrigger() una vez en Apps Script.
+8) Para la lista de pendientes en el panel admin web: añadir la función getPendingBookings y la rama en doGet según docs/APPS_SCRIPT_getPendingBookings.txt; luego volver a desplegar la Web App.
 
 
 4. FRONTEND - MANTENIMIENTO
@@ -207,7 +209,8 @@ Responsabilidades:
   - loadGallery(): crea la cuadrícula de fotos y el lightbox.
 
 - Panel admin:
-  - initAdminPanel(): si la URL tiene ?panel=vistasMar2025, llama a getStats y rellena el panel.
+  - initAdminPanel(): si la URL tiene ?panel=vistasMar2025, muestra el panel, carga getStats y getPendingBookings.
+  - Lista de reservas pendientes con botones Confirmar/Cancelar (requiere getPendingBookings en Apps Script; ver docs/APPS_SCRIPT_getPendingBookings.txt).
 
 - Tracking:
   - trackVisit(): envía action=trackVisit con referrer y tipo de dispositivo (solo en http/https).
