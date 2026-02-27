@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfzpVeR6ccjSOISkLDSm5i62ZVZ1DWqcQw_x6M9NXEn1yW8_28LGHP1Sp5gN66UxCl5Q/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzZobrGU0xXfpYL3p43gJHFAUnfFF3FpU5ZiaVxMpwCtfNPhoOFcayNdQhRfeorfio-7g/exec';
 const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
 const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
@@ -28,6 +28,8 @@ function jsonp(u,cb){
 
 function tryRenderCal(){
   if(pricesReady && bookingsReady){
+    var l=document.getElementById('calLoading');
+    if(l) l.classList.add('hide');
     renderCal();
   }
 }
@@ -270,23 +272,92 @@ function openLboxVar(v,t){
 }
 function closeLbox(){document.getElementById('lbox').classList.remove('show')}
 
-// Admin panel
+// Admin panel (secret usado en URL y en llamadas API)
+var ADMIN_SECRET = 'vistasMar2025';
+
+function loadAdminStats() {
+  fetch(APPS_SCRIPT_URL+'?action=getStats&secret='+encodeURIComponent(ADMIN_SECRET))
+    .then(function(r){return r.json()})
+    .then(function(d){
+      document.getElementById('st-today').textContent=d.visitsToday||0;
+      document.getElementById('st-month').textContent=d.visitsMonth||0;
+      document.getElementById('st-total').textContent=d.totalVisits||0;
+      document.getElementById('st-bookings').textContent=d.totalBookings||0;
+      document.getElementById('st-pending').textContent=d.pendingBookings||0;
+      document.getElementById('st-revenue').textContent=(d.revenue||0)+'€';
+    })
+    .catch(function(err){ console.error('Error getStats:',err); });
+}
+
+function loadAdminPending() {
+  var wrap = document.getElementById('adminPendingWrap');
+  var listEl = document.getElementById('adminPendingList');
+  if (!wrap || !listEl) return;
+  listEl.innerHTML = '<p class="empty">Actualizando...</p>';
+  fetch(APPS_SCRIPT_URL+'?action=getPendingBookings&secret='+encodeURIComponent(ADMIN_SECRET))
+    .then(function(r){return r.json()})
+    .then(function(d){
+      var pending = (d && d.pending) ? d.pending : [];
+      if (pending.length === 0) {
+        listEl.innerHTML = '<p class="empty">No hay reservas pendientes.</p>';
+      } else {
+        listEl.innerHTML = pending.map(function(p){
+          var id = (p.id||'').replace(/"/g,'&quot;');
+          var nombre = (p.nombre||'—').replace(/</g,'&lt;');
+          var checkin = (p.checkin||'—').replace(/</g,'&lt;');
+          var checkout = (p.checkout||'—').replace(/</g,'&lt;');
+          var total = (p.total!=null) ? p.total : '—';
+          var confirmUrl = APPS_SCRIPT_URL+'?action=confirmBooking&id='+encodeURIComponent(p.id)+'&secret='+encodeURIComponent(ADMIN_SECRET);
+          var cancelUrl = APPS_SCRIPT_URL+'?action=cancelBooking&id='+encodeURIComponent(p.id)+'&secret='+encodeURIComponent(ADMIN_SECRET)+'&reason=';
+          return '<div class="pending-item" data-id="'+id+'">'+
+            '<span class="p-id">'+nombre+'</span>'+
+            '<div class="p-dates">'+checkin+' → '+checkout+' · '+total+'€</div>'+
+            '<div class="p-actions">'+
+            '<button type="button" class="btn-confirm" data-url="'+confirmUrl.replace(/"/g,'&quot;')+'">Confirmar</button>'+
+            '<button type="button" class="btn-cancel" data-url="'+cancelUrl.replace(/"/g,'&quot;')+'">Cancelar</button>'+
+            '</div></div>';
+        }).join('');
+        listEl.querySelectorAll('.btn-confirm').forEach(function(btn){
+          btn.onclick=function(){
+            var url = btn.getAttribute('data-url');
+            if (!url) return;
+            btn.disabled=true;
+            var item = btn.closest('.pending-item');
+            if (item) item.remove();
+            fetch(url).then(function(){ loadAdminPending(); loadAdminStats(); }).finally(function(){ btn.disabled=false; });
+          };
+        });
+        listEl.querySelectorAll('.btn-cancel').forEach(function(btn){
+          btn.onclick=function(){
+            var url = btn.getAttribute('data-url');
+            if (!url) return;
+            var reason = prompt('Motivo de cancelación (opcional):')||'';
+            url = url + encodeURIComponent(reason);
+            btn.disabled=true;
+            var item = btn.closest('.pending-item');
+            if (item) item.remove();
+            fetch(url).then(function(){ loadAdminPending(); loadAdminStats(); }).finally(function(){ btn.disabled=false; });
+          };
+        });
+      }
+    })
+    .catch(function(err){
+      console.error('Error getPendingBookings:',err);
+      listEl.innerHTML = '<p class="empty">Error al cargar pendientes.</p>';
+    });
+}
+
 function initAdminPanel() {
-  if(window.location.search.includes('panel=vistasMar2025')){
-    fetch(APPS_SCRIPT_URL+'?action=getStats&secret=vistasMar2025')
-      .then(function(r){return r.json()})
-      .then(function(d){
-        document.getElementById('st-today').textContent=d.visitsToday||0;
-        document.getElementById('st-month').textContent=d.visitsMonth||0;
-        document.getElementById('st-total').textContent=d.totalVisits||0;
-        document.getElementById('st-bookings').textContent=d.totalBookings||0;
-        document.getElementById('st-pending').textContent=d.pendingBookings||0;
-        document.getElementById('st-revenue').textContent=(d.revenue||0)+'€';
-        document.getElementById('adminPanel').classList.add('show');
-      })
-      .catch(function(err){
-        console.error('Error getStats:',err);
-      });
+  if (!window.location.search.includes('panel=vistasMar2025')) return;
+  document.getElementById('adminPanel').classList.add('show');
+  loadAdminStats();
+  loadAdminPending();
+  var rb=document.getElementById('adminRefreshBtn');
+  if (rb) {
+    rb.onclick=function(){
+      loadAdminStats();
+      loadAdminPending();
+    };
   }
 }
 

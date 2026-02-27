@@ -99,22 +99,31 @@ RESUMEN DE TRABAJOS REALIZADOS
     - Cambio a "Confirmada" creando evento en Google Calendar y escribiendo el ID en la hoja.
 
 
-6. TRABAJOS FUTUROS PROPUESTOS
-------------------------------
-
-Pendientes de implementar (diseñadas pero aún no desarrolladas):
+6. MEJORAS ADMIN IMPLEMENTADAS (RAMA feature/admin-panel-pending)
+-----------------------------------------------------------------
 
 - Confirmar / cancelar desde el email del propietario:
-  - Añadir enlaces "Confirmar" y "Cancelar" en el correo de nueva solicitud que llamen a Apps Script.
-  - El propietario podría gestionar reservas sin abrir la hoja.
+  - Implementado: enlaces "Confirmar" y "Cancelar" en el correo de nueva solicitud.
+  - Llaman a la Web App (doGet) con action=confirmBooking / cancelBooking.
+  - Nota: Apps Script puede tener retrasos ocasionales; si sale la página de Drive, reintentar o esperar unos segundos.
 
-- Mejoras en la propia hoja de cálculo:
-  - Menú personalizado "Reservas" con acciones:
-    - Ver solo "Pendientes".
-    - Quitar filtros.
+- Menú personalizado en Google Sheets:
+  - Implementado: menú "Reservas" con "Ver solo pendientes" y "Mostrar todas".
+  - Requiere ejecutar installMenuTrigger() una vez en Apps Script y tener trigger onOpen asociado a la hoja.
 
 - Ampliación del panel admin en la web:
-  - En la URL secreta (?panel=vistasMar2025) mostrar:
-    - Lista de reservas pendientes.
-    - Botones "Confirmar" y "Cancelar" que actualicen el estado directamente.
+  - Implementado: en ?panel=vistasMar2025 se muestra:
+    - Lista de reservas pendientes (nombre, fechas, total).
+    - Botones "Confirmar" y "Cancelar" por reserva (Confirmar ejecuta la confirmación; Cancelar pide motivo opcional).
+  - Backend: hay que añadir en Apps Script la función getPendingBookings y la rama en doGet (ver docs/APPS_SCRIPT_getPendingBookings.txt).
+  - Tras confirmar/cancelar desde el panel, se recargan estadísticas y lista de pendientes automáticamente.
+
+
+7. TRABAJOS FUTUROS PROPUESTOS
+------------------------------
+
+Pendientes de implementar (opcionales):
+
+- Reducir dependencia de retrasos de Apps Script (p. ej. mensaje "Procesando..." al usar enlaces del email).
+- Posibles mejoras de UX en el panel (filtros, ordenación).
 

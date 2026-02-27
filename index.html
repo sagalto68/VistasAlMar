@@ -103,6 +103,7 @@
 <div class="cal-days-hdr">
 <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
 </div>
+<div class="cal-loading" id="calLoading">Cargando calendario...</div>
 <div class="cal-grid" id="calGrid"></div>
 <div class="cal-legend">
 <span><span class="dot" style="background:var(--coral)"></span>Seleccionado</span>
@@ -328,13 +329,20 @@
 </div>
 <div class="admin-panel" id="adminPanel">
 <button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('show')">✕</button>
-<div class="admin-title">📊 Panel Admin</div>
+<div class="admin-title">
+  <span>📊 Panel Admin</span>
+  <button type="button" id="adminRefreshBtn">Actualizar</button>
+</div>
 <div class="stat-row"><span class="slbl">Visitas hoy</span><span class="sval" id="st-today">—</span></div>
 <div class="stat-row"><span class="slbl">Visitas mes</span><span class="sval" id="st-month">—</span></div>
 <div class="stat-row"><span class="slbl">Visitas totales</span><span class="sval" id="st-total">—</span></div>
 <div class="stat-row"><span class="slbl">Reservas</span><span class="sval" id="st-bookings">—</span></div>
 <div class="stat-row"><span class="slbl">Pendientes</span><span class="sval" id="st-pending">—</span></div>
 <div class="stat-row"><span class="slbl">Ingresos</span><span class="sval" id="st-revenue">—</span></div>
+<div class="admin-pending-wrap" id="adminPendingWrap">
+  <div class="admin-subtitle">Reservas pendientes</div>
+  <div id="adminPendingList"></div>
+</div>
 </div>
 <script src="js/app.js"></script>
 </body>
