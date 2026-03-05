@@ -158,9 +158,9 @@ function renderCal(){
     const cd=ds(dayDate);
     const e=document.createElement('div');
     e.className='cal-day';
-    const precio=dailyPrices[cd]||0;
-    e.innerHTML='<span class="day-num">'+i+'</span><span class="day-price">'+(precio>0?precio+'€':'')+'</span>';
     const bkd=bookedRanges.some(function(b){return cd>=b.checkin&&cd<b.checkout});
+    const precio=(bkd)?0:(dailyPrices[cd]||0);
+    e.innerHTML='<span class="day-num">'+i+'</span><span class="day-price">'+(precio>0?precio+'€':'')+'</span>';
     if(bkd) e.classList.add('booked');
     if(dayDate<today) e.classList.add('past');
     if(cd===selStart||cd===selEnd) e.classList.add('selected');
