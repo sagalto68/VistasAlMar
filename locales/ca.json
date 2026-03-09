@@ -18,7 +18,11 @@
     "rooms": "Habitacions",
     "location": "Ubicació",
     "from": "Des de",
-    "wifi": "WiFi"
+    "wifi": "WiFi",
+    "personas": "4 persones",
+    "habitaciones": "1 + sofà llit",
+    "ubicacion": "Primera línia",
+    "incluido": "Inclòs"
   },
   "about": {
     "section": "L'Apartament",
@@ -48,7 +52,7 @@
     "title": "L'espai en imatges",
     "photos": {
       "hero": "Menjador amb vistes",
-      "beach": "Vistes al mar",
+      "beach": "Platja",
       "dining": "Menjador",
       "kitchen": "Cuina",
       "living": "Saló",
@@ -80,7 +84,7 @@
     "phone": "Telèfon",
     "phonePlaceholder": "+34 600 000 000",
     "message": "Missatge (opcional)",
-    "messagePlaceholder": "Cuéntanos algo...",
+    "messagePlaceholder": "Explica'ns alguna cosa...",
     "submit": "Enviar sol·licitud →",
     "summary": "📊 Resum",
     "arrival": "Entrada",
@@ -147,6 +151,12 @@
     "logo": "Vistes al Mar",
     "locationText": "Platja d'Aro · Costa Brava",
     "copyright": "© 2025 Vistes al Mar"
+  },
+  "languages": {
+    "es": "🇪🇸 ES",
+    "ca": "🇨🇦 CA",
+    "fr": "🇫🇷 FR",
+    "en": "🇬🇧 EN"
   },
   "admin": {
     "title": "📊 Panell Admin",

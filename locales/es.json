@@ -18,7 +18,11 @@
     "rooms": "Habitaciones",
     "location": "Ubicación",
     "from": "Desde",
-    "wifi": "WiFi"
+    "wifi": "WiFi",
+    "personas": "4 personas",
+    "habitaciones": "1 + sofá cama",
+    "ubicacion": "Primera línea",
+    "incluido": "Incluido"
   },
   "about": {
     "section": "El Apartamento",
@@ -48,7 +52,7 @@
     "title": "El espacio en imágenes",
     "photos": {
       "hero": "Comedor con vistas",
-      "beach": "Vistas al mar",
+      "beach": "Playa",
       "dining": "Comedor",
       "kitchen": "Cocina",
       "living": "Salón",
@@ -147,6 +151,12 @@
     "logo": "Vistas al Mar",
     "locationText": "Platja d'Aro · Costa Brava",
     "copyright": "© 2025 Vistas al Mar"
+  },
+  "languages": {
+    "es": "🇪🇸 ES",
+    "ca": "🇨🇦 CA",
+    "fr": "🇫🇷 FR",
+    "en": "🇬🇧 EN"
   },
   "admin": {
     "title": "📊 Panel Admin",

@@ -18,7 +18,11 @@
     "rooms": "Rooms",
     "location": "Location",
     "from": "From",
-    "wifi": "WiFi"
+    "wifi": "WiFi",
+    "personas": "4 people",
+    "habitaciones": "1 + sofa bed",
+    "ubicacion": "Beachfront",
+    "incluido": "Included"
   },
   "about": {
     "section": "The Apartment",
@@ -48,7 +52,7 @@
     "title": "The space in images",
     "photos": {
       "hero": "Dining room with views",
-      "beach": "Sea views",
+      "beach": "Beach",
       "dining": "Dining room",
       "kitchen": "Kitchen",
       "living": "Living room",
@@ -160,10 +164,10 @@
     "pendingBookings": "Pending bookings"
   },
   "languages": {
-    "es": "🇪🇸 Español",
-    "ca": "🇪🇸 Català",
-    "fr": "🇫🇷 Français",  
-    "en": "🇬🇧 English"
+    "es": "🇪🇸 ES",
+    "ca": "🇨🇦 CA",
+    "fr": "🇫🇷 FR",
+    "en": "🇬🇧 EN"
   },
   "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
   "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
