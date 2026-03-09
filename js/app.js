@@ -1,6 +1,6 @@
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzZobrGU0xXfpYL3p43gJHFAUnfFF3FpU5ZiaVxMpwCtfNPhoOFcayNdQhRfeorfio-7g/exec';
 const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
-const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+let MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
 let pricesReady=false,bookingsReady=false;
 
@@ -145,6 +145,16 @@ function renderCal(){
   document.getElementById('calLabel').textContent=MN[calM]+' '+calY;
   const g=document.getElementById('calGrid');
   g.innerHTML='';
+
+  // Days header
+  const hdr = document.querySelector('.cal-days-hdr');
+  if (hdr) {
+    const daySpans = hdr.querySelectorAll('span');
+    translations.days.forEach((day, i) => {
+      if (daySpans[i]) daySpans[i].textContent = day;
+    });
+  }
+
   const today=new Date();today.setHours(0,0,0,0);
   const fw=(d.getDay()+6)%7;
   for(let i=0;i<fw;i++){
@@ -388,5 +398,81 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('calPrev').onclick=function(){calM--;if(calM<0){calM=11;calY--}renderCal()};
   document.getElementById('calNext').onclick=function(){calM++;if(calM>11){calM=0;calY++}renderCal()};
+
+  // i18n
+  initI18n();
 });
+
+// i18n
+let currentLang = 'es';
+let translations = {};
+
+function initI18n() {
+  const browserLang = navigator.language.split('-')[0];
+  const supported = ['es', 'ca', 'fr', 'en'];
+  currentLang = supported.includes(browserLang) ? browserLang : 'es';
+  loadTranslations(currentLang);
+  document.getElementById('langSelect').value = currentLang;
+  document.getElementById('langSelect').addEventListener('change', function(e) {
+    loadTranslations(e.target.value);
+  });
+}
+
+function loadTranslations(lang) {
+  fetch('locales/' + lang + '.json')
+    .then(r => r.json())
+    .then(data => {
+      translations = data;
+      currentLang = lang;
+      applyTranslations();
+      updateDynamicElements();
+      document.documentElement.lang = lang;
+    })
+    .catch(err => console.error('Error loading translations:', err));
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const keys = key.split('.');
+    let value = translations;
+    for (const k of keys) {
+      value = value && value[k];
+    }
+    if (value) {
+      el.innerText = value;
+    }
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    const keys = key.split('.');
+    let value = translations;
+    for (const k of keys) {
+      value = value && value[k];
+    }
+    if (value) {
+      el.innerHTML = value;
+    }
+  });
+}
+
+function updateDynamicElements() {
+  // Update guests options
+  const guestsSelect = document.getElementById('f-guests');
+  guestsSelect.innerHTML = '';
+  translations.guestsOptions.forEach((opt, i) => {
+    const option = document.createElement('option');
+    option.value = (i + 1) + ' persona' + (i === 0 ? '' : 's');
+    option.textContent = opt;
+    if (i === 1) option.selected = true;
+    guestsSelect.appendChild(option);
+  });
+
+  // Update days and months
+  MN = translations.months;
+  // Update calendar if rendered
+  if (document.getElementById('calGrid').children.length > 0) {
+    renderCal();
+  }
+}
 

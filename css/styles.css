@@ -11,9 +11,11 @@
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;color:var(--text);background:#fff;line-height:1.6}
 nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,.05);padding:1rem 5%;display:flex;justify-content:space-between;align-items:center}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--ocean)}
+.nav-right{display:flex;align-items:center;gap:2rem}
 .nav-links{list-style:none;display:flex;gap:2rem}
 .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:.95rem;transition:color .3s}
 .nav-links a:hover{color:var(--ocean)}
+.lang-selector select{background:#fff;border:1px solid #ddd;border-radius:4px;padding:.5rem;font-size:.9rem;color:var(--text)}
 .nav-menu-btn{display:none;background:0 0;border:none;font-size:1.8rem;color:var(--ocean);cursor:pointer}
 .mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--deep);z-index:1000;padding:2rem;transition:right .4s;display:flex;flex-direction:column;gap:1.5rem}
 .mobile-menu.active{right:0}

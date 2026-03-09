@@ -11,40 +11,50 @@
 <body>
 <nav>
 <div class="nav-brand">🌊 Vistas al Mar</div>
+<div class="nav-right">
 <ul class="nav-links">
-<li><a href="#inicio">Inicio</a></li>
-<li><a href="#reservar">Reservar</a></li>
-<li><a href="#actividades">Actividades</a></li>
-<li><a href="#restaurantes">Restaurantes</a></li>
+<li><a href="#inicio" data-i18n="nav.inicio">Inicio</a></li>
+<li><a href="#reservar" data-i18n="nav.reservar">Reservar</a></li>
+<li><a href="#actividades" data-i18n="nav.actividades">Actividades</a></li>
+<li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
 </ul>
+<div class="lang-selector">
+<select id="langSelect">
+<option value="es">ES</option>
+<option value="ca">CA</option>
+<option value="fr">FR</option>
+<option value="en">EN</option>
+</select>
+</div>
 <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
+</div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
 <button class="mobile-close" onclick="toggleMenu()">✕</button>
-<a href="#inicio" onclick="toggleMenu()">Inicio</a>
-<a href="#reservar" onclick="toggleMenu()">Reservar</a>
-<a href="#actividades" onclick="toggleMenu()">Actividades</a>
-<a href="#restaurantes" onclick="toggleMenu()">Restaurantes</a>
+<a href="#inicio" onclick="toggleMenu()" data-i18n="nav.inicio">Inicio</a>
+<a href="#reservar" onclick="toggleMenu()" data-i18n="nav.reservar">Reservar</a>
+<a href="#actividades" onclick="toggleMenu()" data-i18n="nav.actividades">Actividades</a>
+<a href="#restaurantes" onclick="toggleMenu()" data-i18n="nav.restaurantes">Restaurantes</a>
 </div>
 <section class="hero" id="inicio">
 <div class="hero-bg"></div>
 <div class="hero-ov"></div>
 <div class="hero-c">
-<span class="eyebrow">Platja d'Aro · Costa Brava</span>
-<h1>Vistas<br><em>al Mar</em></h1>
-<p class="hero-sub">Apartamento de diseño · Primera línea de playa</p>
+<span class="eyebrow" data-i18n="hero.eyebrow">Platja d'Aro · Costa Brava</span>
+<h1 data-i18n="hero.title">Vistas<br><em>al Mar</em></h1>
+<p class="hero-sub" data-i18n="hero.subtitle">Apartamento de diseño · Primera línea de playa</p>
 <div class="hero-btns">
-<a href="#reservar" class="btn-p">Ver disponibilidad</a>
-<a href="#apartamento" class="btn-g">Conocer más</a>
+<a href="#reservar" class="btn-p" data-i18n="hero.btnAvailability">Ver disponibilidad</a>
+<a href="#apartamento" class="btn-g" data-i18n="hero.btnMore">Conocer más</a>
 </div>
 </div>
 </section>
 <div class="hl-bar">
-<div class="hl"><span class="hl-icon">🏠</span><span class="hl-lbl">Capacidad</span><span class="hl-val">4 personas</span></div>
-<div class="hl"><span class="hl-icon">🛏️</span><span class="hl-lbl">Habitaciones</span><span class="hl-val">1 + sofá cama</span></div>
-<div class="hl"><span class="hl-icon">🌊</span><span class="hl-lbl">Ubicación</span><span class="hl-val">Primera línea</span></div>
-<div class="hl"><span class="hl-icon">💶</span><span class="hl-lbl">Desde</span><span class="hl-val" id="hlPrice">60€/noche</span></div>
-<div class="hl"><span class="hl-icon">📶</span><span class="hl-lbl">WiFi</span><span class="hl-val">Incluido</span></div>
+<div class="hl"><span class="hl-icon">🏠</span><span class="hl-lbl" data-i18n="highlights.capacity">Capacidad</span><span class="hl-val">4 personas</span></div>
+<div class="hl"><span class="hl-icon">🛏️</span><span class="hl-lbl" data-i18n="highlights.rooms">Habitaciones</span><span class="hl-val">1 + sofá cama</span></div>
+<div class="hl"><span class="hl-icon">🌊</span><span class="hl-lbl" data-i18n="highlights.location">Ubicación</span><span class="hl-val">Primera línea</span></div>
+<div class="hl"><span class="hl-icon">💶</span><span class="hl-lbl" data-i18n="highlights.from">Desde</span><span class="hl-val" id="hlPrice">60€/noche</span></div>
+<div class="hl"><span class="hl-icon">📶</span><span class="hl-lbl" data-i18n="highlights.wifi">WiFi</span><span class="hl-val">Incluido</span></div>
 </div>
 <section class="about" id="apartamento">
 <div class="about-inner">
@@ -54,10 +64,10 @@
 <div class="img-bot" onclick="openLboxVar('--img-beach','Playa')"></div>
 </div>
 <div class="reveal">
-<span class="sec-eye">El Apartamento</span>
-<h2 class="sec-title">Despierta con el Mediterráneo frente a ti</h2>
-<p class="sec-text">Apartamento moderno y completamente renovado situado en primera línea de playa en Platja d'Aro, en el corazón de la Costa Brava. Vistas directas al mar desde el salón, comedor y balcón.</p>
-<p class="sec-text" style="margin-top:1rem">Habitación con litera para dos personas, sofá cama en el salón, cocina de diseño equipada con electrodomésticos de alta gama, y baño moderno. Perfecto para familias o grupos de hasta 4 personas.</p>
+<span class="sec-eye" data-i18n="about.section">El Apartamento</span>
+<h2 class="sec-title" data-i18n="about.title">Despierta con el Mediterráneo frente a ti</h2>
+<p class="sec-text" data-i18n="about.desc1">Apartamento moderno y completamente renovado situado en primera línea de playa en Platja d'Aro, en el corazón de la Costa Brava. Vistas directas al mar desde el salón, comedor y balcón.</p>
+<p class="sec-text" style="margin-top:1rem" data-i18n="about.desc2">Habitación con litera para dos personas, sofá cama en el salón, cocina de diseño equipada con electrodomésticos de alta gama, y baño moderno. Perfecto para familias o grupos de hasta 4 personas.</p>
 <div class="amenities">
 <span class="amen">🌊 Vistas al mar</span>
 <span class="amen">📶 WiFi gratis</span>
@@ -72,16 +82,16 @@
 <span class="amen">🛒 Supermercado 100m</span>
 </div>
 <div style="margin-top:2rem;padding:1.2rem 1.5rem;background:rgba(30,95,140,0.05);border-left:4px solid var(--ocean);border-radius:0 10px 10px 0">
-<h3 style="color:var(--ocean);font-size:0.9rem;margin:0 0 0.5rem;text-transform:uppercase;letter-spacing:0.08em">📍 Ubicación</h3>
-<p style="color:#3a4a58;margin:0;line-height:1.7"><strong>Passatge Bolívar, 7</strong><br>EDIFICIO CANNES<br>17250, Platja d'Aro, Girona</p>
+<h3 style="color:var(--ocean);font-size:0.9rem;margin:0 0 0.5rem;text-transform:uppercase;letter-spacing:0.08em" data-i18n="about.locationTitle">📍 Ubicación</h3>
+<p style="color:#3a4a58;margin:0;line-height:1.7" data-i18n="about.address"><strong>Passatge Bolívar, 7</strong><br>EDIFICIO CANNES<br>17250, Platja d'Aro, Girona</p>
 </div>
 </div>
 </div>
 </section>
 <section class="gallery" id="galeria">
 <div class="gal-hdr reveal">
-<span class="sec-eye">Galería</span>
-<h2 class="sec-title">El espacio en imágenes</h2>
+<span class="sec-eye" data-i18n="gallery.section">Galería</span>
+<h2 class="sec-title" data-i18n="gallery.title">El espacio en imágenes</h2>
 </div>
 <div class="gal-grid" id="galleryGrid">
 <!-- Las fotos se cargan automáticamente desde la carpeta fotos/ -->
@@ -90,9 +100,9 @@
 <section class="booking" id="reservar">
 <div class="booking-inner">
 <div class="reveal">
-<span class="sec-eye">Reserva</span>
-<h2 class="sec-title">Consulta disponibilidad</h2>
-<p class="sec-text">Selecciona tus fechas en el calendario. Las fechas en rojo están reservadas. El precio incluye limpieza.</p>
+<span class="sec-eye" data-i18n="booking.section">Reserva</span>
+<h2 class="sec-title" data-i18n="booking.title">Consulta disponibilidad</h2>
+<p class="sec-text" data-i18n="booking.desc">Selecciona tus fechas en el calendario. Las fechas en rojo están reservadas. El precio incluye limpieza.</p>
 <div class="cal-wrap">
 <div class="cal-nav">
 <button id="calPrev">‹</button>
@@ -102,11 +112,11 @@
 <div class="cal-days-hdr">
 <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
 </div>
-<div class="cal-loading" id="calLoading">Cargando calendario...</div>
+<div class="cal-loading" id="calLoading" data-i18n="booking.loading">Cargando calendario...</div>
 <div class="cal-grid" id="calGrid"></div>
 <div class="cal-legend">
-<span><span class="dot" style="background:var(--coral)"></span>Seleccionado</span>
-<span><span class="dot" style="background:rgba(255,80,80,0.4)"></span>Reservado</span>
+<span><span class="dot" style="background:var(--coral)"></span><span data-i18n="booking.selected">Seleccionado</span></span>
+<span><span class="dot" style="background:rgba(255,80,80,0.4)"></span><span data-i18n="booking.booked">Reservado</span></span>
 
 </div>
 <div style="margin-top:1rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:8px;border-left:3px solid var(--wave)">
@@ -117,73 +127,73 @@
 </div>
 <div class="price-preview" id="pricePreview">
 <div class="price-row"><span class="lbl" id="pp-nights">—</span><span class="val" id="pp-rate">—</span></div>
-<div class="price-row"><span class="lbl">Temporada</span><span class="val" id="pp-season">—</span></div>
-<div class="price-row total"><span class="lbl">Total</span><span class="val" id="pp-total">—</span></div>
+<div class="price-row"><span class="lbl" data-i18n="booking.season">Temporada</span><span class="val" id="pp-season">—</span></div>
+<div class="price-row total"><span class="lbl" data-i18n="booking.total">Total</span><span class="val" id="pp-total">—</span></div>
 </div>
 <div style="margin-top:1.5rem">
 <p style="color:rgba(255,255,255,0.55);font-size:0.88rem;line-height:2">✉️ <a href="mailto:aptopda121@gmail.com" style="color:var(--wave)">aptopda121@gmail.com</a><br>📍 Passatge Bolívar, 7, Platja d'Aro<br>⚡ Respuesta en &lt;24h</p>
 </div>
 </div>
 <div class="bk-form reveal">
-<p class="form-title">Solicitar reserva</p>
+<p class="form-title" data-i18n="booking.formTitle">Solicitar reserva</p>
 <div id="bookingFormWrap">
 <div class="loading-bar" id="loadingBar"></div>
 <div class="form-row">
-<div class="form-g"><label>Nombre</label><input type="text" id="f-name" placeholder="Tu nombre"></div>
-<div class="form-g"><label>Email</label><input type="email" id="f-email" placeholder="tu@email.com"></div>
+<div class="form-g"><label data-i18n="booking.name">Nombre</label><input type="text" id="f-name" placeholder="Tu nombre"></div>
+<div class="form-g"><label data-i18n="booking.email">Email</label><input type="email" id="f-email" placeholder="tu@email.com"></div>
 </div>
 <div class="form-row">
-<div class="form-g"><label>Check-in</label><input type="text" id="f-checkin" placeholder="Elige en calendario" readonly></div>
-<div class="form-g"><label>Check-out</label><input type="text" id="f-checkout" placeholder="Elige en calendario" readonly></div>
+<div class="form-g"><label data-i18n="booking.checkin">Check-in</label><input type="text" id="f-checkin" placeholder="Elige en calendario" readonly></div>
+<div class="form-g"><label data-i18n="booking.checkout">Check-out</label><input type="text" id="f-checkout" placeholder="Elige en calendario" readonly></div>
 </div>
 <div class="form-row">
-<div class="form-g"><label>Personas</label>
+<div class="form-g"><label data-i18n="booking.guests">Personas</label>
 <select id="f-guests"><option>1 persona</option><option selected>2 personas</option><option>3 personas</option><option>4 personas</option></select>
 </div>
-<div class="form-g"><label>Teléfono</label><input type="tel" id="f-phone" placeholder="+34 600 000 000"></div>
+<div class="form-g"><label data-i18n="booking.phone">Teléfono</label><input type="tel" id="f-phone" placeholder="+34 600 000 000"></div>
 </div>
 <div id="bookingSummary" style="display:none;background:rgba(255,255,255,0.07);border:1.5px solid rgba(74,179,214,0.35);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem">
-<p style="color:var(--wave);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;margin:0 0 0.8rem;font-weight:600">📊 Resumen</p>
+<p style="color:var(--wave);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;margin:0 0 0.8rem;font-weight:600" data-i18n="booking.summary">📊 Resumen</p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1rem;margin-bottom:0.8rem">
-<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Entrada</span>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px" data-i18n="booking.arrival">Entrada</span>
 <span style="color:white;font-size:0.92rem;font-weight:500" id="sum-checkin">—</span></div>
-<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Salida</span>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px" data-i18n="booking.departure">Salida</span>
 <span style="color:white;font-size:0.92rem;font-weight:500" id="sum-checkout">—</span></div>
-<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Noches</span>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px" data-i18n="booking.nights">Noches</span>
 <span style="color:white;font-size:0.92rem" id="sum-nights">—</span></div>
-<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px">Tarifa</span>
+<div><span style="color:rgba(255,255,255,0.45);font-size:0.72rem;display:block;margin-bottom:2px" data-i18n="booking.rate">Tarifa</span>
 <span style="color:white;font-size:0.92rem" id="sum-rate">—</span></div>
 </div>
 <div style="border-top:1px solid rgba(74,179,214,0.2);padding-top:0.8rem;display:flex;justify-content:space-between;align-items:center">
-<span style="color:rgba(255,255,255,0.6);font-size:0.85rem">Total</span>
+<span style="color:rgba(255,255,255,0.6);font-size:0.85rem" data-i18n="booking.total">Total</span>
 <span id="sum-total" style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--coral);font-weight:600;line-height:1">—</span>
 </div>
 <input type="hidden" id="f-amount">
-<p style="color:rgba(255,255,255,0.35);font-size:0.72rem;margin:0.5rem 0 0">* Pago el día de llegada por Bizum o efectivo</p>
+<p style="color:rgba(255,255,255,0.35);font-size:0.72rem;margin:0.5rem 0 0" data-i18n="booking.paymentNote">* Pago el día de llegada por Bizum o efectivo</p>
 </div>
 <div id="noDateWarning" style="background:rgba(74,179,214,0.1);border:1px dashed rgba(74,179,214,0.3);border-radius:10px;padding:0.9rem;text-align:center;margin-bottom:1rem">
-<span style="color:rgba(255,255,255,0.5);font-size:0.85rem">👆 Selecciona fechas en el calendario</span>
+<span style="color:rgba(255,255,255,0.5);font-size:0.85rem" data-i18n="booking.selectDates">👆 Selecciona fechas en el calendario</span>
 </div>
-<div class="form-g"><label>Mensaje (opcional)</label><textarea id="f-msg" placeholder="Cuéntanos algo..."></textarea></div>
-<button class="btn-submit" id="btnSubmit" onclick="submitBooking()">Enviar solicitud →</button>
+<div class="form-g"><label data-i18n="booking.message">Mensaje (opcional)</label><textarea id="f-msg" placeholder="Cuéntanos algo..."></textarea></div>
+<button class="btn-submit" id="btnSubmit" onclick="submitBooking()" data-i18n="booking.submit">Enviar solicitud →</button>
 </div>
 <div class="form-msg" id="formSuccess">
 <div class="big">🎉</div>
-<h3>¡Solicitud enviada!</h3>
-<p>Te hemos enviado confirmación a tu email.<br>Te contactaremos en &lt;24h.</p>
+<h3 data-i18n="booking.successTitle">¡Solicitud enviada!</h3>
+<p data-i18n="booking.successDesc">Te hemos enviado confirmación a tu email.<br>Te contactaremos en &lt;24h.</p>
 </div>
 </div>
 </div>
 </section>
 <section class="activities" id="actividades">
 <div class="activities-inner reveal">
-<span class="sec-eye">Alrededores</span>
-<h2 class="sec-title">Actividades de interés cercanas</h2>
-<p class="sec-text">Descubre todo lo que puedes hacer cerca del apartamento.</p>
+<span class="sec-eye" data-i18n="activities.section">Alrededores</span>
+<h2 class="sec-title" data-i18n="activities.title">Actividades de interés cercanas</h2>
+<p class="sec-text" data-i18n="activities.desc">Descubre todo lo que puedes hacer cerca del apartamento.</p>
 <div class="act-grid">
 <div class="act-card">
 <div class="act-icon">🏖️</div>
-<h3>Playas cercanas</h3>
+<h3 data-i18n="activities.beaches.title">Playas cercanas</h3>
 <p><strong>Playa de Aro</strong> — 50 metros del apartamento. Arena dorada de 2km, aguas cristalinas con Bandera Azul. Servicios completos: hamacas, socorrismo, duchas.</p>
 <p><strong>Cala Rovira</strong> — 2km. Cala semi-urbana tranquila, ideal para familias con niños. Fondo de arena y poco oleaje.</p>
 <p><strong>Sa Conca (S'Agaró)</strong> — 4km. Playa exclusiva con aguas turquesas. Paseo marítimo con ambiente sofisticado.</p>
@@ -192,7 +202,7 @@
 
 <div class="act-card">
 <div class="act-icon">🚶</div>
-<h3>Camí de Ronda</h3>
+<h3 data-i18n="activities.ronda.title">Camí de Ronda</h3>
 <p>El mítico <strong>sendero GR-92</strong> que recorre toda la Costa Brava pegado al mar. Desde Platja d'Aro puedes hacer rutas de diferente dificultad:</p>
 <p>• <strong>Platja d'Aro → Sant Feliu</strong> (8km, 2h30) — nivel fácil<br>
 • <strong>Platja d'Aro → Cala Pedrosa</strong> (4km, 1h15) — nivel medio<br>
@@ -202,7 +212,7 @@
 
 <div class="act-card">
 <div class="act-icon">🏛️</div>
-<h3>Patrimonio histórico</h3>
+<h3 data-i18n="activities.heritage.title">Patrimonio histórico</h3>
 <p><strong>Castillo de Benedormiens</strong> — Ruinas románicas del s.XI con vistas 360º. Acceso gratuito, 3km desde el centro.</p>
 <p><strong>Jardines de Cap Roig</strong> (10km) — Jardín botánico de 17 hectáreas junto al mar. Festival de música en verano. Entrada: 7€.</p>
 <p><strong>Villa romana de Pla de Palol</strong> — Yacimiento arqueológico del s.I-VI. Visitas guiadas gratuitas sábados.</p>
@@ -211,7 +221,7 @@
 
 <div class="act-card">
 <div class="act-icon">⛵</div>
-<h3>Deportes acuáticos</h3>
+<h3 data-i18n="activities.waterSports.title">Deportes acuáticos</h3>
 <p><strong>Platja d'Aro Diving Center</strong> — Bautismos desde 50€, inmersiones para certificados, cursos PADI. Descubre el pecio "Boreas".</p>
 <p><strong>Kayak & SUP</strong> — Alquiler 15€/h. Excursiones guiadas a calas escondidas (35€, 3h). Salida desde la playa principal.</p>
 <p><strong>Vela & catamarán</strong> — Club Náutico ofrece cursos semanales y salidas en velero por la costa (desde 45€).</p>
@@ -220,7 +230,7 @@
 
 <div class="act-card">
 <div class="act-icon">🎨</div>
-<h3>Museos y cultura</h3>
+<h3 data-i18n="activities.museums.title">Museos y cultura</h3>
 <p><strong>Casa Museo Dalí (Cadaqués)</strong> — 50km. Residencia del artista en Portlligat. Visita obligada. Reserva previa imprescindible. Entrada: 14€.</p>
 <p><strong>Teatro-Museo Dalí (Figueres)</strong> — 55km. El museo surrealista más visitado de España. Entrada: 15€.</p>
 <p><strong>Pals</strong> — 15km. Uno de los pueblos medievales mejor conservados de Catalunya. Torre románica, murallas y calles empedradas.</p>
@@ -230,7 +240,7 @@
 
 <div class="act-card">
 <div class="act-icon">🛍️</div>
-<h3>Compras y ocio</h3>
+<h3 data-i18n="activities.shopping.title">Compras y ocio</h3>
 <p><strong>Paseo marítimo</strong> — 2km de tiendas: moda, artesanía, souvenirs, heladerías. Ambiente nocturno con bares y terrazas.</p>
 <p><strong>Mercado semanal</strong> — Sábados por la mañana en Av. Cavall Bernat. Productos locales, ropa, artesanía.</p>
 <p><strong>Espai Gironès</strong> (20km) — Centro comercial con Decathlon, Ikea, Zara, cines.</p>
@@ -241,10 +251,10 @@
 </div>
 </section>
 <section class="restaurants" id="restaurantes">
-<div class="rest-inner reveal">
-<span class="sec-eye">Gastronomía</span>
-<h2 class="sec-title">Restaurantes recomendados</h2>
-<p class="sec-text">La mejor cocina mediterránea a pocos pasos del apartamento.</p>
+<<div class="rest-inner reveal">
+<span class="sec-eye" data-i18n="restaurants.section">Gastronomía</span>
+<h2 class="sec-title" data-i18n="restaurants.title">Restaurantes recomendados</h2>
+<p class="sec-text" data-i18n="restaurants.desc">La mejor cocina mediterránea a pocos pasos del apartamento.</p>
 <div class="rest-grid">
 <div class="rest-card">
 <div class="rest-type">🌴 Beach Club</div>
@@ -309,9 +319,9 @@
 </div>
 </section>
 <footer>
-<p class="flogo">Vistas al Mar</p>
-<p>Platja d'Aro · Costa Brava · <a href="mailto:aptopda121@gmail.com">aptopda121@gmail.com</a></p>
-<p style="margin-top:1rem;font-size:0.72rem;opacity:0.35">© 2025 Vistas al Mar</p>
+<p class="flogo" data-i18n="footer.logo">Vistas al Mar</p>
+<p data-i18n-html="footer.location">Platja d'Aro · Costa Brava · <a href="mailto:aptopda121@gmail.com">aptopda121@gmail.com</a></p>
+<p style="margin-top:1rem;font-size:0.72rem;opacity:0.35" data-i18n="footer.copyright">© 2025 Vistas al Mar</p>
 </footer>
 <div class="lbox" id="lbox" onclick="closeLbox()">
 <button class="lbox-x">✕</button>
@@ -320,17 +330,17 @@
 <div class="admin-panel" id="adminPanel">
 <button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('show')">✕</button>
 <div class="admin-title">
-  <span>📊 Panel Admin</span>
-  <button type="button" id="adminRefreshBtn">Actualizar</button>
+  <span data-i18n="admin.title">📊 Panel Admin</span>
+  <button type="button" id="adminRefreshBtn" data-i18n="admin.refresh">Actualizar</button>
 </div>
-<div class="stat-row"><span class="slbl">Visitas hoy</span><span class="sval" id="st-today">—</span></div>
-<div class="stat-row"><span class="slbl">Visitas mes</span><span class="sval" id="st-month">—</span></div>
-<div class="stat-row"><span class="slbl">Visitas totales</span><span class="sval" id="st-total">—</span></div>
-<div class="stat-row"><span class="slbl">Reservas</span><span class="sval" id="st-bookings">—</span></div>
-<div class="stat-row"><span class="slbl">Pendientes</span><span class="sval" id="st-pending">—</span></div>
-<div class="stat-row"><span class="slbl">Ingresos</span><span class="sval" id="st-revenue">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.visitsToday">Visitas hoy</span><span class="sval" id="st-today">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.visitsMonth">Visitas mes</span><span class="sval" id="st-month">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.visitsTotal">Visitas totales</span><span class="sval" id="st-total">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.bookings">Reservas</span><span class="sval" id="st-bookings">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.pending">Pendientes</span><span class="sval" id="st-pending">—</span></div>
+<div class="stat-row"><span class="slbl" data-i18n="admin.revenue">Ingresos</span><span class="sval" id="st-revenue">—</span></div>
 <div class="admin-pending-wrap" id="adminPendingWrap">
-  <div class="admin-subtitle">Reservas pendientes</div>
+  <div class="admin-subtitle" data-i18n="admin.pendingBookings">Reservas pendientes</div>
   <div id="adminPendingList"></div>
 </div>
 </div>
