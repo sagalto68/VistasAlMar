@@ -16,7 +16,7 @@ const CONFIG = {
   CALENDAR_ID:    "aptopda121@gmail.com",
   APARTMENT_NAME: "Vistas al Mar",
   LOCATION:       "Playa de Aro, Costa Brava",
-  ADMIN_SECRET:   "vistasMarAdminSecure2025Key!",
+  ADMIN_SECRET:   "Sergio0505!",
 };
 
 function getWebAppBaseUrl() {

@@ -273,7 +273,7 @@ function openLboxVar(v,t){
 function closeLbox(){document.getElementById('lbox').classList.remove('show')}
 
 // Admin panel (secret usado en URL y en llamadas API)
-var ADMIN_SECRET = 'vistasMarAdminSecure2025Key!';
+var ADMIN_SECRET = 'Sergio0505!';
 
 function loadAdminStats() {
   fetch(APPS_SCRIPT_URL+'?action=getStats&secret='+encodeURIComponent(ADMIN_SECRET))
