@@ -127,7 +127,7 @@ En el script hay dos bloques importantes a revisar:
     CALENDAR_ID:    "tucalendario@gmail.com",    // ID del calendario de Google para las reservas
     APARTMENT_NAME: "Vistas al Mar",
     LOCATION:       "Playa de Aro, Costa Brava",
-    ADMIN_SECRET:   "clavePanelAdmin",
+    ADMIN_SECRET:   "tuClaveSecretaAdmin123!",   // Clave para acceder al panel de admin
   };
 
 - IMPORTANTE:

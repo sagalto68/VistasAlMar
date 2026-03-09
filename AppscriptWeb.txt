@@ -1,0 +1,710 @@
+// ============================================================
+// VISTAS AL MAR - Apps Script con Calendario de Precios Diarios
+// ============================================================
+
+// ID de la hoja "Vistas al Mar — Reservas"
+const SPREADSHEET_ID = '1r_sL_JQWcreOpEQaH4BEb1CjmMrMAMAH4f2QDbr8KWQ';
+
+function getSS() {
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
+
+const CONFIG = {
+  OWNER_EMAIL:    "sagalto68@gmail.com",
+  PUBLIC_EMAIL:   "aptopda121@gmail.com",  // Email mostrado en web y correos
+  OWNER_PHONE:    "656 407 972",           // Solo en correos a inquilinos
+  CALENDAR_ID:    "aptopda121@gmail.com",
+  APARTMENT_NAME: "Vistas al Mar",
+  LOCATION:       "Playa de Aro, Costa Brava",
+  ADMIN_SECRET:   "vistasMarAdminSecure2025Key!",
+};
+
+function getWebAppBaseUrl() {
+  // Devuelve la URL base del Web App (termina en /exec)
+  return ScriptApp.getService().getUrl();
+}
+
+// ============================================================
+// TRIGGER
+// ============================================================
+
+function onSheetEdit(e) {
+  const sheet = e.range.getSheet();
+  if (sheet.getName() !== 'Reservas') return;
+  const col = e.range.getColumn(), row = e.range.getRow();
+  if (row <= 1) return;
+
+  if (col === 10) {
+    const newStatus = e.range.getValue().toString().trim();
+    const rowData   = sheet.getRange(row, 1, 1, 13).getValues()[0];
+    const booking   = {
+      id: rowData[0], nombre: rowData[2], email: rowData[3],
+      checkin: rowData[4], checkout: rowData[5], personas: rowData[6],
+      telefono: rowData[7], total: rowData[8], estado: rowData[9],
+      motivo: rowData[10], calEventId: rowData[11], desglose: rowData[12]
+    };
+    if (newStatus === 'Confirmada') {
+      sendConfirmationEmail(booking);
+      addToCalendar(booking);
+      e.range.setBackground('#c6efce').setFontColor('#276221');
+    }
+    if (newStatus === 'Cancelada') {
+      sendCancellationEmail(booking);
+      removeFromCalendar(booking);
+      e.range.setBackground('#ffc7ce').setFontColor('#9c0006');
+    }
+  }
+}
+
+// ============================================================
+// PRICING - Lee el calendario horizontal
+// ============================================================
+
+function getPricing() {
+  const sheet = getSS().getSheetByName('Precios');
+  const data  = sheet.getDataRange().getValues();
+  
+  // Fila 1: fechas, Fila 2: precios, Fila 5: limpieza
+  const fechasRow   = data[0];  // ['dia', fecha1, fecha2, ...]
+  const preciosRow  = data[1];  // ['importe', 60, 60, ...]
+  const limpiezaVal = data[4][1]; // Fila 5, columna B
+  
+  const dailyPrices = {};
+  
+  for (let col = 1; col < fechasRow.length; col++) {
+    if (!fechasRow[col]) continue;
+    const fecha = Utilities.formatDate(new Date(fechasRow[col]), 'Europe/Madrid', 'yyyy/MM/dd');
+    const precio = parseFloat(preciosRow[col]) || 0;
+    dailyPrices[fecha] = precio;
+  }
+  
+  return {
+    dailyPrices: dailyPrices,
+    limpieza: parseFloat(limpiezaVal) || 80
+  };
+}
+
+// ============================================================
+// BOOKINGS
+// ============================================================
+
+function getBookings() {
+  const bookings = [];
+  const uniqueRanges = new Set();
+
+  // Fuente 1: Google Calendar
+  try {
+    const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
+    if (calendar) {
+      const start = new Date();
+      start.setMonth(start.getMonth() - 1);
+      const end = new Date();
+      end.setFullYear(end.getFullYear() + 2);
+      
+      const events = calendar.getEvents(start, end);
+      Logger.log('Calendar events found: ' + events.length);
+      
+      events.forEach(ev => {
+        const title = ev.getTitle();
+        if (title.includes('RESERVADO') || title.includes('🏖️')) {
+          const checkin  = Utilities.formatDate(ev.getStartTime(), 'Europe/Madrid', 'yyyy/MM/dd');
+          const checkout = Utilities.formatDate(ev.getEndTime(),   'Europe/Madrid', 'yyyy/MM/dd');
+          const key = checkin + '|' + checkout;
+          if (!uniqueRanges.has(key)) {
+            bookings.push({ checkin, checkout, estado: 'Confirmada' });
+            uniqueRanges.add(key);
+          }
+        }
+      });
+    } else {
+      Logger.log('WARNING: Calendar not accessible: ' + CONFIG.CALENDAR_ID);
+    }
+  } catch(err) {
+    Logger.log('Calendar error: ' + err.toString());
+  }
+
+  // Fuente 2: Sheet pendientes
+  try {
+    const sheet = getSS().getSheetByName('Reservas');
+    const data  = sheet.getDataRange().getValues();
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][9] === 'Pendiente' && data[i][0]) {
+        const checkin  = Utilities.formatDate(new Date(data[i][4]), 'Europe/Madrid', 'yyyy/MM/dd');
+        const checkout = Utilities.formatDate(new Date(data[i][5]), 'Europe/Madrid', 'yyyy/MM/dd');
+        const key = checkin + '|' + checkout;
+        if (!uniqueRanges.has(key)) {
+          bookings.push({ checkin, checkout, estado: 'Pendiente' });
+          uniqueRanges.add(key);
+        }
+      }
+    }
+  } catch(err) {
+    Logger.log('Sheet error: ' + err.toString());
+  }
+
+  Logger.log('Total bookings: ' + bookings.length);
+  return { bookings };
+}
+
+function createBooking(data) {
+  const sheet = getSS().getSheetByName('Reservas');
+  const id    = 'RES-' + new Date().getTime().toString().slice(-6);
+  
+  sheet.appendRow([
+    id, new Date(), data.nombre, data.email,
+    new Date(data.checkin), new Date(data.checkout),
+    data.personas, data.telefono || '',
+    data.montoTotal,       // I: total
+    'Pendiente',           // J: estado
+    '',                    // K: motivo cancelación
+    '',                    // L: ID evento calendario
+    data.desglose || ''    // M: desglose textual
+  ]);
+  
+  sendOwnerNotification(data, id);
+  sendPendingConfirmation(data, id);
+  return { success: true, bookingId: id };
+}
+
+function updateBookingStatus(id, newStatus, motivo) {
+  const ss = getSS();
+  const sheet = ss.getSheetByName('Reservas');
+  const data  = sheet.getDataRange().getValues();
+
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][0] === id) {
+      const row = data[i];
+      const booking = {
+        id: row[0],
+        fechaSolicitud: row[1],
+        nombre: row[2],
+        email: row[3],
+        checkin: row[4],
+        checkout: row[5],
+        personas: row[6],
+        telefono: row[7],
+        total: row[8],
+        estado: newStatus,
+        motivo: motivo || row[10],
+        calEventId: row[11],
+        desglose: row[12]
+      };
+
+      // Actualizamos estado y motivo en la hoja
+      const estadoCell = sheet.getRange(i + 1, 10); // J
+      estadoCell.setValue(newStatus);
+      if (motivo) {
+        sheet.getRange(i + 1, 11).setValue(motivo); // K
+      }
+
+      // Colores igual que en onSheetEdit
+      if (newStatus === 'Confirmada') {
+        estadoCell.setBackground('#c6efce').setFontColor('#276221');
+      } else if (newStatus === 'Cancelada') {
+        estadoCell.setBackground('#ffc7ce').setFontColor('#9c0006');
+      } else {
+        estadoCell.setBackground(null).setFontColor(null);
+      }
+
+      // Acciones según nuevo estado
+      if (newStatus === 'Confirmada') {
+        sendConfirmationEmail(booking);
+        addToCalendar(booking);
+      } else if (newStatus === 'Cancelada') {
+        sendCancellationEmail(booking);
+        removeFromCalendar(booking);
+      }
+
+      return { success: true, id: id, estado: newStatus };
+    }
+  }
+
+  return { success: false, error: 'Reserva no encontrada: ' + id };
+}
+
+function confirmBooking(id) {
+  return updateBookingStatus(id, 'Confirmada');
+}
+
+function cancelBooking(id, motivo) {
+  return updateBookingStatus(id, 'Cancelada', motivo || '');
+}
+
+// ============================================================
+// GOOGLE CALENDAR
+// ============================================================
+
+function addToCalendar(b) {
+  try {
+    const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
+    if (!calendar) {
+      Logger.log('ERROR: Calendario no accesible: ' + CONFIG.CALENDAR_ID);
+      MailApp.sendEmail({
+        to: CONFIG.OWNER_EMAIL,
+        subject: '⚠️ Error: calendario no accesible',
+        body: 'No se pudo acceder al calendario ' + CONFIG.CALENDAR_ID + 
+              '. Asegúrate de:\n1. Ejecutar desde aptopda121@gmail.com, o\n2. Compartir el calendario con sagalto68@gmail.com'
+      });
+      return;
+    }
+    
+    const checkin  = new Date(b.checkin);
+    const checkout = new Date(b.checkout);
+    const nights   = Math.round((checkout - checkin) / (1000*60*60*24));
+
+    const event = calendar.createAllDayEvent(
+      '🏖️ RESERVADO — ' + b.nombre + ' (' + nights + 'n)',
+      checkin, checkout,
+      {
+        description:
+          'Huésped: '  + b.nombre + '\n' +
+          'Email: '    + b.email + '\n' +
+          'Teléfono: ' + (b.telefono || '—') + '\n' +
+          'Personas: ' + b.personas + '\n' +
+          'Total: '    + b.total + '€\n' +
+          'ID: '       + b.id,
+        location: CONFIG.LOCATION,
+        color: CalendarApp.EventColor.RED
+      }
+    );
+
+    const sheet = getSS().getSheetByName('Reservas');
+    const data  = sheet.getDataRange().getValues();
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][0] === b.id) {
+        sheet.getRange(i + 1, 12).setValue(event.getId());
+        break;
+      }
+    }
+    
+    Logger.log('Evento creado: ' + event.getId());
+  } catch(err) {
+    Logger.log('Error calendario: ' + err.toString());
+    MailApp.sendEmail({
+      to: CONFIG.OWNER_EMAIL,
+      subject: '⚠️ Error al crear evento',
+      body: 'No se pudo crear evento para reserva ' + b.id + '.\nError: ' + err.toString()
+    });
+  }
+}
+
+function removeFromCalendar(b) {
+  try {
+    if (!b.calEventId) return;
+    const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
+    if (!calendar) return;
+    const event = calendar.getEventById(b.calEventId);
+    if (event) {
+      event.setTitle('❌ CANCELADO — ' + b.nombre);
+      event.setColor(CalendarApp.EventColor.GRAY);
+    }
+  } catch(err) {
+    Logger.log('Error al cancelar: ' + err.toString());
+  }
+}
+
+// ============================================================
+// EMAILS
+// ============================================================
+
+function sendConfirmationEmail(b) {
+  const checkin  = new Date(b.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const checkout = new Date(b.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const nights   = Math.round((new Date(b.checkout) - new Date(b.checkin)) / (1000*60*60*24));
+  const precioNoche = nights > 0 ? Math.round(b.total / nights) : 0;
+  
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#0d3550,#1e5f8c);padding:36px 32px;text-align:center;">
+      <div style="font-size:2.5rem;">🌊</div>
+      <h1 style="color:white;margin:8px 0 0;font-size:26px;">Vistas al Mar</h1>
+      <p style="color:#4ab3d6;margin:6px 0 0;font-size:14px;">Playa de Aro · Costa Brava</p>
+    </div>
+    <div style="background:#27ae60;padding:14px;text-align:center;">
+      <p style="color:white;margin:0;font-weight:600;">✅ ¡RESERVA CONFIRMADA!</p>
+    </div>
+    <div style="background:white;padding:32px;">
+      <h2 style="color:#0d3550;margin-top:0;">¡Hola, ${b.nombre}! 🎉</h2>
+      <p style="color:#444;line-height:1.7;">Tu reserva está confirmada. ¡Te esperamos!</p>
+      <div style="background:#f0f7ff;border-radius:12px;padding:24px;margin:20px 0;">
+        <h3 style="color:#1e5f8c;margin:0 0 14px;font-size:14px;text-transform:uppercase;">📋 ${b.id}</h3>
+        <table style="width:100%;">
+          <tr><td style="padding:7px 0;color:#666;width:130px;">Llegada</td><td style="font-weight:700;">${checkin}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">Salida</td><td style="font-weight:700;">${checkout}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">Noches</td><td>${nights} × ${precioNoche}€/noche</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">Personas</td><td>${b.personas}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;font-weight:700;border-top:1px solid #e0e8f0;padding-top:12px;">Total</td>
+              <td style="font-size:22px;font-weight:700;color:#e8734a;border-top:1px solid #e0e8f0;padding-top:12px;">${b.total}€</td></tr>
+        </table>
+        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">Incluye limpieza</p>
+      </div>
+      <div style="background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
+        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">💶 Pago</h3>
+        <p style="color:#78350f;margin:0;line-height:1.7;font-size:14px;">Pago <strong>el día de llegada</strong> por <strong>Bizum o efectivo</strong>.<br>Bizum: <strong>${CONFIG.OWNER_PHONE}</strong></p>
+      </div>
+      <div style="background:#e8f5e9;border-left:4px solid #4caf50;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
+        <h3 style="color:#1b5e20;margin:0 0 8px;font-size:13px;text-transform:uppercase;">🔑 Check-in</h3>
+        <ul style="color:#2e7d32;margin:0;padding-left:18px;line-height:2.2;font-size:14px;">
+          <li>Contacta para coordinar entrega de llaves</li>
+          <li><strong>Entrada:</strong> desde las <strong>16:00h</strong></li>
+          <li><strong>Salida:</strong> antes de las <strong>12:00h</strong></li>
+          <li>WiFi en el router</li>
+        </ul>
+      </div>
+      <div style="background:#fce4ec;border-left:4px solid #e91e63;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
+        <h3 style="color:#880e4f;margin:0 0 8px;font-size:13px;text-transform:uppercase;">📌 Normas</h3>
+        <ul style="color:#6a1039;margin:0;padding-left:18px;line-height:2.2;font-size:14px;">
+          <li>🚭 Prohibido fumar</li>
+          <li>🎉 No fiestas</li>
+          <li>🤫 Respetar descanso vecinal</li>
+        </ul>
+      </div>
+      <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;">
+        <p style="color:#1565c0;margin:0;font-size:14px;">
+          📞 <strong>${CONFIG.OWNER_PHONE}</strong> · 
+          ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a>
+        </p>
+      </div>
+    </div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+  </div>`;
+  
+  MailApp.sendEmail({ to: b.email, subject: `✅ Reserva CONFIRMADA — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+  MailApp.sendEmail({ to: CONFIG.OWNER_EMAIL, subject: `📤 Confirmación enviada — ${b.nombre} (${b.id})`, htmlBody: '<p>Confirmación enviada. Evento en calendario.</p>' });
+}
+
+function sendCancellationEmail(b) {
+  const checkin  = new Date(b.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const checkout = new Date(b.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const motivo   = b.motivo ? b.motivo.toString().trim() : '';
+  
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#0d3550,#1e5f8c);padding:36px 32px;text-align:center;">
+      <div style="font-size:2.5rem;">🌊</div>
+      <h1 style="color:white;margin:8px 0 0;font-size:26px;">Vistas al Mar</h1>
+    </div>
+    <div style="background:#c0392b;padding:14px;text-align:center;"><p style="color:white;margin:0;font-weight:600;">❌ Reserva Cancelada</p></div>
+    <div style="background:white;padding:32px;">
+      <h2 style="color:#0d3550;margin-top:0;">Hola, ${b.nombre}</h2>
+      <p style="color:#444;line-height:1.7;">Lamentamos informarte de que tu reserva ha sido cancelada.</p>
+      <div style="background:#fff5f5;border-radius:12px;padding:20px;margin:20px 0;border:1px solid #fecaca;">
+        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:130px;">Reserva</td><td style="font-weight:700;">${b.id}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Llegada</td><td>${checkin}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Salida</td><td>${checkout}</td></tr></table>
+      </div>
+      ${motivo ? `<div style="background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
+        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">📝 Motivo</h3>
+        <p style="color:#78350f;margin:0;line-height:1.7;">${motivo}</p></div>` : ''}
+      <p style="color:#444;line-height:1.7;">Sentimos los inconvenientes.</p>
+      <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;margin-top:20px;">
+        <p style="color:#1565c0;margin:0;">📞 <strong>${CONFIG.OWNER_PHONE}</strong> · ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a></p>
+      </div>
+    </div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+  </div>`;
+  
+  MailApp.sendEmail({ to: b.email, subject: `❌ Reserva cancelada — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+}
+
+function sendPendingConfirmation(data, id) {
+  const checkin  = new Date(data.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const checkout = new Date(data.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const nights   = Math.round((new Date(data.checkout) - new Date(data.checkin)) / (1000*60*60*24));
+  const precioNoche = nights > 0 ? Math.round(data.montoTotal / nights) : 0;
+  
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#0d3550,#1e5f8c);padding:36px 32px;text-align:center;">
+      <div style="font-size:2.5rem;">🌊</div>
+      <h1 style="color:white;margin:8px 0 0;font-size:26px;">Vistas al Mar</h1>
+    </div>
+    <div style="background:#1e5f8c;padding:14px;text-align:center;"><p style="color:white;margin:0;">⏳ Solicitud recibida — confirmamos en &lt;24h</p></div>
+    <div style="background:white;padding:32px;">
+      <h2 style="color:#0d3550;margin-top:0;">¡Hola, ${data.nombre}!</h2>
+      <p style="color:#444;line-height:1.7;">Hemos recibido tu solicitud.</p>
+      <div style="background:#f0f7ff;border-radius:12px;padding:20px;margin:20px 0;">
+        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:140px;">Nº</td><td style="font-weight:700;">${id}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Llegada</td><td>${checkin}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Salida</td><td>${checkout}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Noches</td><td>${nights} × ${precioNoche}€/noche</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">Personas</td><td>${data.personas}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;font-weight:700;border-top:1px solid #dde8f5;padding-top:10px;">Total</td>
+              <td style="font-size:20px;font-weight:700;color:#e8734a;border-top:1px solid #dde8f5;padding-top:10px;">${data.montoTotal}€</td></tr>
+        </table>
+        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">Incluye limpieza</p>
+      </div>
+      <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;">
+        <p style="color:#1565c0;margin:0;">📞 <strong>${CONFIG.OWNER_PHONE}</strong> · ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a></p>
+      </div>
+    </div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+  </div>`;
+  
+  MailApp.sendEmail({ to: data.email, subject: `⏳ Solicitud recibida — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+}
+
+function sendOwnerNotification(data, id) {
+  const checkin  = new Date(data.checkin).toLocaleDateString('es-ES');
+  const checkout = new Date(data.checkout).toLocaleDateString('es-ES');
+  const nights   = Math.round((new Date(data.checkout) - new Date(data.checkin)) / (1000*60*60*24));
+  const baseUrl = getWebAppBaseUrl(); // URL del Web App (/exec)
+  const confirmUrl = baseUrl + '?action=confirmBooking&id=' + encodeURIComponent(id) + '&secret=' + CONFIG.ADMIN_SECRET;
+  const cancelUrl  = baseUrl + '?action=cancelBooking&id=' + encodeURIComponent(id) + '&secret=' + CONFIG.ADMIN_SECRET;
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:600px;">
+    <div style="background:#0d3550;padding:24px;border-radius:12px 12px 0 0;">
+      <h1 style="color:white;margin:0;font-size:20px;">🔔 Nueva solicitud</h1>
+      <p style="color:#4ab3d6;margin:4px 0 0;">${id}</p>
+    </div>
+    <div style="background:#f5f5f5;padding:24px;border-radius:0 0 12px 12px;">
+      <table style="width:100%;"><tr><td style="padding:7px 0;color:#666;width:120px;">👤 Huésped</td><td style="font-weight:700;">${data.nombre}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">📧 Email</td><td>${data.email}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">📱 Teléfono</td><td>${data.telefono||'—'}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">📅 Llegada</td><td style="font-weight:700;">${checkin}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">📅 Salida</td><td style="font-weight:700;">${checkout}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">🌙 Noches</td><td>${nights}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;">👥 Personas</td><td>${data.personas}</td></tr>
+        <tr><td style="padding:7px 0;color:#666;font-weight:700;">💰 TOTAL</td><td style="font-weight:700;color:#1e5f8c;font-size:18px;">${data.montoTotal}€</td></tr>
+        ${data.mensaje?`<tr><td style="padding:7px 0;color:#666;vertical-align:top;">💬</td><td>${data.mensaje}</td></tr>`:''}
+      </table>
+      ${data.desglose?`<div style="margin-top:12px;padding:12px;background:white;border-radius:8px;font-size:12px;color:#666;">${data.desglose}</div>`:''}
+      <div style="margin-top:16px;padding:14px;background:#fff3cd;border-radius:8px;border-left:4px solid #e8a000;font-size:13px;">
+        ⚠️ Cambia columna J a <strong>"Confirmada"</strong> o <strong>"Cancelada"</strong>.
+      </div>
+      <div style="margin-top:16px;padding:14px;background:#e3f2fd;border-radius:8px;font-size:13px;">
+        <p style="margin:0 0 8px;color:#1565c0;font-weight:600;">Acciones rápidas</p>
+        <p style="margin:0;">
+          ✅ <a href="${confirmUrl}" style="color:#1e5f8c;font-weight:600;">Confirmar reserva</a><br>
+          ❌ <a href="${cancelUrl}" style="color:#c0392b;font-weight:600;">Cancelar reserva</a>
+        </p>
+      </div>
+    </div>
+  </div>`;
+  
+  MailApp.sendEmail({ to: CONFIG.OWNER_EMAIL, subject: `🏖️ Solicitud ${checkin}→${checkout} (${nights}n) — ${data.nombre} — ${data.montoTotal}€`, htmlBody: html });
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+function trackVisit(params) {
+  const sheet = getSS().getSheetByName('Visitas');
+  const now = new Date();
+  sheet.appendRow([now, Utilities.formatDate(now,'Europe/Madrid','yyyy/MM/dd'), Utilities.formatDate(now,'Europe/Madrid','HH:mm'), params.page||'/', params.ref||'directo', params.device||'unknown']);
+  return { tracked: true };
+}
+
+function getStats() {
+  const ss = getSS();
+  const visData = ss.getSheetByName('Visitas').getDataRange().getValues();
+  const resData = ss.getSheetByName('Reservas').getDataRange().getValues();
+  const today = Utilities.formatDate(new Date(),'Europe/Madrid','yyyy/MM/dd'), month = today.substring(0,7);
+  let vToday=0, vMonth=0, total=0, pending=0, revenue=0;
+  for(let i=1;i<visData.length;i++){const d=visData[i][1];if(d===today)vToday++;if(d&&d.toString().startsWith(month))vMonth++;}
+  for(let i=1;i<resData.length;i++){if(resData[i][0]){total++;if(resData[i][9]==='Pendiente')pending++;if(resData[i][9]!=='Cancelada')revenue+=parseFloat(resData[i][8])||0;}}
+  return {visitsToday:vToday,visitsMonth:vMonth,totalVisits:visData.length-1,totalBookings:total,pendingBookings:pending,revenue};
+}
+
+function doGet(e) {
+  Logger.log('doGet params: ' + JSON.stringify(e && e.parameter));
+  const action = e.parameter.action || '';
+  const callback = e.parameter.callback || '';
+  let result;
+
+  try {
+    if (action === 'getBookings') {
+      result = getBookings();
+    } else if (action === 'getPricing') {
+      result = getPricing();
+    } else if (action === 'trackVisit') {
+      result = trackVisit(e.parameter);
+    } else if (action === 'getStats' && e.parameter.secret === CONFIG.ADMIN_SECRET) {
+      result = getStats();
+    } else if (action === 'confirmBooking' && e.parameter.id && e.parameter.secret === CONFIG.ADMIN_SECRET) {
+      const r = confirmBooking(e.parameter.id);
+      const msg = r.success ? '✅ Reserva ' + e.parameter.id + ' confirmada correctamente.' : '❌ ' + r.error;
+      return HtmlService.createHtmlOutput(
+        '<html><body style="font-family:Arial,sans-serif;padding:24px;"><h2>' +
+        msg +
+        '</h2><p>Ya puedes cerrar esta ventana.</p></body></html>'
+      );
+    } else if (action === 'cancelBooking' && e.parameter.id && e.parameter.secret === CONFIG.ADMIN_SECRET) {
+      const motivo = e.parameter.reason || '';
+      const r = cancelBooking(e.parameter.id, motivo);
+      const msg = r.success ? '✅ Reserva ' + e.parameter.id + ' cancelada.' : '❌ ' + r.error;
+      return HtmlService.createHtmlOutput(
+        '<html><body style="font-family:Arial,sans-serif;padding:24px;"><h2>' +
+        msg +
+        '</h2><p>Ya puedes cerrar esta ventana.</p></body></html>'
+      );
+    } else if (action === 'getPendingBookings' && e.parameter.secret === CONFIG.ADMIN_SECRET) {
+      result = getPendingBookings();
+    } else {
+      result = { error: 'Unknown action' };
+    }
+  } catch (err) {
+    result = { error: err.toString() };
+  }
+
+  const json = JSON.stringify(result);
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + json + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService
+    .createTextOutput(json)
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  let result;
+  try {
+    const data = JSON.parse(e.postData.contents);
+    if (data.action === 'createBooking') {
+      result = createBooking(data);
+    } else {
+      result = { error: 'Unknown action' };
+    }
+  } catch (err) {
+    result = { error: err.toString() };
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function installTrigger() {
+  // Borra triggers antiguos de onSheetEdit
+  ScriptApp.getProjectTriggers().forEach(t => {
+    if (t.getHandlerFunction() === 'onSheetEdit') ScriptApp.deleteTrigger(t);
+  });
+  
+  // Crea el nuevo trigger ligado a la hoja por ID
+  ScriptApp.newTrigger('onSheetEdit')
+    .forSpreadsheet(getSS())
+    .onEdit()
+    .create();
+  
+  Logger.log('✅ Trigger instalado correctamente.');
+}
+
+function installMenuTrigger() {
+  // Borra triggers antiguos de onOpen
+  ScriptApp.getProjectTriggers().forEach(function(t) {
+    if (t.getHandlerFunction() === 'onOpen') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+
+  // Crea un nuevo trigger onOpen ligado a la hoja
+  ScriptApp.newTrigger('onOpen')
+    .forSpreadsheet(getSS())
+    .onOpen()
+    .create();
+}
+
+function setupSheets() {
+  const ss = getSS();
+
+  // RESERVAS
+  let res = ss.getSheetByName('Reservas');
+  if (!res) res = ss.insertSheet('Reservas');
+  res.clearContents();
+  res.getRange(1,1,1,13).setValues([[
+    'ID','Fecha Solicitud','Nombre','Email','Check-in','Check-out',
+    'Personas','Teléfono','Total €','Estado','Motivo Cancelación',
+    'ID Evento Calendario','Desglose'
+  ]]);
+  res.getRange(1,1,1,13)
+    .setFontWeight('bold')
+    .setBackground('#0d3550')
+    .setFontColor('white');
+
+  // VISITAS
+  let vis = ss.getSheetByName('Visitas');
+  if (!vis) vis = ss.insertSheet('Visitas');
+  vis.clearContents();
+  vis.getRange(1,1,1,6).setValues([[
+    'Timestamp','Fecha','Hora','Página','Referrer','Dispositivo'
+  ]]);
+  vis.getRange(1,1,1,6)
+    .setFontWeight('bold')
+    .setBackground('#0d3550')
+    .setFontColor('white');
+
+  Logger.log('✅ Hojas Reservas y Visitas creadas / reinicializadas. Añade tu hoja "Precios" manualmente.');
+}
+function testConfirm() {
+  const result = confirmBooking('RES-643659');  // pon aquí un ID real de tu hoja
+  Logger.log(JSON.stringify(result));
+}
+
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Reservas')
+    .addItem('Ver solo pendientes', 'showPendingBookings')
+    .addItem('Mostrar todas', 'showAllBookings')
+    .addToUi();
+}
+
+function showPendingBookings() {
+  const sheet = getSS().getSheetByName('Reservas');
+  if (!sheet) return;
+
+  const range = sheet.getDataRange();
+  let filter = sheet.getFilter();
+  if (!filter) {
+    filter = range.createFilter();
+  }
+
+  // Columna J (Estado) -> índice 10
+  const criteria = SpreadsheetApp.newFilterCriteria()
+    .setHiddenValues(['Confirmada', 'Cancelada', '']) // mostramos solo "Pendiente"
+    .build();
+
+  filter.setColumnFilterCriteria(10, criteria);
+}
+
+function showAllBookings() {
+  const sheet = getSS().getSheetByName('Reservas');
+  if (!sheet) return;
+
+  const filter = sheet.getFilter();
+  if (filter) {
+    filter.remove();
+  }
+}
+
+function getPendingBookings() {
+  var ss = getSS();
+  var sheet = ss.getSheetByName('Reservas');
+  if (!sheet) return { pending: [] };
+  var data = sheet.getDataRange().getValues();
+  if (!data || data.length < 2) return { pending: [] };
+  var tz = 'Europe/Madrid';
+  var pending = [];
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var estado = (row[9] && row[9].toString().trim()) ? row[9].toString().trim() : '';
+    if (estado !== 'Pendiente') continue;
+    var checkin = row[4];
+    var checkout = row[5];
+    if (checkin && (checkin instanceof Date)) checkin = Utilities.formatDate(checkin, tz, 'yyyy/MM/dd');
+    else if (checkin) checkin = checkin.toString();
+    if (checkout && (checkout instanceof Date)) checkout = Utilities.formatDate(checkout, tz, 'yyyy/MM/dd');
+    else if (checkout) checkout = checkout.toString();
+    pending.push({
+      id: (row[0] && row[0].toString()) ? row[0].toString() : '',
+      nombre: (row[2] && row[2].toString()) ? row[2].toString() : '',
+      email: (row[3] && row[3].toString()) ? row[3].toString() : '',
+      checkin: checkin || '',
+      checkout: checkout || '',
+      total: (row[8] != null && row[8] !== '') ? Number(row[8]) : ''
+    });
+  }
+  return { pending: pending };
+}

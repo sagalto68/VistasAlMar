@@ -273,7 +273,7 @@ function openLboxVar(v,t){
 function closeLbox(){document.getElementById('lbox').classList.remove('show')}
 
 // Admin panel (secret usado en URL y en llamadas API)
-var ADMIN_SECRET = 'vistasMar2025';
+var ADMIN_SECRET = 'vistasMarAdminSecure2025Key!';
 
 function loadAdminStats() {
   fetch(APPS_SCRIPT_URL+'?action=getStats&secret='+encodeURIComponent(ADMIN_SECRET))
@@ -348,7 +348,12 @@ function loadAdminPending() {
 }
 
 function initAdminPanel() {
-  if (!window.location.search.includes('panel=vistasMar2025')) return;
+  if (!window.location.search.includes('panel=1')) return;
+  var password = prompt('Introduce la contraseña de admin:');
+  if (password !== ADMIN_SECRET) {
+    alert('Contraseña incorrecta.');
+    return;
+  }
   document.getElementById('adminPanel').classList.add('show');
   loadAdminStats();
   loadAdminPending();
