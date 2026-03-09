@@ -236,13 +236,13 @@ function submitBooking(){
 
 // Dynamic gallery loader
 const galleryPhotos = [
-  {file: 'hero.jpg', titleKey: 'gallery.photos.hero'},
-  {file: 'beach.jpg', titleKey: 'gallery.photos.beach'},
-  {file: 'dining.jpg', titleKey: 'gallery.photos.dining'},
-  {file: 'kitchen.jpg', titleKey: 'gallery.photos.kitchen'},
-  {file: 'living.jpg', titleKey: 'gallery.photos.living'},
-  {file: 'bedroom.jpg', titleKey: 'gallery.photos.bedroom'},
-  {file: 'bath.jpg', titleKey: 'gallery.photos.bath'}
+  {file: 'hero.jpg', titleKey: 'hero'},
+  {file: 'beach.jpg', titleKey: 'beach'},
+  {file: 'dining.jpg', titleKey: 'dining'},
+  {file: 'kitchen.jpg', titleKey: 'kitchen'},
+  {file: 'living.jpg', titleKey: 'living'},
+  {file: 'bedroom.jpg', titleKey: 'bedroom'},
+  {file: 'bath.jpg', titleKey: 'bath'}
 ];
 
 function loadGallery() {
@@ -261,12 +261,8 @@ function loadGallery() {
     
     const ov = document.createElement('div');
     ov.className = 'gal-ov';
-    const titleKeys = photo.titleKey.split('.');
-    let title = translations;
-    for (const k of titleKeys) {
-      title = title && title[k];
-    }
-    ov.innerHTML = '<span>' + (title || photo.titleKey) + '</span>';
+    const title = translations.gallery && translations.gallery.photos && translations.gallery.photos[photo.titleKey] || photo.titleKey;
+    ov.innerHTML = '<span>' + title + '</span>';
     
     item.appendChild(bg);
     item.appendChild(ov);
