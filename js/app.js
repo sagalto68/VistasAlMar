@@ -212,7 +212,8 @@ function submitBooking(){
     personas:document.getElementById('f-guests').value,
     telefono:document.getElementById('f-phone').value,
     montoTotal:p.montoTotal,desglose:p.desglose,
-    mensaje:document.getElementById('f-msg').value
+    mensaje:document.getElementById('f-msg').value,
+    lang: currentLang
   };
   fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}})
     .then(function(r){return r.json()})
