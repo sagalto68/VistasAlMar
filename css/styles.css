@@ -15,7 +15,8 @@ nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(255,255,255,.95)
 .nav-links{list-style:none;display:flex;gap:2rem}
 .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:.95rem;transition:color .3s}
 .nav-links a:hover{color:var(--ocean)}
-.lang-selector select{background:#fff;border:1px solid #ddd;border-radius:4px;padding:.5rem;font-size:.9rem;color:var(--text)}
+.lang-selector select{background:#fff;border:1px solid #ddd;border-radius:4px;padding:.5rem;font-size:.9rem;color:var(--text);cursor:pointer}
+#langSelect{appearance:none;padding-right:2rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233a4a58' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .5rem center;background-size:1.2em}
 .nav-menu-btn{display:none;background:0 0;border:none;font-size:1.8rem;color:var(--ocean);cursor:pointer}
 .mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--deep);z-index:1000;padding:2rem;transition:right .4s;display:flex;flex-direction:column;gap:1.5rem}
 .mobile-menu.active{right:0}

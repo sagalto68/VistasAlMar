@@ -20,10 +20,10 @@
 </ul>
 <div class="lang-selector">
 <select id="langSelect">
-<option value="es">ES</option>
-<option value="ca">CA</option>
-<option value="fr">FR</option>
-<option value="en">EN</option>
+<option value="es" data-label="languages.es">ES</option>
+<option value="ca" data-label="languages.ca">CA</option>
+<option value="fr" data-label="languages.fr">FR</option>
+<option value="en" data-label="languages.en">EN</option>
 </select>
 </div>
 <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
@@ -41,7 +41,9 @@
 <div class="hero-ov"></div>
 <div class="hero-c">
 <span class="eyebrow" data-i18n="hero.eyebrow">Platja d'Aro · Costa Brava</span>
-<h1 data-i18n="hero.title">Vistas<br><em>al Mar</em></h1>
+<h1>
+<span data-i18n="hero.title">Vistas</span><br><em data-i18n="hero.titleEm">al Mar</em>
+</h1>
 <p class="hero-sub" data-i18n="hero.subtitle">Apartamento de diseño · Primera línea de playa</p>
 <div class="hero-btns">
 <a href="#reservar" class="btn-p" data-i18n="hero.btnAvailability">Ver disponibilidad</a>
@@ -83,7 +85,11 @@
 </div>
 <div style="margin-top:2rem;padding:1.2rem 1.5rem;background:rgba(30,95,140,0.05);border-left:4px solid var(--ocean);border-radius:0 10px 10px 0">
 <h3 style="color:var(--ocean);font-size:0.9rem;margin:0 0 0.5rem;text-transform:uppercase;letter-spacing:0.08em" data-i18n="about.locationTitle">📍 Ubicación</h3>
-<p style="color:#3a4a58;margin:0;line-height:1.7" data-i18n="about.address"><strong>Passatge Bolívar, 7</strong><br>EDIFICIO CANNES<br>17250, Platja d'Aro, Girona</p>
+<p style="color:#3a4a58;margin:0;line-height:1.7">
+<strong data-i18n="about.address">Passatge Bolívar, 7</strong><br>
+<span data-i18n="about.addressBuilding">EDIFICIO CANNES</span><br>
+<span data-i18n="about.addressCity">17250, Platja d'Aro, Girona</span>
+</p>
 </div>
 </div>
 </div>
@@ -120,8 +126,8 @@
 
 </div>
 <div style="margin-top:1rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:8px;border-left:3px solid var(--wave)">
-<p style="font-size:0.88rem;line-height:1.6;color:rgba(255,255,255,0.8)">
-<strong style="color:var(--wave)">ℹ️ Gastos de limpieza:</strong> 80€ que se sumarán al total de la reserva.
+<p style="font-size:0.88rem;line-height:1.6;color:rgba(255,255,255,0.8)" data-i18n="booking.cleaning">
+ℹ️ Gastos de limpieza: 80€ que se sumarán al total de la reserva.
 </p>
 </div>
 </div>
@@ -139,18 +145,18 @@
 <div id="bookingFormWrap">
 <div class="loading-bar" id="loadingBar"></div>
 <div class="form-row">
-<div class="form-g"><label data-i18n="booking.name">Nombre</label><input type="text" id="f-name" placeholder="Tu nombre"></div>
-<div class="form-g"><label data-i18n="booking.email">Email</label><input type="email" id="f-email" placeholder="tu@email.com"></div>
+<div class="form-g"><label data-i18n="booking.name">Nombre</label><input type="text" id="f-name" data-i18n="booking.namePlaceholder" placeholder="Tu nombre"></div>
+<div class="form-g"><label data-i18n="booking.email">Email</label><input type="email" id="f-email" data-i18n="booking.emailPlaceholder" placeholder="tu@email.com"></div>
 </div>
 <div class="form-row">
-<div class="form-g"><label data-i18n="booking.checkin">Check-in</label><input type="text" id="f-checkin" placeholder="Elige en calendario" readonly></div>
-<div class="form-g"><label data-i18n="booking.checkout">Check-out</label><input type="text" id="f-checkout" placeholder="Elige en calendario" readonly></div>
+<div class="form-g"><label data-i18n="booking.checkin">Check-in</label><input type="text" id="f-checkin" data-i18n="booking.checkinPlaceholder" placeholder="Elige en calendario" readonly></div>
+<div class="form-g"><label data-i18n="booking.checkout">Check-out</label><input type="text" id="f-checkout" data-i18n="booking.checkoutPlaceholder" placeholder="Elige en calendario" readonly></div>
 </div>
 <div class="form-row">
 <div class="form-g"><label data-i18n="booking.guests">Personas</label>
 <select id="f-guests"><option>1 persona</option><option selected>2 personas</option><option>3 personas</option><option>4 personas</option></select>
 </div>
-<div class="form-g"><label data-i18n="booking.phone">Teléfono</label><input type="tel" id="f-phone" placeholder="+34 600 000 000"></div>
+<div class="form-g"><label data-i18n="booking.phone">Teléfono</label><input type="tel" id="f-phone" data-i18n="booking.phonePlaceholder" placeholder="+34 600 000 000"></div>
 </div>
 <div id="bookingSummary" style="display:none;background:rgba(255,255,255,0.07);border:1.5px solid rgba(74,179,214,0.35);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem">
 <p style="color:var(--wave);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;margin:0 0 0.8rem;font-weight:600" data-i18n="booking.summary">📊 Resumen</p>
@@ -174,7 +180,7 @@
 <div id="noDateWarning" style="background:rgba(74,179,214,0.1);border:1px dashed rgba(74,179,214,0.3);border-radius:10px;padding:0.9rem;text-align:center;margin-bottom:1rem">
 <span style="color:rgba(255,255,255,0.5);font-size:0.85rem" data-i18n="booking.selectDates">👆 Selecciona fechas en el calendario</span>
 </div>
-<div class="form-g"><label data-i18n="booking.message">Mensaje (opcional)</label><textarea id="f-msg" placeholder="Cuéntanos algo..."></textarea></div>
+<div class="form-g"><label data-i18n="booking.message">Mensaje (opcional)</label><textarea id="f-msg" data-i18n="booking.messagePlaceholder" placeholder="Cuéntanos algo..."></textarea></div>
 <button class="btn-submit" id="btnSubmit" onclick="submitBooking()" data-i18n="booking.submit">Enviar solicitud →</button>
 </div>
 <div class="form-msg" id="formSuccess">

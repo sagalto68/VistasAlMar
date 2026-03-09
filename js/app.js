@@ -235,13 +235,13 @@ function submitBooking(){
 
 // Dynamic gallery loader
 const galleryPhotos = [
-  {file: 'hero.jpg', title: 'Comedor con vistas'},
-  {file: 'beach.jpg', title: 'Vistas al mar'},
-  {file: 'dining.jpg', title: 'Comedor'},
-  {file: 'kitchen.jpg', title: 'Cocina'},
-  {file: 'living.jpg', title: 'Salón'},
-  {file: 'bedroom.jpg', title: 'Habitación'},
-  {file: 'bath.jpg', title: 'Baño'}
+  {file: 'hero.jpg', titleKey: 'gallery.photos.hero'},
+  {file: 'beach.jpg', titleKey: 'gallery.photos.beach'},
+  {file: 'dining.jpg', titleKey: 'gallery.photos.dining'},
+  {file: 'kitchen.jpg', titleKey: 'gallery.photos.kitchen'},
+  {file: 'living.jpg', titleKey: 'gallery.photos.living'},
+  {file: 'bedroom.jpg', titleKey: 'gallery.photos.bedroom'},
+  {file: 'bath.jpg', titleKey: 'gallery.photos.bath'}
 ];
 
 function loadGallery() {
@@ -260,7 +260,12 @@ function loadGallery() {
     
     const ov = document.createElement('div');
     ov.className = 'gal-ov';
-    ov.innerHTML = '<span>' + photo.title + '</span>';
+    const titleKeys = photo.titleKey.split('.');
+    let title = translations;
+    for (const k of titleKeys) {
+      title = title && title[k];
+    }
+    ov.innerHTML = '<span>' + (title || photo.titleKey) + '</span>';
     
     item.appendChild(bg);
     item.appendChild(ov);
@@ -452,6 +457,111 @@ function applyTranslations() {
     }
     if (value) {
       el.innerHTML = value;
+    }
+  });
+  
+  // Update placeholders
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    if (el.placeholder) {
+      const key = el.getAttribute('data-i18n');
+      const keys = key.split('.');
+      let value = translations;
+      for (const k of keys) {
+        value = value && value[k];
+      }
+      if (value && typeof value === 'string') {
+        el.placeholder = value;
+      }
+    }
+  });
+  
+  // Update language selector labels
+  document.querySelectorAll('#langSelect option').forEach(opt => {
+    const label = opt.getAttribute('data-label');
+    if (label) {
+      const keys = label.split('.');
+      let value = translations;
+      for (const k of keys) {
+        value = value && value[k];
+      }
+      if (value) {
+        opt.textContent = value;
+      }
+    }
+  });
+  
+  // Translate activities content
+  updateActivitiesContent();
+  // Translate restaurants content
+  updateRestaurantsContent();
+}
+
+function updateDynamicElements() {
+  // Update guests options
+  const guestsSelect = document.getElementById('f-guests');
+  guestsSelect.innerHTML = '';
+  translations.guestsOptions.forEach((opt, i) => {
+    const option = document.createElement('option');
+    option.value = (i + 1) + ' persona' + (i === 0 ? '' : 's');
+    option.textContent = opt;
+    if (i === 1) option.selected = true;
+    guestsSelect.appendChild(option);
+  });
+
+  // Update days and months
+  MN = translations.months;
+  // Update calendar if rendered
+  if (document.getElementById('calGrid').children.length > 0) {
+    renderCal();
+  }
+}
+
+function updateActivitiesContent() {
+  const activities = translations.activities;
+  if (!activities || !activities.beaches) return;
+  
+  const sections = [
+    { data_key: 'beaches', selector: '.act-card:has(h3:contains("Playas"))' },
+    { data_key: 'ronda', selector: '.act-card:has(h3:contains("Camí"))' },
+    { data_key: 'heritage', selector: '.act-card:has(h3:contains("Patrimonio"))' },
+    { data_key: 'waterSports', selector: '.act-card:has(h3:contains("Deportes"))' },
+    { data_key: 'museums', selector: '.act-card:has(h3:contains("Museos"))' },
+    { data_key: 'shopping', selector: '.act-card:has(h3:contains("Compras"))' }
+  ];
+  
+  // Translate by finding cards with the matching h3 titles
+  document.querySelectorAll('.act-card').forEach((card, idx) => {
+    const titleEl = card.querySelector('h3');
+    const actKeys = ['beaches', 'ronda', 'heritage', 'waterSports', 'museums', 'shopping'];
+    if (actKeys[idx]) {
+      const actKey = actKeys[idx];
+      const content = activities[actKey];
+      if (content && content.desc) {
+        const p = card.querySelector('p');
+        if (p) p.textContent = content.desc;
+      }
+      if (content && content.link) {
+        const a = card.querySelector('a');
+        if (a) a.textContent = content.link;
+      }
+    }
+  });
+}
+
+function updateRestaurantsContent() {
+  const rests = translations.restaurants;
+  if (!rests || !rests.cards) return;
+  
+  document.querySelectorAll('.rest-card').forEach((card, idx) => {
+    if (rests.cards[idx]) {
+      const rest = rests.cards[idx];
+      const type = card.querySelector('.rest-type');
+      const name = card.querySelector('h3');
+      const desc = card.querySelector('.rest-desc');
+      
+      if (type) type.textContent = rest.type;
+      if (name) name.textContent = rest.name;
+      if (desc) desc.textContent = rest.desc;
     }
   });
 }

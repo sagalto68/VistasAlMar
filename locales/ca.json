@@ -7,7 +7,8 @@
   },
   "hero": {
     "eyebrow": "Platja d'Aro · Costa Brava",
-    "title": "Vistes<br><em>al Mar</em>",
+    "title": "Vistes",
+    "titleEm": "al Mar",
     "subtitle": "Apartament de disseny · Primera línia de platja",
     "btnAvailability": "Veure disponibilitat",
     "btnMore": "Conèixer més"
@@ -38,11 +39,22 @@
       "🛒 Supermercat 100m"
     ],
     "locationTitle": "📍 Ubicació",
-    "address": "Passatge Bolívar, 7<br>EDIFICI CANNES<br>17250, Platja d'Aro, Girona"
+    "address": "Passatge Bolívar, 7",
+    "addressBuilding": "EDIFICI CANNES",
+    "addressCity": "17250, Platja d'Aro, Girona"
   },
   "gallery": {
     "section": "Galeria",
-    "title": "L'espai en imatges"
+    "title": "L'espai en imatges",
+    "photos": {
+      "hero": "Menjador amb vistes",
+      "beach": "Vistes al mar",
+      "dining": "Menjador",
+      "kitchen": "Cuina",
+      "living": "Saló",
+      "bedroom": "Habitació",
+      "bath": "Bany"
+    }
   },
   "booking": {
     "section": "Reserva",
@@ -54,15 +66,21 @@
     "cleaning": "ℹ️ Despeses de neteja: 80€ que s'afegiran al total de la reserva.",
     "season": "Temporada",
     "total": "Total",
-    "contact": "✉️ <a href=\"mailto:aptopda121@gmail.com\" style=\"color:var(--wave)\">aptopda121@gmail.com</a><br>📍 Passatge Bolívar, 7, Platja d'Aro<br>⚡ Resposta en &lt;24h",
+    "contact": "✉️ aptopda121@gmail.com | 📍 Passatge Bolívar, 7, Platja d'Aro | ⚡ Resposta en <24h",
     "formTitle": "Sol·licitar reserva",
     "name": "Nom",
+    "namePlaceholder": "El teu nom",
     "email": "Email",
+    "emailPlaceholder": "tu@email.com",
     "checkin": "Entrada",
+    "checkinPlaceholder": "Tria al calendari",
     "checkout": "Sortida",
+    "checkoutPlaceholder": "Tria al calendari",
     "guests": "Persones",
     "phone": "Telèfon",
+    "phonePlaceholder": "+34 600 000 000",
     "message": "Missatge (opcional)",
+    "messagePlaceholder": "Cuéntanos algo...",
     "submit": "Enviar sol·licitud →",
     "summary": "📊 Resum",
     "arrival": "Entrada",
@@ -72,7 +90,7 @@
     "paymentNote": "* Pagament el dia d'arribada per Bizum o efectiu",
     "selectDates": "👆 Selecciona dates al calendari",
     "successTitle": "¡Sol·licitud enviada!",
-    "successDesc": "T'hem enviat confirmació al teu email.<br>Et contactarem en &lt;24h."
+    "successDesc": "T'hem enviat confirmació al teu email. Et contactarem en <24h."
   },
   "activities": {
     "section": "Voltants",
@@ -80,32 +98,32 @@
     "desc": "Descobreix tot el que pots fer a prop de l'apartament.",
     "beaches": {
       "title": "Platges properes",
-      "desc": "<strong>Playa de Aro</strong> — 50 metres de l'apartament. Sorra daurada de 2km, aigües cristal·lines amb Bandera Blava. Serveis complets: hamaques, socorrisme, dutxes.<br><br><strong>Cala Rovira</strong> — 2km. Cala semi-urbana tranquil·la, ideal per a famílies amb nens. Fons de sorra i poc onatge.<br><br><strong>Sa Conca (S'Agaró)</strong> — 4km. Platja exclusiva amb aigües turqueses. Passeig marítim amb ambient sofisticat.",
+      "desc": "Playa de Aro — 50 metres de l'apartament. Sorra daurada de 2km, aigües cristal·lines amb Bandera Blava. Serveis complets: hamaques, socorrisme, dutxes. Cala Rovira — 2km. Cala semi-urbana tranquil·la, ideal per a famílies amb nens. Fons de sorra i poc onatge. Sa Conca (S'Agaró) — 4km. Platja exclusiva amb aigües turqueses. Passeig marítim amb ambient sofisticat.",
       "link": "🔗 Veure totes les platges →"
     },
     "ronda": {
       "title": "Camí de Ronda",
-      "desc": "El mític <strong>sender GR-92</strong> que recorre tota la Costa Brava enganxat al mar. Des de Platja d'Aro pots fer rutes de diferent dificultat:<br><br>• <strong>Platja d'Aro → Sant Feliu</strong> (8km, 2h30) — nivell fàcil<br>• <strong>Platja d'Aro → Cala Pedrosa</strong> (4km, 1h15) — nivell mitjà<br>• <strong>Circuit cales de Castell</strong> (6km, 2h) — nivell mitjà-alt",
+      "desc": "El mític sender GR-92 que recorre tota la Costa Brava enganxat al mar. Des de Platja d'Aro pots fer rutes de diferent dificultat: • Platja d'Aro → Sant Feliu (8km, 2h30) — nivell fàcil • Platja d'Aro → Cala Pedrosa (4km, 1h15) — nivell mitjà • Circuit cales de Castell (6km, 2h) — nivell mitjà-alt",
       "link": "🔗 Rutes a Wikiloc →"
     },
     "heritage": {
       "title": "Patrimoni històric",
-      "desc": "<strong>Castell de Benedormiens</strong> — Ruïnes romàniques del s.XI amb vistes 360º. Accés gratuït, 3km des del centre.<br><br><strong>Jardins de Cap Roig</strong> (10km) — Jardí botànic de 17 hectàrees al costat del mar. Festival de música a l'estiu. Entrada: 7€.<br><br><strong>Vila romana de Pla de Palol</strong> — Jaciment arqueològic del s.I-VI. Visites guiades gratuïtes dissabtes.",
+      "desc": "Castell de Benedormiens — Ruïnes romàniques del s.XI amb vistes 360º. Accés gratuït, 3km des del centre. Jardins de Cap Roig (10km) — Jardí botànic de 17 hectàrees al costat del mar. Festival de música a l'estiu. Entrada: 7€. Vila romana de Pla de Palol — Jaciment arqueològic del s.I-VI. Visites guiades gratuïtes dissabtes.",
       "link": "🔗 Info Jardins Cap Roig →"
     },
     "waterSports": {
       "title": "Esports aquàtics",
-      "desc": "<strong>Platja d'Aro Diving Center</strong> — Baptismes des de 50€, immersions per a certificats, cursos PADI. Descobreix el peci \"Boreas\".<br><br><strong>Kayak & SUP</strong> — Lloguer 15€/h. Excursions guiades a cales amagades (35€, 3h). Sortida des de la platja principal.<br><br><strong>Vela & catamarà</strong> — Club Nàutic ofereix cursos setmanals i sortides en velero per la costa (des de 45€).",
+      "desc": "Platja d'Aro Diving Center — Baptismes des de 50€, immersions per a certificats, cursos PADI. Descobreix el peci Boreas. Kayak & SUP — Lloguer 15€/h. Excursions guiades a cales amagades (35€, 3h). Sortida des de la platja principal. Vela & catamarà — Club Nàutic ofereix cursos setmanals i sortides en velero per la costa (des de 45€).",
       "link": "🔗 Centre de busseig →"
     },
     "museums": {
       "title": "Museus i cultura",
-      "desc": "<strong>Casa Museu Dalí (Cadaqués)</strong> — 50km. Residència de l'artista a Portlligat. Visita obligada. Reserva prèvia imprescindible. Entrada: 14€.<br><br><strong>Teatre-Museu Dalí (Figueres)</strong> — 55km. El museu surrealista més visitat d'Espanya. Entrada: 15€.<br><br><strong>Pals</strong> — 15km. Un dels pobles medievals millor conservats de Catalunya. Torre romànica, muralles i carrers empedrats.<br><br><strong>Girona</strong> — 35km. Call Jueu (barri jueu medieval), Catedral, Cases de l'Onyar. Escenari de Joc de Trons.",
+      "desc": "Casa Museu Dalí (Cadaqués) — 50km. Residència de l'artista a Portlligat. Visita obligada. Reserva prèvia imprescindible. Entrada: 14€. Teatre-Museu Dalí (Figueres) — 55km. El museu surrealista més visitat d'Espanya. Entrada: 15€. Pals — 15km. Un dels pobles medievals millor conservats de Catalunya. Torre romànica, muralles i carrers empedrats. Girona — 35km. Call Jueu (barri jueu medieval), Catedral, Cases de l'Onyar. Escenari de Joc de Trons.",
       "link": "🔗 Museus Dalí →"
     },
     "shopping": {
       "title": "Compres i oci",
-      "desc": "<strong>Passeig marítim</strong> — 2km de botigues: moda, artesania, souvenirs, gelateries. Ambient nocturn amb bars i terrasses.<br><br><strong>Mercat setmanal</strong> — Dissabtes al matí a Av. Cavall Bernat. Productes locals, roba, artesania.<br><br><strong>Espai Gironès</strong> (20km) — Centre comercial amb Decathlon, Ikea, Zara, cinemes.<br><br><strong>La Bisbal d'Empordà</strong> (15km) — Capital de la ceràmica catalana. Botigues de ceràmica artesanal i antiguitats.",
+      "desc": "Passeig marítim — 2km de botigues: moda, artesania, souvenirs, gelateries. Ambient nocturn amb bars i terrasses. Mercat setmanal — Dissabtes al matí a Av. Cavall Bernat. Productes locals, roba, artesania. Espai Gironès (20km) — Centre comercial amb Decathlon, Ikea, Zara, cinemes. La Bisbal d'Empordà (15km) — Capital de la ceràmica catalana. Botigues de ceràmica artesanal i antiguitats.",
       "link": "🔗 Guia de compres →"
     }
   },
@@ -114,56 +132,20 @@
     "title": "Restaurants recomanats",
     "desc": "La millor cuina mediterrània a pocs passos de l'apartament.",
     "cards": [
-      {
-        "type": "🌴 Beach Club",
-        "name": "Enjoy Beach Club",
-        "desc": "El local més de moda del passeig marítim. Cuina mediterrània amb tocs asiàtics, còctels premium i sessions DJ. Ambient sofisticat amb gandules davant del mar. Ideal per a vermut i posta de sol."
-      },
-      {
-        "type": "🔥 Braseria",
-        "name": "Pura Brasa",
-        "desc": "Especialistes en carns a la brasa i graella argentina. Chuletons, secret ibèric, costella. Producte de primera qualitat. Terrassa en primera línia de platja amb vistes al mar. Reserva recomanada."
-      },
-      {
-        "type": "🍝 Mediterrània",
-        "name": "Levante Beach Club",
-        "desc": "Cuina mediterrània creativa amb producte local. Arrossos, peixos frescos i pasta artesanal. Ambient chill-out amb música lounge. Perfecte per a àpats llargs davant del mar."
-      },
-      {
-        "type": "🐟 Peix fresc",
-        "name": "La Taverna del Mar",
-        "desc": "Clàssic imprescindible del port. Peix del dia, suquet de rap, fideuà i marisc. Cuina marinera tradicional catalana. Terrassa amb vistes al port esportiu. Imprescindible reservar a l'estiu."
-      },
-      {
-        "type": "🍕 Italiana",
-        "name": "Pizzeria Bella Napoli",
-        "desc": "Autèntica pizza napolitana amb massa mare i forn de llenya. Ingredients importats d'Itàlia. Ambient familiar i acollidor. Preus ajustats, ideal per a sopars amb nens. També pasta fresca casolana."
-      },
-      {
-        "type": "🍔 Burger & Gin Bar",
-        "name": "NIVO Beach Club",
-        "desc": "Hamburgueses gourmet, poke bowls i amanides premium. Carta de gin-tonics amb més de 40 referències. Música en viu els caps de setmana. Ambient jove i desenfadat. Perfecte després de platja."
-      },
-      {
-        "type": "🍝 Italiana",
-        "name": "Basilico",
-        "desc": "Autèntica cuina italiana amb pasta fresca casolana i pizzes al forn de llenya. Ingredients importats directament d'Itàlia. Terrassa acollidora amb vistes al passeig. Ambient familiar i romàntic."
-      },
-      {
-        "type": "🥩 Assador",
-        "name": "Txots",
-        "desc": "Chuletons de bou a la brasa i peixos frescos a la graella. Cuina basca de producte. Carta de vins amb referències de Rioja i Ribera. Reserva recomanada en temporada alta."
-      },
-      {
-        "type": "🍦 Gelateria",
-        "name": "Dinos Ice Cream",
-        "desc": "Gelats artesanals amb sabors únics i tradicionals. Més de 30 varietats, granissats i batuts naturals. Perfecte per després de platja. Els nens adoren l'ambient colorit i divertit."
-      }
+      {"type": "🌴 Beach Club", "name": "Enjoy Beach Club", "desc": "El local més de moda del passeig marítim. Cuina mediterrània amb tocs asiàtics, còctels premium i sessions DJ. Ambient sofisticat amb gandules davant del mar. Ideal per a vermut i posta de sol."},
+      {"type": "🔥 Braseria", "name": "Pura Brasa", "desc": "Especialistes en carns a la brasa i graella argentina. Chuletons, secret ibèric, costella. Producte de primera qualitat. Terrassa en primera línia de platja amb vistes al mar. Reserva recomanada."},
+      {"type": "🍝 Mediterrània", "name": "Levante Beach Club", "desc": "Cuina mediterrània creativa amb producte local. Arrossos, peixos frescos i pasta artesanal. Ambient chill-out amb música lounge. Perfecte per a àpats llargs davant del mar."},
+      {"type": "🐟 Peix fresc", "name": "La Taverna del Mar", "desc": "Clàssic imprescindible del port. Peix del dia, suquet de rap, fideuà i marisc. Cuina marinera tradicional catalana. Terrassa amb vistes al port esportiu. Imprescindible reservar a l'estiu."},
+      {"type": "🍕 Italiana", "name": "Pizzeria Bella Napoli", "desc": "Autèntica pizza napolitana amb massa mare i forn de llenya. Ingredients importats d'Itàlia. Ambient familiar i acollidor. Preus ajustats, ideal per a sopars amb nens. També pasta fresca casolana."},
+      {"type": "🍔 Burger & Gin Bar", "name": "NIVO Beach Club", "desc": "Hamburgueses gourmet, poke bowls i amanides premium. Carta de gin-tonics amb més de 40 referències. Música en viu els caps de setmana. Ambient jove i desenfadat. Perfecte després de platja."},
+      {"type": "🍝 Italiana", "name": "Basilico", "desc": "Autèntica cuina italiana amb pasta fresca casolana i pizzes al forn de llenya. Ingredients importats directament d'Itàlia. Terrassa acollidora amb vistes al passeig. Ambient familiar i romàntic."},
+      {"type": "🥩 Assador", "name": "Txots", "desc": "Chuletons de bou a la brasa i peixos frescos a la graella. Cuina basca de producte. Carta de vins amb referències de Rioja i Ribera. Reserva recomanada en temporada alta."},
+      {"type": "🍦 Gelateria", "name": "Dinos Ice Cream", "desc": "Gelats artesanals amb sabors únics i tradicionals. Més de 30 varietats, granissats i batuts naturals. Perfecte per després de platja. Els nens adoren l'ambient colorit i divertit."}
     ]
   },
   "footer": {
     "logo": "Vistes al Mar",
-    "location": "Platja d'Aro · Costa Brava · <a href=\"mailto:aptopda121@gmail.com\">aptopda121@gmail.com</a>",
+    "locationText": "Platja d'Aro · Costa Brava",
     "copyright": "© 2025 Vistes al Mar"
   },
   "admin": {
@@ -176,6 +158,12 @@
     "pending": "Pendents",
     "revenue": "Ingressos",
     "pendingBookings": "Reserves pendents"
+  },
+  "languages": {
+    "es": "🇪🇸 Español",
+    "ca": "🇪🇸 Català",
+    "fr": "🇫🇷 Français",
+    "en": "🇬🇧 English"
   },
   "days": ["Dl", "Dt", "Dc", "Dj", "Dv", "Ds", "Dg"],
   "months": ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"],
