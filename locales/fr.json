@@ -164,10 +164,10 @@
     "pendingBookings": "Réservations en attente"
   },
   "languages": {
-    "es": "🇪🇸 ES",
-    "ca": "🇨🇦 CA",
-    "fr": "🇫🇷 FR",
-    "en": "🇬🇧 EN"
+    "es": "Español 🇪🇸",
+    "ca": "Català 🇨🇦",
+    "fr": "Français 🇫🇷",
+    "en": "English 🇬🇧"
   },
   "days": ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"],
   "months": ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"],

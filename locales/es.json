@@ -153,10 +153,10 @@
     "copyright": "© 2025 Vistas al Mar"
   },
   "languages": {
-    "es": "🇪🇸 ES",
-    "ca": "🇨🇦 CA",
-    "fr": "🇫🇷 FR",
-    "en": "🇬🇧 EN"
+    "es": "Español 🇪🇸",
+    "ca": "Català 🇨🇦",
+    "fr": "Français 🇫🇷",
+    "en": "English 🇬🇧"
   },
   "admin": {
     "title": "📊 Panel Admin",
