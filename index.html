@@ -19,12 +19,13 @@
 <li><a href="#restaurantes" data-i18n="nav.restaurantes">Restaurantes</a></li>
 </ul>
 <div class="lang-selector">
-<select id="langSelect">
-<option value="es" data-label="languages.es">ES</option>
-<option value="ca" data-label="languages.ca">CA</option>
-<option value="fr" data-label="languages.fr">FR</option>
-<option value="en" data-label="languages.en">EN</option>
-</select>
+<button class="lang-btn" id="langBtn">Español 🇪🇸</button>
+<div class="lang-dropdown" id="langDropdown">
+  <button class="lang-option" data-lang="es">Español 🇪🇸</button>
+  <button class="lang-option" data-lang="ca">Català 🇨🇦</button>
+  <button class="lang-option" data-lang="fr">Français 🇫🇷</button>
+  <button class="lang-option" data-lang="en">English 🇬🇧</button>
+</div>
 </div>
 <button class="nav-menu-btn" onclick="toggleMenu()">☰</button>
 </div>

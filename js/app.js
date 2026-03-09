@@ -414,9 +414,34 @@ function initI18n() {
   const supported = ['es', 'ca', 'fr', 'en'];
   currentLang = supported.includes(browserLang) ? browserLang : 'es';
   loadTranslations(currentLang);
-  document.getElementById('langSelect').value = currentLang;
-  document.getElementById('langSelect').addEventListener('change', function(e) {
-    loadTranslations(e.target.value);
+  
+  // Setup language dropdown
+  const langBtn = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+  const langOptions = document.querySelectorAll('.lang-option');
+  
+  if (langBtn) {
+    langBtn.addEventListener('click', function() {
+      langDropdown.classList.toggle('show');
+    });
+  }
+  
+  langOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const newLang = this.getAttribute('data-lang');
+      loadTranslations(newLang);
+      langDropdown.classList.remove('show');
+      langBtn.textContent = this.textContent;
+      langOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.lang-selector')) {
+      langDropdown.classList.remove('show');
+    }
   });
 }
 
@@ -472,18 +497,13 @@ function applyTranslations() {
     }
   });
   
-  // Update language selector labels
-  document.querySelectorAll('#langSelect option').forEach(opt => {
-    const label = opt.getAttribute('data-label');
-    if (label) {
-      const keys = label.split('.');
-      let value = translations;
-      for (const k of keys) {
-        value = value && value[k];
-      }
-      if (value) {
-        opt.textContent = value;
-      }
+  // Update language dropdown options
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    const lang = opt.getAttribute('data-lang');
+    if (lang === currentLang) {
+      opt.classList.add('active');
+    } else {
+      opt.classList.remove('active');
     }
   });
   
