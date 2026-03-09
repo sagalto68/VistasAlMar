@@ -495,6 +495,12 @@ function applyTranslations() {
   updateActivitiesContent();
   // Translate restaurants content
   updateRestaurantsContent();
+  
+  // Update amenities
+  if (translations.about && translations.about.amenities) {
+    const amenitiesDiv = document.getElementById('amenitiesList');
+    amenitiesDiv.innerHTML = translations.about.amenities.map(amen => `<span class="amen">${amen}</span>`).join('');
+  }
 }
 
 function updateDynamicElements() {

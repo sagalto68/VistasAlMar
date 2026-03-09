@@ -18,7 +18,11 @@
     "rooms": "Chambres",
     "location": "Emplacement",
     "from": "À partir de",
-    "wifi": "WiFi"
+    "wifi": "WiFi",
+    "personas": "4 personnes",
+    "habitaciones": "1 + canapé-lit",
+    "ubicacion": "Première ligne",
+    "incluido": "Inclus"
   },
   "about": {
     "section": "L'Appartement",
@@ -48,7 +52,7 @@
     "title": "L'espace en images",
     "photos": {
       "hero": "Salle à manger avec vue",
-      "beach": "Vues sur la mer",
+      "beach": "Plage",
       "dining": "Salle à manger",
       "kitchen": "Cuisine",
       "living": "Salon",
@@ -160,10 +164,10 @@
     "pendingBookings": "Réservations en attente"
   },
   "languages": {
-    "es": "🇪🇸 Español",
-    "ca": "🇪🇸 Català",
-    "fr": "🇫🇷 Français",
-    "en": "🇬🇧 English"
+    "es": "🇪🇸 ES",
+    "ca": "🇨🇦 CA",
+    "fr": "🇫🇷 FR",
+    "en": "🇬🇧 EN"
   },
   "days": ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"],
   "months": ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"],
