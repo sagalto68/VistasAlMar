@@ -152,13 +152,7 @@
     "locationText": "Platja d'Aro · Costa Brava",
     "copyright": "© 2025 Vistes al Mar"
   },
-  "languages": {
-    "es": "Español 🇪🇸",
-    "ca": "Català 🇨🇦",
-    "fr": "Français 🇫🇷",
-    "en": "English 🇬🇧"
-  },
-  "admin": {
+   "admin": {
     "title": "📊 Panell Admin",
     "refresh": "Actualitzar",
     "visitsToday": "Visites avui",
