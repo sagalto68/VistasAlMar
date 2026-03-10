@@ -19,6 +19,259 @@ const CONFIG = {
   ADMIN_SECRET:   "Sergio0505!",
 };
 
+// ============================================================
+// EMAIL TRANSLATIONS
+// ============================================================
+
+const EMAIL_TRANSLATIONS = {
+  es: {
+    pending: {
+      subject: "⏳ Solicitud recibida — {APARTMENT_NAME}",
+      header: "⏳ Solicitud recibida — confirmamos en <24h",
+      greeting: "¡Hola, {NOMBRE}!",
+      received: "Hemos recibido tu solicitud.",
+      bookingId: "Nº",
+      checkin: "Llegada",
+      checkout: "Salida",
+      nights: "Noches",
+      perNight: "× {PRECIO}€/noche",
+      people: "Personas",
+      total: "Total",
+      includesCleaning: "Incluye limpieza",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    confirmed: {
+      subject: "✅ Reserva CONFIRMADA — {APARTMENT_NAME}",
+      header: "✅ ¡RESERVA CONFIRMADA!",
+      greeting: "¡Hola, {NOMBRE}! 🎉",
+      confirmed: "Tu reserva está confirmada. ¡Te esperamos!",
+      bookingId: "📋 {ID}",
+      checkin: "Llegada",
+      checkout: "Salida",
+      nights: "Noches",
+      perNight: "× {PRECIO}€/noche",
+      people: "Personas",
+      total: "Total",
+      includesCleaning: "Incluye limpieza",
+      payment: "💶 Pago",
+      paymentText: "Pago <strong>el día de llegada</strong> por <strong>Bizum o efectivo</strong>.<br>Bizum: <strong>{PHONE}</strong>",
+      checkinTitle: "🔑 Check-in",
+      checkinText: "<li>Contacta para coordinar entrega de llaves</li><li><strong>Entrada:</strong> desde las <strong>16:00h</strong></li><li><strong>Salida:</strong> antes de las <strong>12:00h</strong></li><li>WiFi en el router</li>",
+      rulesTitle: "📌 Normas",
+      rulesText: "<li>🚭 Prohibido fumar</li><li>🎉 No fiestas</li><li>🤫 Respetar descanso vecinal</li>",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    cancelled: {
+      subject: "❌ Reserva Cancelada — {APARTMENT_NAME}",
+      header: "❌ Reserva Cancelada",
+      greeting: "Hola, {NOMBRE}",
+      cancelled: "Lamentamos informarte de que tu reserva ha sido cancelada.",
+      bookingId: "Reserva",
+      checkin: "Llegada",
+      checkout: "Salida",
+      reason: "📝 Motivo",
+      sorry: "Sentimos los inconvenientes.",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    }
+  },
+  ca: {
+    pending: {
+      subject: "⏳ Sol·licitud rebuda — {APARTMENT_NAME}",
+      header: "⏳ Sol·licitud rebuda — confirmem en <24h",
+      greeting: "Hola, {NOMBRE}!",
+      received: "Hem rebut la teva sol·licitud.",
+      bookingId: "Núm.",
+      checkin: "Arribada",
+      checkout: "Sortida",
+      nights: "Nits",
+      perNight: "× {PRECIO}€/nit",
+      people: "Persones",
+      total: "Total",
+      includesCleaning: "Inclou neteja",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    confirmed: {
+      subject: "✅ Reserva CONFIRMADA — {APARTMENT_NAME}",
+      header: "✅ ¡RESERVA CONFIRMADA!",
+      greeting: "Hola, {NOMBRE}! 🎉",
+      confirmed: "La teva reserva està confirmada. ¡T'esperem!",
+      bookingId: "📋 {ID}",
+      checkin: "Arribada",
+      checkout: "Sortida",
+      nights: "Nits",
+      perNight: "× {PRECIO}€/nit",
+      people: "Persones",
+      total: "Total",
+      includesCleaning: "Inclou neteja",
+      payment: "💶 Pagament",
+      paymentText: "Pagament <strong>el dia d'arribada</strong> per <strong>Bizum o efectiu</strong>.<br>Bizum: <strong>{PHONE}</strong>",
+      checkinTitle: "🔑 Check-in",
+      checkinText: "<li>Contacta per coordinar l'entrega de claus</li><li><strong>Entrada:</strong> des de les <strong>16:00h</strong></li><li><strong>Sortida:</strong> abans de les <strong>12:00h</strong></li><li>WiFi al router</li>",
+      rulesTitle: "📌 Normes",
+      rulesText: "<li>🚭 Prohibit fumar</li><li>🎉 No festes</li><li>🤫 Respectar el descans veïnal</li>",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    cancelled: {
+      subject: "❌ Reserva Cancel·lada — {APARTMENT_NAME}",
+      header: "❌ Reserva Cancel·lada",
+      greeting: "Hola, {NOMBRE}",
+      cancelled: "Lamentem informar-te que la teva reserva ha estat cancel·lada.",
+      bookingId: "Reserva",
+      checkin: "Arribada",
+      checkout: "Sortida",
+      reason: "📝 Motiu",
+      sorry: "Sentim les molèsties.",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    }
+  },
+  fr: {
+    pending: {
+      subject: "⏳ Demande reçue — {APARTMENT_NAME}",
+      header: "⏳ Demande reçue — confirmation en <24h",
+      greeting: "Bonjour, {NOMBRE} !",
+      received: "Nous avons reçu votre demande.",
+      bookingId: "N°",
+      checkin: "Arrivée",
+      checkout: "Départ",
+      nights: "Nuits",
+      perNight: "× {PRECIO}€/nuit",
+      people: "Personnes",
+      total: "Total",
+      includesCleaning: "Inclut nettoyage",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    confirmed: {
+      subject: "✅ RÉSERVATION CONFIRMÉE — {APARTMENT_NAME}",
+      header: "✅ RÉSERVATION CONFIRMÉE !",
+      greeting: "Bonjour, {NOMBRE} ! 🎉",
+      confirmed: "Votre réservation est confirmée. Nous vous attendons !",
+      bookingId: "📋 {ID}",
+      checkin: "Arrivée",
+      checkout: "Départ",
+      nights: "Nuits",
+      perNight: "× {PRECIO}€/nuit",
+      people: "Personnes",
+      total: "Total",
+      includesCleaning: "Inclut nettoyage",
+      payment: "💶 Paiement",
+      paymentText: "Paiement <strong>le jour d'arrivée</strong> par <strong>Bizum ou espèces</strong>.<br>Bizum : <strong>{PHONE}</strong>",
+      checkinTitle: "🔑 Check-in",
+      checkinText: "<li>Contactez pour coordonner la remise des clés</li><li><strong>Arrivée :</strong> à partir de <strong>16h00</strong></li><li><strong>Départ :</strong> avant <strong>12h00</strong></li><li>WiFi sur le routeur</li>",
+      rulesTitle: "📌 Règles",
+      rulesText: "<li>🚭 Interdiction de fumer</li><li>🎉 Pas de fête</li><li>🤫 Respecter le repos des voisins</li>",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    cancelled: {
+      subject: "❌ Réservation annulée — {APARTMENT_NAME}",
+      header: "❌ Réservation annulée",
+      greeting: "Bonjour, {NOMBRE}",
+      cancelled: "Nous regrettons de vous informer que votre réservation a été annulée.",
+      bookingId: "Réservation",
+      checkin: "Arrivée",
+      checkout: "Départ",
+      reason: "📝 Motif",
+      sorry: "Nous regrettons les désagréments.",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    }
+  },
+  en: {
+    pending: {
+      subject: "⏳ Request received — {APARTMENT_NAME}",
+      header: "⏳ Request received — we confirm in <24h",
+      greeting: "Hello, {NOMBRE}!",
+      received: "We have received your request.",
+      bookingId: "No.",
+      checkin: "Check-in",
+      checkout: "Check-out",
+      nights: "Nights",
+      perNight: "× {PRECIO}€/night",
+      people: "People",
+      total: "Total",
+      includesCleaning: "Includes cleaning",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    confirmed: {
+      subject: "✅ BOOKING CONFIRMED — {APARTMENT_NAME}",
+      header: "✅ BOOKING CONFIRMED!",
+      greeting: "Hello, {NOMBRE}! 🎉",
+      confirmed: "Your booking is confirmed. We look forward to welcoming you!",
+      bookingId: "📋 {ID}",
+      checkin: "Check-in",
+      checkout: "Check-out",
+      nights: "Nights",
+      perNight: "× {PRECIO}€/night",
+      people: "People",
+      total: "Total",
+      includesCleaning: "Includes cleaning",
+      payment: "💶 Payment",
+      paymentText: "Payment <strong>on arrival day</strong> by <strong>Bizum or cash</strong>.<br>Bizum: <strong>{PHONE}</strong>",
+      checkinTitle: "🔑 Check-in",
+      checkinText: "<li>Contact to coordinate key handover</li><li><strong>Check-in:</strong> from <strong>4:00 PM</strong></li><li><strong>Check-out:</strong> before <strong>12:00 PM</strong></li><li>WiFi on the router</li>",
+      rulesTitle: "📌 Rules",
+      rulesText: "<li>🚭 No smoking</li><li>🎉 No parties</li><li>🤫 Respect neighbor's rest</li>",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    },
+    cancelled: {
+      subject: "❌ Booking cancelled — {APARTMENT_NAME}",
+      header: "❌ Booking cancelled",
+      greeting: "Hello, {NOMBRE}",
+      cancelled: "We regret to inform you that your booking has been cancelled.",
+      bookingId: "Booking",
+      checkin: "Check-in",
+      checkout: "Check-out",
+      reason: "📝 Reason",
+      sorry: "We apologize for any inconvenience.",
+      contact: "📞 <strong>{PHONE}</strong> · ✉️ <a href=\"mailto:{EMAIL}\" style=\"color:#1e5f8c;\">{EMAIL}</a>",
+      footer: "{APARTMENT_NAME}"
+    }
+  }
+};
+
+// ============================================================
+// EMAIL HELPER FUNCTIONS
+// ============================================================
+
+function getEmailTranslations(lang, type) {
+  const defaultLang = 'es';
+  const safeLang = EMAIL_TRANSLATIONS[lang] ? lang : defaultLang;
+  return EMAIL_TRANSLATIONS[safeLang][type] || EMAIL_TRANSLATIONS[defaultLang][type];
+}
+
+function formatEmailText(text, replacements) {
+  let result = text;
+  for (const [key, value] of Object.entries(replacements)) {
+    result = result.replace(new RegExp(`{${key}}`, 'g'), value);
+  }
+  return result;
+}
+
+function getLocalizedDate(date, lang) {
+  const locales = {
+    es: 'es-ES',
+    ca: 'ca-ES', 
+    fr: 'fr-FR',
+    en: 'en-GB'
+  };
+  const locale = locales[lang] || 'es-ES';
+  return date.toLocaleDateString(locale, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
 function getWebAppBaseUrl() {
   // Devuelve la URL base del Web App (termina en /exec)
   return ScriptApp.getService().getUrl();
@@ -36,12 +289,13 @@ function onSheetEdit(e) {
 
   if (col === 10) {
     const newStatus = e.range.getValue().toString().trim();
-    const rowData   = sheet.getRange(row, 1, 1, 13).getValues()[0];
+    const rowData   = sheet.getRange(row, 1, 1, 14).getValues()[0];
     const booking   = {
       id: rowData[0], nombre: rowData[2], email: rowData[3],
       checkin: rowData[4], checkout: rowData[5], personas: rowData[6],
       telefono: rowData[7], total: rowData[8], estado: rowData[9],
-      motivo: rowData[10], calEventId: rowData[11], desglose: rowData[12]
+      motivo: rowData[10], calEventId: rowData[11], desglose: rowData[12],
+      lang: rowData[13] || 'es'
     };
     if (newStatus === 'Confirmada') {
       sendConfirmationEmail(booking);
@@ -158,7 +412,8 @@ function createBooking(data) {
     'Pendiente',           // J: estado
     '',                    // K: motivo cancelación
     '',                    // L: ID evento calendario
-    data.desglose || ''    // M: desglose textual
+    data.desglose || '',   // M: desglose textual
+    data.lang || 'es'      // N: idioma
   ]);
   
   sendOwnerNotification(data, id);
@@ -187,7 +442,8 @@ function updateBookingStatus(id, newStatus, motivo) {
         estado: newStatus,
         motivo: motivo || row[10],
         calEventId: row[11],
-        desglose: row[12]
+        desglose: row[12],
+        lang: row[13] || 'es'
       };
 
       // Actualizamos estado y motivo en la hoja
@@ -308,10 +564,22 @@ function removeFromCalendar(b) {
 // ============================================================
 
 function sendConfirmationEmail(b) {
-  const checkin  = new Date(b.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const checkout = new Date(b.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const lang = b.lang || 'es';
+  const t = getEmailTranslations(lang, 'confirmed');
+  
+  const checkin  = getLocalizedDate(new Date(b.checkin), lang);
+  const checkout = getLocalizedDate(new Date(b.checkout), lang);
   const nights   = Math.round((new Date(b.checkout) - new Date(b.checkin)) / (1000*60*60*24));
   const precioNoche = nights > 0 ? Math.round(b.total / nights) : 0;
+  
+  const replacements = {
+    APARTMENT_NAME: CONFIG.APARTMENT_NAME,
+    NOMBRE: b.nombre,
+    ID: b.id,
+    PRECIO: precioNoche,
+    PHONE: CONFIG.OWNER_PHONE,
+    EMAIL: CONFIG.PUBLIC_EMAIL
+  };
   
   const html = `
   <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
@@ -321,62 +589,67 @@ function sendConfirmationEmail(b) {
       <p style="color:#4ab3d6;margin:6px 0 0;font-size:14px;">Playa de Aro · Costa Brava</p>
     </div>
     <div style="background:#27ae60;padding:14px;text-align:center;">
-      <p style="color:white;margin:0;font-weight:600;">✅ ¡RESERVA CONFIRMADA!</p>
+      <p style="color:white;margin:0;font-weight:600;">${t.header}</p>
     </div>
     <div style="background:white;padding:32px;">
-      <h2 style="color:#0d3550;margin-top:0;">¡Hola, ${b.nombre}! 🎉</h2>
-      <p style="color:#444;line-height:1.7;">Tu reserva está confirmada. ¡Te esperamos!</p>
+      <h2 style="color:#0d3550;margin-top:0;">${formatEmailText(t.greeting, replacements)}</h2>
+      <p style="color:#444;line-height:1.7;">${t.confirmed}</p>
       <div style="background:#f0f7ff;border-radius:12px;padding:24px;margin:20px 0;">
-        <h3 style="color:#1e5f8c;margin:0 0 14px;font-size:14px;text-transform:uppercase;">📋 ${b.id}</h3>
+        <h3 style="color:#1e5f8c;margin:0 0 14px;font-size:14px;text-transform:uppercase;">${formatEmailText(t.bookingId, {ID: b.id})}</h3>
         <table style="width:100%;">
-          <tr><td style="padding:7px 0;color:#666;width:130px;">Llegada</td><td style="font-weight:700;">${checkin}</td></tr>
-          <tr><td style="padding:7px 0;color:#666;">Salida</td><td style="font-weight:700;">${checkout}</td></tr>
-          <tr><td style="padding:7px 0;color:#666;">Noches</td><td>${nights} × ${precioNoche}€/noche</td></tr>
-          <tr><td style="padding:7px 0;color:#666;">Personas</td><td>${b.personas}</td></tr>
-          <tr><td style="padding:7px 0;color:#666;font-weight:700;border-top:1px solid #e0e8f0;padding-top:12px;">Total</td>
+          <tr><td style="padding:7px 0;color:#666;width:130px;">${t.checkin}</td><td style="font-weight:700;">${checkin}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">${t.checkout}</td><td style="font-weight:700;">${checkout}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">${t.nights}</td><td>${nights} ${formatEmailText(t.perNight, {PRECIO: precioNoche})}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;">${t.people}</td><td>${b.personas}</td></tr>
+          <tr><td style="padding:7px 0;color:#666;font-weight:700;border-top:1px solid #e0e8f0;padding-top:12px;">${t.total}</td>
               <td style="font-size:22px;font-weight:700;color:#e8734a;border-top:1px solid #e0e8f0;padding-top:12px;">${b.total}€</td></tr>
         </table>
-        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">Incluye limpieza</p>
+        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">${t.includesCleaning}</p>
       </div>
       <div style="background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
-        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">💶 Pago</h3>
-        <p style="color:#78350f;margin:0;line-height:1.7;font-size:14px;">Pago <strong>el día de llegada</strong> por <strong>Bizum o efectivo</strong>.<br>Bizum: <strong>${CONFIG.OWNER_PHONE}</strong></p>
+        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">${t.payment}</h3>
+        <p style="color:#78350f;margin:0;line-height:1.7;font-size:14px;">${formatEmailText(t.paymentText, {PHONE: CONFIG.OWNER_PHONE})}</p>
       </div>
       <div style="background:#e8f5e9;border-left:4px solid #4caf50;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
-        <h3 style="color:#1b5e20;margin:0 0 8px;font-size:13px;text-transform:uppercase;">🔑 Check-in</h3>
+        <h3 style="color:#1b5e20;margin:0 0 8px;font-size:13px;text-transform:uppercase;">${t.checkinTitle}</h3>
         <ul style="color:#2e7d32;margin:0;padding-left:18px;line-height:2.2;font-size:14px;">
-          <li>Contacta para coordinar entrega de llaves</li>
-          <li><strong>Entrada:</strong> desde las <strong>16:00h</strong></li>
-          <li><strong>Salida:</strong> antes de las <strong>12:00h</strong></li>
-          <li>WiFi en el router</li>
+          ${t.checkinText}
         </ul>
       </div>
       <div style="background:#fce4ec;border-left:4px solid #e91e63;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
-        <h3 style="color:#880e4f;margin:0 0 8px;font-size:13px;text-transform:uppercase;">📌 Normas</h3>
+        <h3 style="color:#880e4f;margin:0 0 8px;font-size:13px;text-transform:uppercase;">${t.rulesTitle}</h3>
         <ul style="color:#6a1039;margin:0;padding-left:18px;line-height:2.2;font-size:14px;">
-          <li>🚭 Prohibido fumar</li>
-          <li>🎉 No fiestas</li>
-          <li>🤫 Respetar descanso vecinal</li>
+          ${t.rulesText}
         </ul>
       </div>
       <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;">
         <p style="color:#1565c0;margin:0;font-size:14px;">
-          📞 <strong>${CONFIG.OWNER_PHONE}</strong> · 
-          ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a>
+          ${formatEmailText(t.contact, replacements)}
         </p>
       </div>
     </div>
-    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${formatEmailText(t.footer, replacements)}</p></div>
   </div>`;
   
-  MailApp.sendEmail({ to: b.email, subject: `✅ Reserva CONFIRMADA — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+  MailApp.sendEmail({ to: b.email, subject: formatEmailText(t.subject, replacements), htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
   MailApp.sendEmail({ to: CONFIG.OWNER_EMAIL, subject: `📤 Confirmación enviada — ${b.nombre} (${b.id})`, htmlBody: '<p>Confirmación enviada. Evento en calendario.</p>' });
 }
 
 function sendCancellationEmail(b) {
-  const checkin  = new Date(b.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const checkout = new Date(b.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const lang = b.lang || 'es';
+  const t = getEmailTranslations(lang, 'cancelled');
+  
+  const checkin  = getLocalizedDate(new Date(b.checkin), lang);
+  const checkout = getLocalizedDate(new Date(b.checkout), lang);
   const motivo   = b.motivo ? b.motivo.toString().trim() : '';
+  
+  const replacements = {
+    APARTMENT_NAME: CONFIG.APARTMENT_NAME,
+    NOMBRE: b.nombre,
+    ID: b.id,
+    PHONE: CONFIG.OWNER_PHONE,
+    EMAIL: CONFIG.PUBLIC_EMAIL
+  };
   
   const html = `
   <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
@@ -384,34 +657,46 @@ function sendCancellationEmail(b) {
       <div style="font-size:2.5rem;">🌊</div>
       <h1 style="color:white;margin:8px 0 0;font-size:26px;">Vistas al Mar</h1>
     </div>
-    <div style="background:#c0392b;padding:14px;text-align:center;"><p style="color:white;margin:0;font-weight:600;">❌ Reserva Cancelada</p></div>
+    <div style="background:#c0392b;padding:14px;text-align:center;"><p style="color:white;margin:0;font-weight:600;">${t.header}</p></div>
     <div style="background:white;padding:32px;">
-      <h2 style="color:#0d3550;margin-top:0;">Hola, ${b.nombre}</h2>
-      <p style="color:#444;line-height:1.7;">Lamentamos informarte de que tu reserva ha sido cancelada.</p>
+      <h2 style="color:#0d3550;margin-top:0;">${formatEmailText(t.greeting, replacements)}</h2>
+      <p style="color:#444;line-height:1.7;">${t.cancelled}</p>
       <div style="background:#fff5f5;border-radius:12px;padding:20px;margin:20px 0;border:1px solid #fecaca;">
-        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:130px;">Reserva</td><td style="font-weight:700;">${b.id}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Llegada</td><td>${checkin}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Salida</td><td>${checkout}</td></tr></table>
+        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:130px;">${t.bookingId}</td><td style="font-weight:700;">${b.id}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.checkin}</td><td>${checkin}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.checkout}</td><td>${checkout}</td></tr></table>
       </div>
       ${motivo ? `<div style="background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:20px;">
-        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">📝 Motivo</h3>
+        <h3 style="color:#92400e;margin:0 0 8px;font-size:13px;text-transform:uppercase;">${t.reason}</h3>
         <p style="color:#78350f;margin:0;line-height:1.7;">${motivo}</p></div>` : ''}
-      <p style="color:#444;line-height:1.7;">Sentimos los inconvenientes.</p>
+      <p style="color:#444;line-height:1.7;">${t.sorry}</p>
       <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;margin-top:20px;">
-        <p style="color:#1565c0;margin:0;">📞 <strong>${CONFIG.OWNER_PHONE}</strong> · ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a></p>
+        <p style="color:#1565c0;margin:0;">${formatEmailText(t.contact, replacements)}</p>
       </div>
     </div>
-    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${formatEmailText(t.footer, replacements)}</p></div>
   </div>`;
   
-  MailApp.sendEmail({ to: b.email, subject: `❌ Reserva cancelada — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+  MailApp.sendEmail({ to: b.email, subject: formatEmailText(t.subject, replacements), htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
 }
 
 function sendPendingConfirmation(data, id) {
-  const checkin  = new Date(data.checkin).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const checkout = new Date(data.checkout).toLocaleDateString('es-ES', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const lang = data.lang || 'es';
+  const t = getEmailTranslations(lang, 'pending');
+  
+  const checkin  = getLocalizedDate(new Date(data.checkin), lang);
+  const checkout = getLocalizedDate(new Date(data.checkout), lang);
   const nights   = Math.round((new Date(data.checkout) - new Date(data.checkin)) / (1000*60*60*24));
   const precioNoche = nights > 0 ? Math.round(data.montoTotal / nights) : 0;
+  
+  const replacements = {
+    APARTMENT_NAME: CONFIG.APARTMENT_NAME,
+    NOMBRE: data.nombre,
+    ID: id,
+    PRECIO: precioNoche,
+    PHONE: CONFIG.OWNER_PHONE,
+    EMAIL: CONFIG.PUBLIC_EMAIL
+  };
   
   const html = `
   <div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;border-radius:16px;overflow:hidden;">
@@ -419,29 +704,29 @@ function sendPendingConfirmation(data, id) {
       <div style="font-size:2.5rem;">🌊</div>
       <h1 style="color:white;margin:8px 0 0;font-size:26px;">Vistas al Mar</h1>
     </div>
-    <div style="background:#1e5f8c;padding:14px;text-align:center;"><p style="color:white;margin:0;">⏳ Solicitud recibida — confirmamos en &lt;24h</p></div>
+    <div style="background:#1e5f8c;padding:14px;text-align:center;"><p style="color:white;margin:0;">${formatEmailText(t.header, replacements)}</p></div>
     <div style="background:white;padding:32px;">
-      <h2 style="color:#0d3550;margin-top:0;">¡Hola, ${data.nombre}!</h2>
-      <p style="color:#444;line-height:1.7;">Hemos recibido tu solicitud.</p>
+      <h2 style="color:#0d3550;margin-top:0;">${formatEmailText(t.greeting, replacements)}</h2>
+      <p style="color:#444;line-height:1.7;">${t.received}</p>
       <div style="background:#f0f7ff;border-radius:12px;padding:20px;margin:20px 0;">
-        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:140px;">Nº</td><td style="font-weight:700;">${id}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Llegada</td><td>${checkin}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Salida</td><td>${checkout}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Noches</td><td>${nights} × ${precioNoche}€/noche</td></tr>
-          <tr><td style="padding:6px 0;color:#666;">Personas</td><td>${data.personas}</td></tr>
-          <tr><td style="padding:6px 0;color:#666;font-weight:700;border-top:1px solid #dde8f5;padding-top:10px;">Total</td>
+        <table style="width:100%;"><tr><td style="padding:6px 0;color:#666;width:140px;">${t.bookingId}</td><td style="font-weight:700;">${id}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.checkin}</td><td>${checkin}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.checkout}</td><td>${checkout}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.nights}</td><td>${nights} ${formatEmailText(t.perNight, {PRECIO: precioNoche})}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;">${t.people}</td><td>${data.personas}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;font-weight:700;border-top:1px solid #dde8f5;padding-top:10px;">${t.total}</td>
               <td style="font-size:20px;font-weight:700;color:#e8734a;border-top:1px solid #dde8f5;padding-top:10px;">${data.montoTotal}€</td></tr>
         </table>
-        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">Incluye limpieza</p>
+        <p style="font-size:0.8rem;color:#888;margin:8px 0 0;">${t.includesCleaning}</p>
       </div>
       <div style="background:#e3f2fd;border-radius:12px;padding:16px;text-align:center;">
-        <p style="color:#1565c0;margin:0;">📞 <strong>${CONFIG.OWNER_PHONE}</strong> · ✉️ <a href="mailto:${CONFIG.PUBLIC_EMAIL}" style="color:#1e5f8c;">${CONFIG.PUBLIC_EMAIL}</a></p>
+        <p style="color:#1565c0;margin:0;">${formatEmailText(t.contact, replacements)}</p>
       </div>
     </div>
-    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${CONFIG.APARTMENT_NAME}</p></div>
+    <div style="background:#0d3550;padding:16px;text-align:center;"><p style="color:rgba(255,255,255,0.4);margin:0;font-size:11px;">${formatEmailText(t.footer, replacements)}</p></div>
   </div>`;
   
-  MailApp.sendEmail({ to: data.email, subject: `⏳ Solicitud recibida — ${CONFIG.APARTMENT_NAME}`, htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
+  MailApp.sendEmail({ to: data.email, subject: formatEmailText(t.subject, replacements), htmlBody: html, replyTo: CONFIG.PUBLIC_EMAIL });
 }
 
 function sendOwnerNotification(data, id) {

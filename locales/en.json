@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "reservar": "Book",
+    "actividades": "Activities",
+    "restaurantes": "Restaurants"
+  },
+  "hero": {
+    "eyebrow": "Platja d'Aro · Costa Brava",
+    "title": "Views",
+    "titleEm": "by the Sea",
+    "subtitle": "Design apartment · Beachfront",
+    "btnAvailability": "Check availability",
+    "btnMore": "Learn more"
+  },
+  "highlights": {
+    "capacity": "Capacity",
+    "rooms": "Rooms",
+    "location": "Location",
+    "from": "From",
+    "wifi": "WiFi",
+    "personas": "4 people",
+    "habitaciones": "1 + sofa bed",
+    "ubicacion": "Beachfront",
+    "incluido": "Included"
+  },
+  "about": {
+    "section": "The Apartment",
+    "title": "Wake up with the Mediterranean in front of you",
+    "desc1": "Modern and fully renovated apartment located on the beachfront in Platja d'Aro, in the heart of the Costa Brava. Direct sea views from the living room, dining room and balcony.",
+    "desc2": "Room with bunk bed for two people, sofa bed in the living room, design kitchen equipped with high-end appliances, and modern bathroom. Perfect for families or groups up to 4 people.",
+    "amenities": [
+      "🌊 Sea views",
+      "📶 Free WiFi",
+      "☕ Nespresso",
+      "📺 Smart TV",
+      "🍳 Equipped kitchen",
+      "🧴 Bathroom amenities",
+      "🛁 Towels and sheets",
+      "🔥 Microwave-grill",
+      "❄️ Refrigerator",
+      "🏖️ Beach 50m",
+      "🛒 Supermarket 100m"
+    ],
+    "locationTitle": "📍 Location",
+    "address": "Passatge Bolívar, 7",
+    "addressBuilding": "EDIFICIO CANNES",
+    "addressCity": "17250, Platja d'Aro, Girona"
+  },
+  "gallery": {
+    "section": "Gallery",
+    "title": "The space in images",
+    "photos": {
+      "hero": "Dining room with views",
+      "beach": "Beach",
+      "dining": "Dining room",
+      "kitchen": "Kitchen",
+      "living": "Living room",
+      "bedroom": "Bedroom",
+      "bath": "Bathroom"
+    }
+  },
+  "booking": {
+    "section": "Booking",
+    "title": "Check availability",
+    "desc": "Select your dates in the calendar. Dates in red are booked. Price includes cleaning.",
+    "loading": "Loading calendar...",
+    "selected": "Selected",
+    "booked": "Booked",
+    "cleaning": "ℹ️ Cleaning fee: 80€ that will be added to the total reservation.",
+    "season": "Season",
+    "total": "Total",
+    "contact": "✉️ aptopda121@gmail.com | 📍 Passatge Bolívar, 7, Platja d'Aro | ⚡ Reply in <24h",
+    "formTitle": "Request booking",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "checkin": "Check-in",
+    "checkinPlaceholder": "Choose in calendar",
+    "checkout": "Check-out",
+    "checkoutPlaceholder": "Choose in calendar",
+    "guests": "Guests",
+    "phone": "Phone",
+    "phonePlaceholder": "+34 600 000 000",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Tell us something...",
+    "submit": "Send request →",
+    "summary": "📊 Summary",
+    "arrival": "Arrival",
+    "departure": "Departure",
+    "nights": "Nights",
+    "rate": "Rate",
+    "paymentNote": "* Payment on arrival by Bizum or cash",
+    "selectDates": "👆 Select dates in the calendar",
+    "successTitle": "Request sent!",
+    "successDesc": "We have sent you confirmation to your email. We will contact you in <24h."
+  },
+  "activities": {
+    "section": "Surroundings",
+    "title": "Nearby activities of interest",
+    "desc": "Discover everything you can do near the apartment.",
+    "beaches": {
+      "title": "Nearby beaches",
+      "desc": "Playa de Aro — 50 meters from the apartment. 2km golden sand, crystal clear waters with Blue Flag. Complete services: sunbeds, lifeguards, showers. Cala Rovira — 2km. Quiet semi-urban cove, ideal for families with children. Sandy bottom and little waves. Sa Conca (S'Agaró) — 4km. Exclusive beach with turquoise waters. Seaside promenade with sophisticated atmosphere.",
+      "link": "🔗 See all beaches →"
+    },
+    "ronda": {
+      "title": "Camí de Ronda",
+      "desc": "The mythical GR-92 trail that runs along the entire Costa Brava next to the sea. From Platja d'Aro you can do routes of different difficulty: • Platja d'Aro → Sant Feliu (8km, 2h30) — easy level • Platja d'Aro → Cala Pedrosa (4km, 1h15) — medium level • Castell coves circuit (6km, 2h) — medium-high level",
+      "link": "🔗 Routes on Wikiloc →"
+    },
+    "heritage": {
+      "title": "Historical heritage",
+      "desc": "Benedormiens Castle — 11th century Romanesque ruins with 360º views. Free access, 3km from the center. Cap Roig Gardens (10km) — 17 hectare botanical garden by the sea. Music festival in summer. Entry: 7€. Roman Villa of Pla de Palol — 1st-6th century archaeological site. Free guided visits Saturdays.",
+      "link": "🔗 Cap Roig Gardens info →"
+    },
+    "waterSports": {
+      "title": "Water sports",
+      "desc": "Platja d'Aro Diving Center — Baptisms from 50€, dives for certificates, PADI courses. Discover the Boreas wreck. Kayak & SUP — Rental 15€/h. Guided excursions to hidden coves (35€, 3h). Departure from the main beach. Sailing & catamaran — Nautical Club offers weekly courses and sailing trips along the coast (from 45€).",
+      "link": "🔗 Diving center →"
+    },
+    "museums": {
+      "title": "Museums and culture",
+      "desc": "Dalí House Museum (Cadaqués) — 50km. Artist's residence in Portlligat. Must visit. Prior booking essential. Entry: 14€. Dalí Theatre-Museum (Figueres) — 55km. Spain's most visited surrealist museum. Entry: 15€. Pals — 15km. One of Catalonia's best preserved medieval villages. Romanesque tower, walls and cobbled streets. Girona — 35km. Call Jueu (medieval Jewish quarter), Cathedral, Houses of the Onyar. Game of Thrones setting.",
+      "link": "🔗 Dalí museums →"
+    },
+    "shopping": {
+      "title": "Shopping and leisure",
+      "desc": "Seaside promenade — 2km of shops: fashion, crafts, souvenirs, ice cream parlors. Nightlife with bars and terraces. Weekly market — Saturdays morning at Av. Cavall Bernat. Local products, clothes, crafts. Espai Gironès (20km) — Shopping center with Decathlon, Ikea, Zara, cinemas. La Bisbal d'Empordà (15km) — Capital of Catalan ceramics. Artisan ceramic shops and antiques.",
+      "link": "🔗 Shopping guide →"
+    }
+  },
+  "restaurants": {
+    "section": "Gastronomy",
+    "title": "Recommended restaurants",
+    "desc": "The best Mediterranean cuisine just steps from the apartment.",
+    "cards": [
+      {"type": "🌴 Beach Club", "name": "Enjoy Beach Club", "desc": "The trendiest spot on the seaside promenade. Mediterranean cuisine with Asian touches, premium cocktails and DJ sessions. Sophisticated atmosphere with sun loungers facing the sea. Ideal for aperitif and sunset."},
+      {"type": "🔥 Steakhouse", "name": "Pura Brasa", "desc": "Specialists in charcoal-grilled meats and Argentine grill. Ribeye steaks, Iberian secreto, ribs. First quality product. Terrace on the beachfront with sea views. Reservation recommended."},
+      {"type": "🍝 Mediterranean", "name": "Levante Beach Club", "desc": "Creative Mediterranean cuisine with local produce. Rice dishes, fresh fish and handmade pasta. Chill-out atmosphere with lounge music. Perfect for long meals facing the sea."},
+      {"type": "🐟 Fresh fish", "name": "La Taverna del Mar", "desc": "Essential classic of the port. Fresh fish of the day, monkfish stew, fideuà and seafood. Traditional Catalan marine cuisine. Terrace with views of the sports port. Essential to book in summer."},
+      {"type": "🍕 Italian", "name": "Pizzeria Bella Napoli", "desc": "Authentic Neapolitan pizza with sourdough and wood-fired oven. Ingredients imported from Italy. Family-friendly atmosphere. Affordable prices, ideal for dinners with children. Also fresh homemade pasta."},
+      {"type": "🍔 Burger & Gin Bar", "name": "NIVO Beach Club", "desc": "Gourmet burgers, poke bowls and premium salads. Gin-tonic menu with over 40 references. Live music on weekends. Young and relaxed atmosphere. Perfect after beach."},
+      {"type": "🍝 Italian", "name": "Basilico", "desc": "Authentic Italian cuisine with fresh homemade pasta and wood-fired pizzas. Ingredients imported directly from Italy. Cozy terrace with views of the promenade. Family and romantic atmosphere."},
+      {"type": "🥩 Grill", "name": "Txots", "desc": "Beef ribeye steaks on the grill and fresh fish. Basque cuisine with local produce. Wine list with Rioja and Ribera references. Reservation recommended in high season."},
+      {"type": "🍦 Ice cream parlor", "name": "Dinos Ice Cream", "desc": "Artisanal ice creams with unique and traditional flavors. Over 30 varieties, slushies and natural smoothies. Perfect after beach. Kids love the colorful and fun atmosphere."}
+    ]
+  },
+  "footer": {
+    "logo": "Views by the Sea",
+    "locationText": "Platja d'Aro · Costa Brava",
+    "copyright": "© 2025 Views by the Sea"
+  },
+  "admin": {
+    "title": "📊 Admin Panel",
+    "refresh": "Refresh",
+    "visitsToday": "Visits today",
+    "visitsMonth": "Visits month",
+    "visitsTotal": "Total visits",
+    "bookings": "Bookings",
+    "pending": "Pending",
+    "revenue": "Revenue",
+    "pendingBookings": "Pending bookings"
+  },
+  "languages": {
+    "es": "Español 🇪🇸",
+    "ca": "Català 🇨🇦",
+    "fr": "Français 🇫🇷",
+    "en": "English 🇬🇧"
+  },
+  "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "guestsOptions": ["1 person", "2 people", "3 people", "4 people"]
+}

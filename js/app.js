@@ -1,6 +1,6 @@
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzZobrGU0xXfpYL3p43gJHFAUnfFF3FpU5ZiaVxMpwCtfNPhoOFcayNdQhRfeorfio-7g/exec';
 const CONFIG={ADDRESS_PUBLIC:'Passatge Bolívar, 7, EDIFICIO CANNES, 17250, Platja d\'Aro',ADDRESS_FULL:'Passatge Bolívar, 7, (EDIFICIO CANNES), 12-1, 17250, Platja d\'Aro'};
-const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+let MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 let bookedRanges=[],dailyPrices={},limpiezaCost=80,calY=new Date().getFullYear(),calM=new Date().getMonth(),selStart=null,selEnd=null;
 let pricesReady=false,bookingsReady=false;
 
@@ -145,6 +145,16 @@ function renderCal(){
   document.getElementById('calLabel').textContent=MN[calM]+' '+calY;
   const g=document.getElementById('calGrid');
   g.innerHTML='';
+
+  // Days header
+  const hdr = document.querySelector('.cal-days-hdr');
+  if (hdr) {
+    const daySpans = hdr.querySelectorAll('span');
+    translations.days.forEach((day, i) => {
+      if (daySpans[i]) daySpans[i].textContent = day;
+    });
+  }
+
   const today=new Date();today.setHours(0,0,0,0);
   const fw=(d.getDay()+6)%7;
   for(let i=0;i<fw;i++){
@@ -202,7 +212,8 @@ function submitBooking(){
     personas:document.getElementById('f-guests').value,
     telefono:document.getElementById('f-phone').value,
     montoTotal:p.montoTotal,desglose:p.desglose,
-    mensaje:document.getElementById('f-msg').value
+    mensaje:document.getElementById('f-msg').value,
+    lang: currentLang
   };
   fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}})
     .then(function(r){return r.json()})
@@ -225,13 +236,13 @@ function submitBooking(){
 
 // Dynamic gallery loader
 const galleryPhotos = [
-  {file: 'hero.jpg', title: 'Comedor con vistas'},
-  {file: 'beach.jpg', title: 'Vistas al mar'},
-  {file: 'dining.jpg', title: 'Comedor'},
-  {file: 'kitchen.jpg', title: 'Cocina'},
-  {file: 'living.jpg', title: 'Salón'},
-  {file: 'bedroom.jpg', title: 'Habitación'},
-  {file: 'bath.jpg', title: 'Baño'}
+  {file: 'hero.jpg', titleKey: 'hero'},
+  {file: 'beach.jpg', titleKey: 'beach'},
+  {file: 'dining.jpg', titleKey: 'dining'},
+  {file: 'kitchen.jpg', titleKey: 'kitchen'},
+  {file: 'living.jpg', titleKey: 'living'},
+  {file: 'bedroom.jpg', titleKey: 'bedroom'},
+  {file: 'bath.jpg', titleKey: 'bath'}
 ];
 
 function loadGallery() {
@@ -250,7 +261,8 @@ function loadGallery() {
     
     const ov = document.createElement('div');
     ov.className = 'gal-ov';
-    ov.innerHTML = '<span>' + photo.title + '</span>';
+    const title = translations.gallery && translations.gallery.photos && translations.gallery.photos[photo.titleKey] || photo.titleKey;
+    ov.innerHTML = '<span>' + title + '</span>';
     
     item.appendChild(bg);
     item.appendChild(ov);
@@ -388,5 +400,212 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('calPrev').onclick=function(){calM--;if(calM<0){calM=11;calY--}renderCal()};
   document.getElementById('calNext').onclick=function(){calM++;if(calM>11){calM=0;calY++}renderCal()};
+
+  // i18n
+  initI18n();
 });
+
+// i18n
+let currentLang = 'es';
+let translations = {};
+
+function initI18n() {
+  const browserLang = navigator.language.split('-')[0];
+  const supported = ['es', 'ca', 'fr', 'en'];
+  currentLang = supported.includes(browserLang) ? browserLang : 'es';
+  loadTranslations(currentLang);
+  
+  // Setup language dropdown
+  const langBtn = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+  const langOptions = document.querySelectorAll('.lang-option');
+  
+  if (langBtn) {
+    langBtn.addEventListener('click', function() {
+      langDropdown.classList.toggle('show');
+    });
+  }
+  
+  langOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const newLang = this.getAttribute('data-lang');
+      loadTranslations(newLang);
+      langDropdown.classList.remove('show');
+      langBtn.textContent = this.textContent;
+      langOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.lang-selector')) {
+      langDropdown.classList.remove('show');
+    }
+  });
+}
+
+function loadTranslations(lang) {
+  fetch('locales/' + lang + '.json')
+    .then(r => r.json())
+    .then(data => {
+      translations = data;
+      currentLang = lang;
+      applyTranslations();
+      updateDynamicElements();
+      document.documentElement.lang = lang;
+    })
+    .catch(err => console.error('Error loading translations:', err));
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const keys = key.split('.');
+    let value = translations;
+    for (const k of keys) {
+      value = value && value[k];
+    }
+    if (value) {
+      el.innerText = value;
+    }
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    const keys = key.split('.');
+    let value = translations;
+    for (const k of keys) {
+      value = value && value[k];
+    }
+    if (value) {
+      el.innerHTML = value;
+    }
+  });
+  
+  // Update placeholders
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    if (el.placeholder) {
+      const key = el.getAttribute('data-i18n');
+      const keys = key.split('.');
+      let value = translations;
+      for (const k of keys) {
+        value = value && value[k];
+      }
+      if (value && typeof value === 'string') {
+        el.placeholder = value;
+      }
+    }
+  });
+  
+  // Update language dropdown options
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    const lang = opt.getAttribute('data-lang');
+    if (lang === currentLang) {
+      opt.classList.add('active');
+    } else {
+      opt.classList.remove('active');
+    }
+  });
+  
+  // Translate activities content
+  updateActivitiesContent();
+  // Translate restaurants content
+  updateRestaurantsContent();
+  
+  // Update amenities
+  if (translations.about && translations.about.amenities) {
+    const amenitiesDiv = document.getElementById('amenitiesList');
+    amenitiesDiv.innerHTML = translations.about.amenities.map(amen => `<span class="amen">${amen}</span>`).join('');
+  }
+}
+
+function updateDynamicElements() {
+  // Update guests options
+  const guestsSelect = document.getElementById('f-guests');
+  guestsSelect.innerHTML = '';
+  translations.guestsOptions.forEach((opt, i) => {
+    const option = document.createElement('option');
+    option.value = (i + 1) + ' persona' + (i === 0 ? '' : 's');
+    option.textContent = opt;
+    if (i === 1) option.selected = true;
+    guestsSelect.appendChild(option);
+  });
+
+  // Update days and months
+  MN = translations.months;
+  // Update calendar if rendered
+  if (document.getElementById('calGrid').children.length > 0) {
+    renderCal();
+  }
+}
+
+function updateActivitiesContent() {
+  const activities = translations.activities;
+  if (!activities || !activities.beaches) return;
+  
+  const sections = [
+    { data_key: 'beaches', selector: '.act-card:has(h3:contains("Playas"))' },
+    { data_key: 'ronda', selector: '.act-card:has(h3:contains("Camí"))' },
+    { data_key: 'heritage', selector: '.act-card:has(h3:contains("Patrimonio"))' },
+    { data_key: 'waterSports', selector: '.act-card:has(h3:contains("Deportes"))' },
+    { data_key: 'museums', selector: '.act-card:has(h3:contains("Museos"))' },
+    { data_key: 'shopping', selector: '.act-card:has(h3:contains("Compras"))' }
+  ];
+  
+  // Translate by finding cards with the matching h3 titles
+  document.querySelectorAll('.act-card').forEach((card, idx) => {
+    const titleEl = card.querySelector('h3');
+    const actKeys = ['beaches', 'ronda', 'heritage', 'waterSports', 'museums', 'shopping'];
+    if (actKeys[idx]) {
+      const actKey = actKeys[idx];
+      const content = activities[actKey];
+      if (content && content.desc) {
+        const p = card.querySelector('p');
+        if (p) p.textContent = content.desc;
+      }
+      if (content && content.link) {
+        const a = card.querySelector('a');
+        if (a) a.textContent = content.link;
+      }
+    }
+  });
+}
+
+function updateRestaurantsContent() {
+  const rests = translations.restaurants;
+  if (!rests || !rests.cards) return;
+  
+  document.querySelectorAll('.rest-card').forEach((card, idx) => {
+    if (rests.cards[idx]) {
+      const rest = rests.cards[idx];
+      const type = card.querySelector('.rest-type');
+      const name = card.querySelector('h3');
+      const desc = card.querySelector('.rest-desc');
+      
+      if (type) type.textContent = rest.type;
+      if (name) name.textContent = rest.name;
+      if (desc) desc.textContent = rest.desc;
+    }
+  });
+}
+
+function updateDynamicElements() {
+  // Update guests options
+  const guestsSelect = document.getElementById('f-guests');
+  guestsSelect.innerHTML = '';
+  translations.guestsOptions.forEach((opt, i) => {
+    const option = document.createElement('option');
+    option.value = (i + 1) + ' persona' + (i === 0 ? '' : 's');
+    option.textContent = opt;
+    if (i === 1) option.selected = true;
+    guestsSelect.appendChild(option);
+  });
+
+  // Update days and months
+  MN = translations.months;
+  // Update calendar if rendered
+  if (document.getElementById('calGrid').children.length > 0) {
+    renderCal();
+  }
+}
 

@@ -11,9 +11,18 @@
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;color:var(--text);background:#fff;line-height:1.6}
 nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,.05);padding:1rem 5%;display:flex;justify-content:space-between;align-items:center}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--ocean)}
+.nav-right{display:flex;align-items:center;gap:2rem}
 .nav-links{list-style:none;display:flex;gap:2rem}
 .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:.95rem;transition:color .3s}
 .nav-links a:hover{color:var(--ocean)}
+.lang-selector{position:relative}.lang-btn{background:#fff;border:1px solid #ddd;border-radius:4px;padding:.5rem .8rem;font-size:.9rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .3s}
+.lang-btn:hover{border-color:var(--ocean);background:#f9f9f9}
+.lang-dropdown{position:absolute;top:100%;right:0;margin-top:.3rem;background:#fff;border:1px solid #ddd;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:1001;min-width:180px;display:none}
+.lang-dropdown.show{display:block}
+.lang-option{width:100%;text-align:left;background:none;border:none;padding:.8rem 1rem;font-size:.9rem;color:var(--text);cursor:pointer;transition:all .2s}
+.lang-option:hover{background:#f0f7ff;color:var(--ocean)}
+.lang-option.active{background:var(--wave);color:#fff;font-weight:600}
+#langSelect{appearance:none;padding-right:2rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233a4a58' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .5rem center;background-size:1.2em}
 .nav-menu-btn{display:none;background:0 0;border:none;font-size:1.8rem;color:var(--ocean);cursor:pointer}
 .mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--deep);z-index:1000;padding:2rem;transition:right .4s;display:flex;flex-direction:column;gap:1.5rem}
 .mobile-menu.active{right:0}

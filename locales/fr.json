@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "inicio": "Accueil",
+    "reservar": "Réserver",
+    "actividades": "Activités",
+    "restaurantes": "Restaurants"
+  },
+  "hero": {
+    "eyebrow": "Platja d'Aro · Costa Brava",
+    "title": "Vues",
+    "titleEm": "sur Mer",
+    "subtitle": "Appartement design · Première ligne de plage",
+    "btnAvailability": "Voir disponibilité",
+    "btnMore": "En savoir plus"
+  },
+  "highlights": {
+    "capacity": "Capacité",
+    "rooms": "Chambres",
+    "location": "Emplacement",
+    "from": "À partir de",
+    "wifi": "WiFi",
+    "personas": "4 personnes",
+    "habitaciones": "1 + canapé-lit",
+    "ubicacion": "Première ligne",
+    "incluido": "Inclus"
+  },
+  "about": {
+    "section": "L'Appartement",
+    "title": "Réveillez-vous avec la Méditerranée devant vous",
+    "desc1": "Appartement moderne et entièrement rénové situé en première ligne de plage à Platja d'Aro, au cœur de la Costa Brava. Vues directes sur la mer depuis le salon, la salle à manger et le balcon.",
+    "desc2": "Chambre avec lit superposé pour deux personnes, canapé-lit dans le salon, cuisine design équipée d'électroménagers haut de gamme, et salle de bain moderne. Parfait pour les familles ou groupes jusqu'à 4 personnes.",
+    "amenities": [
+      "🌊 Vues sur mer",
+      "📶 WiFi gratuit",
+      "☕ Nespresso",
+      "📺 Smart TV",
+      "🍳 Cuisine équipée",
+      "🧴 Produits salle de bain",
+      "🛁 Serviettes et draps",
+      "🔥 Micro-ondes-grill",
+      "❄️ Réfrigérateur",
+      "🏖️ Plage à 50m",
+      "🛒 Supermarché 100m"
+    ],
+    "locationTitle": "📍 Emplacement",
+    "address": "Passatge Bolívar, 7",
+    "addressBuilding": "EDIFICIO CANNES",
+    "addressCity": "17250, Platja d'Aro, Girona"
+  },
+  "gallery": {
+    "section": "Galerie",
+    "title": "L'espace en images",
+    "photos": {
+      "hero": "Salle à manger avec vue",
+      "beach": "Plage",
+      "dining": "Salle à manger",
+      "kitchen": "Cuisine",
+      "living": "Salon",
+      "bedroom": "Chambre",
+      "bath": "Salle de bain"
+    }
+  },
+  "booking": {
+    "section": "Réservation",
+    "title": "Consulter disponibilité",
+    "desc": "Sélectionnez vos dates dans le calendrier. Les dates en rouge sont réservées. Le prix inclut le nettoyage.",
+    "loading": "Chargement calendrier...",
+    "selected": "Sélectionné",
+    "booked": "Réservé",
+    "cleaning": "ℹ️ Frais de nettoyage: 80€ qui seront ajoutés au total de la réservation.",
+    "season": "Saison",
+    "total": "Total",
+    "contact": "✉️ aptopda121@gmail.com | 📍 Passatge Bolívar, 7, Platja d'Aro | ⚡ Réponse en <24h",
+    "formTitle": "Demander réservation",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom",
+    "email": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "checkin": "Arrivée",
+    "checkinPlaceholder": "Choisir dans le calendrier",
+    "checkout": "Départ",
+    "checkoutPlaceholder": "Choisir dans le calendrier",
+    "guests": "Personnes",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+33 6 00 00 00 00",
+    "message": "Message (optionnel)",
+    "messagePlaceholder": "Dites-nous quelque chose...",
+    "submit": "Envoyer demande →",
+    "summary": "📊 Résumé",
+    "arrival": "Arrivée",
+    "departure": "Départ",
+    "nights": "Nuits",
+    "rate": "Tarif",
+    "paymentNote": "* Paiement à l'arrivée par Bizum ou espèces",
+    "selectDates": "👆 Sélectionnez des dates dans le calendrier",
+    "successTitle": "Demande envoyée!",
+    "successDesc": "Nous vous avons envoyé une confirmation par email. Nous vous contacterons en <24h."
+  },
+  "activities": {
+    "section": "Environs",
+    "title": "Activités d'intérêt proches",
+    "desc": "Découvrez tout ce que vous pouvez faire près de l'appartement.",
+    "beaches": {
+      "title": "Plages proches",
+      "desc": "Playa de Aro — 50 mètres de l'appartement. Sable doré de 2km, eaux cristallines avec Drapeau Bleu. Services complets: transats, sauvetage, douches. Cala Rovira — 2km. Calanque semi-urbaine tranquille, idéale pour les familles avec enfants. Fond de sable et peu de vagues. Sa Conca (S'Agaró) — 4km. Plage exclusive avec eaux turquoise. Promenade maritime avec ambiance sophistiquée.",
+      "link": "🔗 Voir toutes les plages →"
+    },
+    "ronda": {
+      "title": "Camí de Ronda",
+      "desc": "Le mythique sentier GR-92 qui parcourt toute la Costa Brava collé à la mer. Depuis Platja d'Aro vous pouvez faire des randonnées de difficulté différente: • Platja d'Aro → Sant Feliu (8km, 2h30) — niveau facile • Platja d'Aro → Cala Pedrosa (4km, 1h15) — niveau moyen • Circuit calanques de Castell (6km, 2h) — niveau moyen-élevé",
+      "link": "🔗 Randonnées sur Wikiloc →"
+    },
+    "heritage": {
+      "title": "Patrimoine historique",
+      "desc": "Château de Benedormiens — Ruines romanes du XIe siècle avec vues 360º. Accès gratuit, 3km du centre. Jardins de Cap Roig (10km) — Jardin botanique de 17 hectares au bord de la mer. Festival de musique en été. Entrée: 7€. Villa romaine de Pla de Palol — Site archéologique du Ier-VIe siècle. Visites guidées gratuites samedis.",
+      "link": "🔗 Info Jardins Cap Roig →"
+    },
+    "waterSports": {
+      "title": "Sports aquatiques",
+      "desc": "Platja d'Aro Diving Center — Baptêmes dès 50€, plongées pour certificats, cours PADI. Découvrez l'épave Boreas. Kayak & SUP — Location 15€/h. Excursions guidées vers des calanques cachées (35€, 3h). Départ depuis la plage principale. Voile & catamaran — Club Nautique propose cours hebdomadaires et sorties en voilier le long de la côte (dès 45€).",
+      "link": "🔗 Centre de plongée →"
+    },
+    "museums": {
+      "title": "Musées et culture",
+      "desc": "Casa Museo Dalí (Cadaqués) — 50km. Résidence de l'artiste à Portlligat. Visite obligatoire. Réservation préalable indispensable. Entrée: 14€. Teatro-Museo Dalí (Figueres) — 55km. Le musée surréaliste le plus visité d'Espagne. Entrée: 15€. Pals — 15km. Un des villages médiévaux les mieux conservés de Catalogne. Tour romane, remparts et rues pavées. Girona — 35km. Call Jueu (quartier juif médiéval), Cathédrale, Maisons de l'Onyar. Décor de Game of Thrones.",
+      "link": "🔗 Musées Dalí →"
+    },
+    "shopping": {
+      "title": "Achats et loisirs",
+      "desc": "Promenade maritime — 2km de boutiques: mode, artisanat, souvenirs, glaciers. Ambiance nocturne avec bars et terrasses. Marché hebdomadaire — Samedis matin à Av. Cavall Bernat. Produits locaux, vêtements, artisanat. Espai Gironès (20km) — Centre commercial avec Decathlon, Ikea, Zara, cinémas. La Bisbal d'Empordà (15km) — Capitale de la céramique catalane. Boutiques de céramique artisanale et antiquités.",
+      "link": "🔗 Guide des achats →"
+    }
+  },
+  "restaurants": {
+    "section": "Gastronomie",
+    "title": "Restaurants recommandés",
+    "desc": "La meilleure cuisine méditerranéenne à quelques pas de l'appartement.",
+    "cards": [
+      {"type": "🌴 Beach Club", "name": "Enjoy Beach Club", "desc": "Le lieu le plus tendance de la promenade maritime. Cuisine méditerranéenne avec touches asiatiques, cocktails premium et sessions DJ. Ambiance sophistiquée avec transats face à la mer. Idéal pour l'apéritif et le coucher du soleil."},
+      {"type": "🔥 Braseria", "name": "Pura Brasa", "desc": "Spécialistes en viandes à la braise et grill argentin. Entrecôtes, secreto ibérique, côtes. Produit de première qualité. Terrasse en première ligne de plage avec vues sur mer. Réservation recommandée."},
+      {"type": "🍝 Méditerranéenne", "name": "Levante Beach Club", "desc": "Cuisine méditerranéenne créative avec produit local. Riz, poissons frais et pâtes artisanales. Ambiance chill-out avec musique lounge. Parfait pour de longs repas face à la mer."},
+      {"type": "🐟 Poisson frais", "name": "La Taverna del Mar", "desc": "Classique incontournable du port. Poisson du jour, suquet de lotte, fideuà et fruits de mer. Cuisine marine traditionnelle catalane. Terrasse avec vues sur le port de plaisance. Réservation indispensable en été."},
+      {"type": "🍕 Italienne", "name": "Pizzeria Bella Napoli", "desc": "Authentique pizza napolitaine avec pâte mère et four à bois. Ingrédients importés d'Italie. Ambiance familiale et accueillante. Prix ajustés, idéal pour dîners avec enfants. Aussi pâtes fraîches maison."},
+      {"type": "🍔 Burger & Gin Bar", "name": "NIVO Beach Club", "desc": "Hamburgers gourmet, poke bowls et salades premium. Carte de gin-tonics avec plus de 40 références. Musique live les week-ends. Ambiance jeune et décontractée. Parfait après la plage."},
+      {"type": "🍝 Italienne", "name": "Basilico", "desc": "Authentique cuisine italienne avec pâtes fraîches maison et pizzas au four à bois. Ingrédients importés directement d'Italie. Terrasse accueillante avec vues sur la promenade. Ambiance familiale et romantique."},
+      {"type": "🥩 Rôtisserie", "name": "Txots", "desc": "Entrecôtes de bœuf à la braise et poissons frais au grill. Cuisine basque de produit. Carte des vins avec références de Rioja et Ribera. Réservation recommandée en haute saison."},
+      {"type": "🍦 Glacier", "name": "Dinos Ice Cream", "desc": "Glaces artisanales avec saveurs uniques et traditionnelles. Plus de 30 variétés, granités et milkshakes naturels. Parfait après la plage. Les enfants adorent l'ambiance colorée et amusante."}
+    ]
+  },
+  "footer": {
+    "logo": "Vues sur Mer",
+    "locationText": "Platja d'Aro · Costa Brava",
+    "copyright": "© 2025 Vues sur Mer"
+  },
+  "admin": {
+    "title": "📊 Panel Admin",
+    "refresh": "Actualiser",
+    "visitsToday": "Visites aujourd'hui",
+    "visitsMonth": "Visites mois",
+    "visitsTotal": "Visites totales",
+    "bookings": "Réservations",
+    "pending": "En attente",
+    "revenue": "Revenus",
+    "pendingBookings": "Réservations en attente"
+  },
+  "languages": {
+    "es": "Español 🇪🇸",
+    "ca": "Català 🇨🇦",
+    "fr": "Français 🇫🇷",
+    "en": "English 🇬🇧"
+  },
+  "days": ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"],
+  "months": ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+  "guestsOptions": ["1 personne", "2 personnes", "3 personnes", "4 personnes"]
+}
